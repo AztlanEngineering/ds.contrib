@@ -36,5 +36,5 @@ export default create({
 
   brandTitle: 'Paradise Design System',
   brandUrl: 'https://fwrlines.com',
-  brandImage: 'https://i.imgur.com/Fljioj0.png',
+  brandImage: 'https://i.imgur.com/nue7Qdk.png',
 });
