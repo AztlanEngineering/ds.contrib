@@ -16,8 +16,8 @@
     "now-build": "mkdir ./public && npm run build-storybook --quiet",
     "copy-css:cjs": "copyfiles -u 2 src/ui/**/*.scss dist/cjs",
     "copy-css:es": "copyfiles -u 2 src/ui/**/*.scss dist/es",
-    "compile:cjs": "NODE_ENV=cjs babel src/ui --out-dir dist/cjs --ignore **/storie*/*.js",
-    "compile:es": "NODE_ENV=es babel src/ui --out-dir dist/es --ignore **/stories/*.js",
+    "compile:cjs": "NODE_ENV=cjs babel src/ui --out-dir dist/cjs --ignore src/stories",
+    "compile:es": "NODE_ENV=es babel src/ui --out-dir dist/es --ignore src/stories",
     "build:cjs": "npm run compile:cjs && npm run copy-css:cjs",
     "build:es": "npm run compile:es && npm run copy-css:es",
     "compile": "npm run pre-compile && npm run build:cjs && npm run build:es",
@@ -29,7 +29,7 @@
     "bd": "npm run build&&npm run commit ",
     "npre": "nodemon --watch src --exec 'npm run build:es && echo done'",
     "postinstall": "node ./scripts/postinstall.js",
-    "relink": "npm link @fwrlines/alphabet-scss && npm link @fwrlines/swatch && npm link @fwrlines/utils"
+    "relink": "npm link @fwrlines/ds.core && npm link @fwrlines/alphabet-scss && npm link @fwrlines/swatch && npm link @fwrlines/utils"
   },
   "keywords": [],
   "license": "ISC",
@@ -37,6 +37,7 @@
     "@apollo/client": "^3.0.0-rc.2",
     "@apollo/link-retry": "^2.0.0-beta.3",
     "@fwrlines/alphabet-scss": "latest",
+    "@fwrlines/ds.core": "latest",
     "@fwrlines/utils": "latest",
     "compressorjs": "^1.0.6",
     "date-fns": "^2.15.0",
