@@ -3,7 +3,7 @@ import * as React from 'react'
 import { useContext, useCallback } from 'react'
 import PropTypes from 'prop-types'
 
-import { Button } from '@fwrlines/ds/elements'
+import { Button } from 'core'
 import { Context as TabContext } from '../../Context'
 
 

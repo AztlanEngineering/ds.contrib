@@ -9,7 +9,7 @@ import { useObjectMap } from '../Context'
 import gql from 'graphql-tag'
 import { useQuery, useMutation } from '@apollo/client'
 
-import { Heading, Card } from 'ui/elements'
+import { Heading, Card } from 'ds-core'
 
 //Intl
 

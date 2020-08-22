@@ -5,16 +5,19 @@ import faker from 'faker'
 //import {} from 'react'
 
 //import { action } from '@storybook/addon-actions'
-
+//
 import {
   Button,
   Card,
   DotInfo,
+  Shortener,
+  Timestamp,
+} from 'core'
+
+import {
   MapContextProvider,
   MapListView as ListView,
   MapSingleView as SingleView,
-  Shortener,
-  Timestamp,
 } from 'ui'
 
 import QUERY_ONE from './graphql/getFruit.gql'

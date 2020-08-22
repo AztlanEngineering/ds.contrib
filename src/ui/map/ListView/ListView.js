@@ -3,10 +3,6 @@ import * as React from 'react'
 import { useMemo, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
-import { Button, Heading } from 'ui/elements'
-
-
-
 import {
   MapTableView as TableView,
   MapCardView as CardView,
@@ -14,8 +10,10 @@ import {
 } from '../common'
 
 import {
+  Button,
+  Heading,
   Shortcut
-} from 'ui/site'
+} from 'ds-core'
 
 import gql from 'graphql-tag'
 import { useQuery, useMutation } from '@apollo/client'

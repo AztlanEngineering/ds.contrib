@@ -4,17 +4,19 @@ import { useCallback, useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
 
 import {
-  useForm,
+  FormContextDebugger,
   FormContextProvider,
   FormInput,
-  FormContextDebugger
-} from 'ui/form'
+  useForm,
+} from 'ds-form'
 
-import { InlineLoader, Timestamp } from 'ui/common'
-
-import { Accordion } from 'ui/site'
-
-import { Button, Heading } from 'ui/elements'
+import {
+  Accordion,
+  Button,
+  Heading,
+  InlineLoader,
+  Timestamp
+} from 'ds-core'
 
 import { useObjectMap, MapSingleActions as Actions } from '../common'
 

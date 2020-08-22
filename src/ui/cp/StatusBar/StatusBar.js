@@ -3,7 +3,7 @@ import * as React from 'react'
 //import {} from 'react'
 import PropTypes from 'prop-types'
 
-import { HorizontalBar } from '@fwrlines/ds/site'
+import { HorizontalBar } from 'ds-core'
 import {
   ConnectionStatus,
   LogoutLink

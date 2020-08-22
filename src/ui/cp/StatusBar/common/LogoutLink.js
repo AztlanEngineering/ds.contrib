@@ -12,7 +12,7 @@ import { FormattedMessage} from 'react-intl'
 
 import messages from './messages'
 
-import { SessionContext } from 'ui/collections/dashboard'
+import { SessionContext } from 'ui/dashboard'
 
 import { Link } from 'react-router-dom'
 

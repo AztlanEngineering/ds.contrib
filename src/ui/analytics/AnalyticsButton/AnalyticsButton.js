@@ -2,9 +2,7 @@
 import * as React from 'react'
 //import {} from 'react'
 import PropTypes from 'prop-types'
-import { Button } from '@fwrlines/ds/elements'
-import { usePage } from '@fwrlines/ds/site'
-
+import { Button, usePage } from 'ds-core'
 
 import ga from 'react-ga'
 

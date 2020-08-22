@@ -3,10 +3,9 @@ import * as React from 'react'
 //import {} from 'react'
 import PropTypes from 'prop-types'
 
-import { Image } from '@fwrlines/ds/common'
-import { Heading, Card } from '@fwrlines/ds/elements'
+import { Heading, Card, Image } from 'core'
 
-import { AnalyticsButton as LocalButton } from 'ui/collections/analytics'
+import { AnalyticsButton as LocalButton } from 'ui/analytics'
 
 import { BlogLink } from '../Link'
 import { CategoryButton } from '../CategoryButton'

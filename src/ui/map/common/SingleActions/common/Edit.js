@@ -4,7 +4,7 @@ import * as React from 'react'
 import PropTypes from 'prop-types'
 
 
-import { Button } from 'ui/elements'
+import { Button } from 'ds-core'
 
 import { useParams, Link } from 'react-router-dom'
 
