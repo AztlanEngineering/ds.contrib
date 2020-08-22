@@ -1,7 +1,7 @@
 {
-  "name": "@fwrlines/ds",
+  "name": "@fwrlines/ds.contrib",
   "author": "",
-  "version": "2.30.0",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -9,7 +9,7 @@
   "sideEffects": false,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 6006 -s ./src/assets/fonts,./src/assets/images,./src/assets/favicon",
+    "storybook": "start-storybook -p 6007 -s ./src/assets/fonts,./src/assets/images,./src/assets/favicon",
     "build-storybook": "rm -rf ./public/* && build-storybook -c .storybook -o public --quiet -s ./src/assets/fonts,./src/assets/images,./src/assets/favicon",
     "build": "echo",
     "test-eslint": "eslint .storybook/main.js --no-ignore",
