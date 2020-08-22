@@ -1,0 +1,42 @@
+/* @fwrlines/generator-react-component 1.4.0 */
+
+/*
+
+Classes :
+.popup : default
+
+*/
+
+.popup {
+  display: inline-block;
+  position: absolute;
+  background: var(--y, blue);
+  //overflow-y:scroll;
+
+  &:not(.visible) {
+    display: none;
+  }
+
+  &.left {
+    top: 0;
+    right: 100%;
+    background: grey;
+  }
+
+  &.right {
+    top: 0;
+    left: 100%;
+    background: yellow;
+  }
+
+  &.top {
+    bottom: 100%;
+    left: 0;
+    background: red;
+  }
+
+  &.bottom {
+    top: 100%;
+    left: 0
+  }
+}

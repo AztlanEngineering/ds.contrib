@@ -1,0 +1,141 @@
+/* @fwrlines/generator-react-component 2.3.4 */
+
+/*
+
+Classes :
+.nav_bar : default
+
+*/
+@use "@fwrlines/alphabet-scss/scss/mixins";
+@use "@fwrlines/alphabet-scss/scss/vars/responsive" as *;
+
+@keyframes display {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+.nav_bar {
+  display: grid;
+
+  .i-content,
+  .i-footer {
+    display: flex;
+  //.padding: calc(var(--u, 1) * .5em);
+  }
+
+  .i-content {
+    margin: 0;
+  }
+
+  .leader,
+  .i-header {
+    display:flex;
+    align-items: center;
+  }
+
+  .i-content {
+
+    a {
+      //color:inherit;
+    }
+  }
+
+  .i-footer {
+  }
+
+  @include mixins.media($from:$sm-md) {
+    grid-template-areas: "header content footer";
+    grid-template-columns: min-content 1fr min-content;
+    position:sticky;
+    top:0;
+
+    .i-content {
+      align-items: center;
+      justify-content: flex-end;
+
+      > li {
+        margin-bottom: 0;
+
+        & + li {
+          margin-left: 1em;
+        }
+      }
+    }
+
+    .i-footer {
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hamburger {
+      display: none;
+    }
+  }
+
+  @include mixins.media($to:$sm-md) {
+    &:not(.open) {
+      grid-template-areas: "header content footer";
+      grid-template-columns: min-content 1fr min-content;
+      position: sticky;
+
+      top: var(--top, 0);
+
+      .title {
+        display: none;
+      }
+      .i-content {
+        display:none;
+      }
+
+      .leader:not(.isTop),
+      .leader.istop + .i_content {
+        animation:display .3s linear 1 forwards;
+      }
+
+      .leader.istop,
+      .default_content:first-child, 
+      .leader:not(.istop) + .i-content {
+        display: none;
+      }
+    }
+
+    &.open {
+      z-index:2;
+      grid-template-areas:
+        "header"
+        "content"
+        "footer";
+      grid-template-rows: min-content 1fr min-content;
+      height: 100%;
+      left: 0;
+      overflow-y: scroll;
+      position: fixed;
+      top: 0;
+      width: 100%;
+
+      title {
+        display: block;
+      }
+    }
+
+
+    .i-content {
+      flex-direction: column;
+      //align-items:flex-end;
+    }
+    .i-footer {
+      justify-content:space-between;
+      align-items: center;
+    }
+  }
+  .progress_bar {
+    position:absolute;
+    bottom:0;
+    left:0;
+    transform:translateY(50%)
+  }
+}

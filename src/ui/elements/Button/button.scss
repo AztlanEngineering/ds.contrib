@@ -1,0 +1,253 @@
+/*
+
+Classes :
+.button : default
+
+*/
+
+$paddingSide:0.8em;
+$paddingTop:0.5em;
+$paddingBottom:0.55em;
+$padding:$paddingTop $paddingSide $paddingBottom;
+$fontFamily:var(--fp);
+$fontWeight:bold;
+$willChange:"";
+$tapColor:transparent;
+$lineHeight:1.3em;
+$iconOpacity:0.9;
+$iconOpacityHover:0.96;
+$iconBackOpacity:0.2;
+$iconBackOpacityHover:0.4;
+$iconBackWidth:2em;
+$iconPadding:$paddingTop 0.5em $paddingBottom;
+$iconTransitionMovement:0.25em;
+$iconTransitionTime:0.3s;
+
+.button {
+  position: relative;
+  outline: none;
+  border: 0;
+  border-radius: var(--r);
+
+  background: var(--x, var(--metadata));
+  cursor: pointer;
+  overflow: hidden;
+  line-height: $lineHeight;
+  color: var(--on-x, var(--paragraph));
+  font-family: $fontFamily;
+  font-weight: $fontWeight;
+  -webkit-tap-highlight-color: $tapColor;
+  user-select: none;
+  will-change: $willChange;
+
+  &:not(.i) {
+    padding: $padding;
+  }
+
+  :not(.g-button) > & {
+    height: $lineHeight + $paddingTop + $paddingBottom;
+  }
+
+
+  &:disabled {
+    background: var(--light-x, var(--dark-white));
+    cursor: unset;
+    color: var(--on-x, var(--dark-grey));
+  }
+
+  &:not(:disabled) {
+    &:hover {
+      background: var(--light-x, var(--dark-white));
+    }
+
+    &:focus,
+    &:active {
+      background: var(--x, var(--light-grey));
+    }
+  }
+
+  &.il {
+    padding-left: $paddingSide + $iconBackWidth;
+  }
+
+  &.ir {
+    padding-right: $paddingSide + $iconBackWidth;
+  }
+
+  &.ic  {
+    padding: .5em;
+  }
+
+  &.ir,
+  &.il {
+    i {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      opacity: $iconOpacity;
+      z-index: 0;
+      padding: $iconPadding;
+      line-height: $lineHeight;
+      transition: all $iconTransitionTime;
+
+      &::before {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        z-index: -1;
+        width: $iconBackWidth;
+        content: " ";
+        transition: all $iconTransitionTime;
+      }
+
+    }
+
+    &:not(.simple) i {
+      &::before {
+        opacity: $iconBackOpacity;
+        background: var(--white);
+      }
+    }
+
+
+    &[class*="bh-"] {
+      &:hover,
+      &:focus {
+        i {
+          opacity: $iconOpacityHover;
+
+          &::before {
+            opacity: $iconBackOpacityHover;
+          }
+        }
+      }
+
+      &:active {
+        i {
+          //box-shadow: var(--ish-sm);
+        }
+      }
+    }
+  }
+
+  &.i i,
+  &.il i {
+    left: 0;
+
+    &::before {
+      left: 0;
+    }
+  }
+
+  &.i i,
+  &.ir i {
+    right: 0;
+
+    &::before {
+      right: 0;
+    }
+  }
+
+  &.it {
+    &:hover,
+    &:focus,
+    &:active {
+      &.il {
+        i {
+          transform: translateX(-#{$iconTransitionMovement});
+
+          &::before {
+            width: $iconBackWidth + $iconTransitionMovement;
+          }
+        }
+      }
+
+      &.ir {
+        i {
+          transform: translateX(#{$iconTransitionMovement});
+
+          &::before {
+            width: $iconBackWidth + $iconTransitionMovement;
+          }
+        }
+      }
+    }
+  }
+}
+
+.group.buttons {
+  display: flex;
+
+  &.indep.indep {
+    .button {
+      border-radius: var(--r) !important;
+    }
+
+    &:not(.vrt) {
+      & > a + a,
+      .button + .button {
+        margin-left: 0.25rem;
+      }
+    }
+
+    &.vrt {
+      & > a + a,
+      .button + .button {
+        margin-top: 0.25rem;
+      }
+    }
+  }
+
+  &:not(.vrt) {
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    .button {
+      border-radius: 0;
+    }
+
+    > *:not(.button) {
+      > .button {
+        height: inherit;
+      }
+    }
+
+    > :first-child,
+    > :first-child .button, {
+      border-radius: var(--rl);
+    }
+
+    > :last-child,
+    > :last-child .button, {
+      border-radius: var(--rr);
+    }
+  }
+
+  &.vrt {
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    .button {
+      border-radius: 0;
+    }
+
+    > *:not(.button) {
+      width: 100%;
+
+      > .button {
+        width: inherit;
+      }
+    }
+
+
+    > :first-child,
+    > :first-child .button, {
+      border-radius: var(--rt);
+    }
+
+    > :last-child,
+    > :last-child .button, {
+      border-radius: var(--rb);
+    }
+  }
+}

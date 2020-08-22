@@ -1,0 +1,37 @@
+/* @fwrlines/generator-react-component 2.3.3 */
+
+/*
+
+Classes :
+.plan : default
+
+*/
+
+@use "@fwrlines/alphabet-scss/scss/mixins";
+@use "@fwrlines/alphabet-scss/scss/vars/responsive" as *;
+
+.plan {
+  --z: var(--y);
+  display:flex;
+
+  flex-direction:column;
+
+  .features {
+    flex-grow:99;
+  }
+
+  .section {
+      background:inherit;
+
+  }
+
+  @include mixins.media($from:$sm-md) {
+    .section.price_tag {
+      position:-webkit-sticky;
+      position:sticky;
+      top:3em;
+      border-bottom:1px solid rgba(255,255,255,.1);
+      z-index:1;
+    }
+  }
+}

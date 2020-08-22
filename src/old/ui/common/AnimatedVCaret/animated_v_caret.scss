@@ -1,0 +1,15 @@
+/*
+
+Classes :
+.animated_v_caret : default
+
+*/
+
+.animated_v_caret{
+	display:inline;
+	cursor:pointer;
+	line {
+		stroke:var(--cc, var(--black, black));
+		transition:stroke .3s;
+	}
+}

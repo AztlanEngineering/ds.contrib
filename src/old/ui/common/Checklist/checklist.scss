@@ -1,0 +1,32 @@
+/*
+
+Classes :
+.checklist : default
+
+*/
+$checkmarkLetter:'o';
+$crossLetter:'p';
+$iconFontName:'if';
+$paddingRight:.5em;
+$checklistTop:.2em;
+
+.checklist{
+	list-style:none;
+	padding-left:0;
+
+	li {
+		&:before {
+			position:relative;
+			top:.2em;
+			content:$checkmarkLetter;
+			font-family:$iconFontName;
+			color:var(--cc, var(--blue));
+			padding-right:$paddingRight;
+		}
+
+		&.cross:before {
+			content:$crossLetter;
+		}
+	}
+
+}

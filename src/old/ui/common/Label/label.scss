@@ -1,0 +1,40 @@
+/*
+
+Classes :
+.label : default
+
+*/
+$paddingTop:.3em;
+$paddingSide:.5em;
+$paddingBottom:.4em;
+$padding:$paddingTop $paddingSide $paddingBottom;
+$border-radius:$paddingTop + $paddingBottom + 1em;
+$fontFamily:var(--font-d)!default;
+$verticalAlignInHeadings:top;
+$marginBottom:.3em;
+
+.label{
+	display:inline-block;
+	padding:$padding;
+	border-radius:$border-radius;
+	font-family:$fontFamily;
+	margin-bottom:$marginBottom;
+
+	&.i {
+		padding:$paddingTop $paddingTop $paddingBottom;
+		vertical-align:unset;
+	}
+
+	&[class*=bh-] {
+		cursor:pointer;
+	}
+
+}
+
+h1,h2,h3,h4,h5,
+.h1,.h2,.h3,.h4,.h5,
+{
+	& .label {
+		vertical-align:$verticalAlignInHeadings;
+	}
+}

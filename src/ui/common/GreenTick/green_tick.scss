@@ -1,0 +1,54 @@
+/*
+
+Classes :
+.green_tick : default
+
+*/
+$tickDuration:0.8s;
+
+$tickDasharrayOutline:480px;
+
+$tickStroke:var(--on-green);
+$tickStrokeDashOffset:110;
+$tickStrokeDasharray:110;
+$tickStrokeWidth:10;
+$tickFill:var(--green);
+
+@keyframes outline {
+  0% {
+    stroke-dashoffset: $tickDasharrayOutline;
+  }
+
+  100% {
+    stroke-dashoffset: $tickDasharrayOutline *2;
+  }
+}
+
+.green_tick {
+  height: 100%;
+
+  #outline {
+    animation: outline $tickDuration ease-in-out 1 backwards;
+    fill: none;
+    stroke: $tickFill;
+    stroke-dasharray: $tickDasharrayOutline, $tickDasharrayOutline;
+    stroke-dashoffset: $tickDasharrayOutline *2;
+  }
+
+  #colored {
+    animation: show $tickDuration ease-in-out 1 forwards;
+    fill: $tickFill;
+    stroke: none;
+  }
+
+  #line {
+    --svg-odo: #{$tickStrokeDashOffset};
+    animation: draw-stroke $tickDuration ease-in-out 1 $tickDuration forwards;
+    fill: none;
+    stroke: $tickStroke;
+    stroke-dasharray: $tickStrokeDasharray;
+    stroke-dashoffset: $tickStrokeDashOffset;
+    stroke-width: $tickStrokeWidth;//-$tickDasharrayTick *3;
+  }
+}
+

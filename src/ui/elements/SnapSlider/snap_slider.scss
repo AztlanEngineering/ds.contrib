@@ -1,0 +1,70 @@
+/*
+
+Classes :
+.snap_slider : default
+
+*/
+$inBetweenMargin:1em;
+$inBetweenMarginCompact:0.5em;
+$scrollPadding:$inBetweenMargin * 2;
+
+.snap_slider {
+  display: flex;
+  align-items: center;
+  height: max-content;
+  overflow-x: scroll;
+  overflow-y: hidden;
+
+  /* Enable Safari touch scrolling physics which is needed for scroll snap */
+  -webkit-overflow-scrolling: touch;
+
+  /* snap mandatory on horizontal axis  */
+  scroll-snap-type: x mandatory;
+
+  & > * {
+    position: relative;
+    margin: $inBetweenMargin ($inBetweenMargin / 2);
+    //min-width:75%;
+    //
+    &:first-child {
+      margin-left: $inBetweenMargin;
+    }
+
+    &:last-child {
+      margin-right: $inBetweenMargin;
+    }
+  }
+
+  &.compact > * {
+    margin: $inBetweenMarginCompact ($inBetweenMarginCompact / 2);
+
+    &:first-child {
+      margin-left: $inBetweenMarginCompact;
+    }
+
+    &:last-child {
+      margin-right: $inBetweenMarginCompact;
+    }
+  }
+
+  & > *,
+  &.ctr > * {
+    scroll-snap-align: center;
+  }
+
+  &.left {
+    scroll-padding: 0 0 0 $scrollPadding;
+
+    > * {
+      scroll-snap-align: start;
+    }
+  }
+
+  &.right {
+    scroll-padding: 0 $scrollPadding 0;
+
+    > * {
+      scroll-snap-align: end;
+    }
+  }
+}

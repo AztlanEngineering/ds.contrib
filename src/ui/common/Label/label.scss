@@ -1,0 +1,58 @@
+/*
+
+Classes :
+.label : default
+
+*/
+$paddingTop:0.3em;
+$paddingSide:0.5em;
+$paddingBottom:0.4em;
+$padding:$paddingTop $paddingSide $paddingBottom;
+$border-radius:$paddingTop + $paddingBottom + 1em;
+$fontFamily:var(--font-d) !default;
+$verticalAlignInHeadings:top;
+$marginBottom:0.3em;
+$font-weight:bold;
+$vertical-align:bottom;
+$line-height:.9em;
+
+.label {
+  display: inline-block;
+  margin-bottom: $marginBottom;
+  border-radius: var(--r);
+  background: var(--x, transparent);
+  padding: $padding;
+  vertical-align: $vertical-align;
+  color: var(--on-x, var(--black));
+  line-height:$line-height;
+  font-family: $fontFamily;
+  font-weight: $font-weight;
+
+  &.circle {
+    border-radius: $border-radius;
+  }
+
+  &.i {
+    padding: $paddingTop $paddingTop $paddingBottom;
+    vertical-align: unset;
+  }
+
+  &[class*=bh-] {
+    cursor: pointer;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5, {
+  & .label {
+    vertical-align: $verticalAlignInHeadings;
+  }
+}

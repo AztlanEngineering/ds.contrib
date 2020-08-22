@@ -1,0 +1,38 @@
+/*
+
+Classes :
+.greyscale_icon : default
+
+*/
+
+$baseOpacity:.9;
+$hoverOpacity:1;
+$grayscale:1;
+
+.grayscale_icon {
+  display: inline-block;
+  -webkit-filter: grayscale($grayscale);
+
+  &,
+  .ui-light & {
+    filter: grayscale($grayscale);
+    opacity: $baseOpacity;
+  }
+
+  &:hover,
+  &:focus {
+    opacity: $hoverOpacity;
+  }
+
+  .content {
+    height: 100%;
+    object-fit: contain;
+    width: 100%;
+  }
+
+  .ui-dark & {
+    -webkit-filter: grayscale($grayscale) invert(1);
+    filter: grayscale($grayscale) invert(1);
+  }
+}
+

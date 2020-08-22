@@ -1,0 +1,7 @@
+$marginBottom:2rem;
+
+.schema_question {
+	&:not(:last-child){
+		margin-bottom:$marginBottom;
+	}
+}

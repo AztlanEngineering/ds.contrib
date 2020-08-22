@@ -1,0 +1,24 @@
+/*
+
+Classes :
+.card_calendar_selector : default
+
+*/
+
+.card_calendar_selector{
+	.urgency {
+		text-transform:none!important;
+		font-style:italic;
+		font-size:.9em;
+	}
+
+	.subtitle {
+		&.free {
+			color:var(--teal)!important;
+		}
+		&.premium {
+			color:var(--blue)!important;
+		}
+	}
+
+}

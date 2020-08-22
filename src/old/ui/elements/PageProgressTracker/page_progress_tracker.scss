@@ -1,0 +1,26 @@
+/*
+
+Classes :
+.page_progress_tracker : default
+
+*/
+$transitionDuration:.3s;
+
+.page_progress_tracker{
+	width:100%;
+
+	svg {
+		width:100%;
+		position:absolute;
+
+		#active {
+			stroke-dashoffset:var(--do, 50);
+			transition:all $transitionDuration;
+		}
+		rect#pb_back {
+			fill:var(--fill, var(--cb, var(--default)))
+
+		}
+	}
+
+}

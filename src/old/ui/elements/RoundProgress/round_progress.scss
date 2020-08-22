@@ -1,0 +1,61 @@
+/*
+
+Classes :
+.round_progress : default
+
+*/
+$strokeDasharray:300;
+$rotation:-90deg;
+$duration:1.5s;
+$originalDashOffset:300;
+$numberSuffixOpacity:.65;
+$contourOpacity:.18;
+$fillOpacity:.75;
+
+
+.round_progress{
+	position:relative;
+	height:100%;
+	display:flex;
+	flex-direction:column;
+
+	svg {
+		width:100%;
+
+		circle.ctr{
+			fill:var(--f, transparent);
+			opacity:$fillOpacity;
+		}
+		circle.contour{
+			stroke:var(--f, var(--grey, grey));	
+			opacity:$contourOpacity;
+			//stroke-opacity:$contourOpacity;
+			fill:transparent;
+		}
+		circle.stroke{
+			//fill:var(--f, transparent);
+			fill:transparent;
+			stroke:var(--cc, var(--accent1));
+			stroke-dasharray:$strokeDasharray;
+			transform-origin:50% 50%;
+			transform:rotate($rotation);
+			--ado:#{$originalDashOffset};
+			animation:draw-stroke $duration ease-in-out forwards;
+		}
+	}
+
+	.number {
+		position:absolute;
+		left:50%;
+		transform: translateY(-50%) translateX(-50%);
+		margin-top:50%;
+		//color:var(--c, var(--accent1))
+		span {
+			opacity:$numberSuffixOpacity;
+		}
+	}
+	p.title {
+		margin-top:1em;
+	}
+
+}

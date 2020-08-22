@@ -1,0 +1,67 @@
+/* @fwrlines/generator-react-component 2.1.0 */
+
+/*
+
+Classes :
+.navigation : default
+
+*/
+
+.dashboard .navigation {
+  background: var(--light-secondary);
+  position:relative;
+
+  overflow-x:hidden;
+  min-height:100vh;
+  
+  @media (max-width:899px){
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+  }
+
+  @media (min-width:900px){
+    grid-column:sidebar-start/sidebar-end;
+  }
+
+  .slide {
+    display:flex;
+    flex-direction:column;
+    height:100vh;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left:0;
+    transition:all .3s;
+    box-shadow: -1.5em 0px 2em -.75em rgba(0,0,0,0.15);
+
+    &:not(.active) {
+      //background: var(--light-grey);
+      z-index:0;
+      //opacity: 0;
+    }
+
+    &.prev {
+      //left: -30%;
+    }
+
+    &.next {
+      left: calc(100% + 2.25em);
+    }
+
+    &.active {
+      //background: red;
+      z-index:1;
+    }
+
+    .icon_list{
+      margin:0;//TODO Clean, figure out how this margin is unherited
+    }
+
+    .horizontal_bar {
+      position:-webkit-sticky;
+      position:sticky;
+    }
+  }
+}

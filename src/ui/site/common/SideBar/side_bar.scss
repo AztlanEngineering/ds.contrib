@@ -1,0 +1,29 @@
+/* @fwrlines/generator-react-component 1.5.0 */
+
+/*
+
+Classes :
+.side_bar : default
+
+*/
+
+.side_bar {
+  display: block;
+  grid-column: sidebar-start / sidebar-end;
+
+  //grid-row: 1/-1;,
+  position: relative;
+
+  background: var(--x, var(--background));
+
+  > .inside {
+    display: flex;
+    flex-direction: column;
+    justify-content: safe center;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+}

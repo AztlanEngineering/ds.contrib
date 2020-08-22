@@ -1,0 +1,33 @@
+@import 'scss/variables/responsive';
+
+@import 'scss/variables/responsive';
+
+$paragraphLineHeight:var(--lh-content, 1.35);
+
+$localIndexMdWidth:240px;//
+$contentMdWidth:680px;//
+
+.sg {
+
+	p {
+		line-height:$paragraphLineHeight;
+	}
+
+	> footer {
+		padding:3rem 1em;
+
+		.snap_slider {
+			align-items:start;
+		}
+		@include media($from:$sm-md) {
+			display:grid;
+			grid-template-columns:[lindex] $localIndexMdWidth [ct] auto [rs] 0;
+			.cont {
+				grid-column:lindex/rs;
+			}
+		}
+		@include media($from:$md-lg) {
+			grid-template-columns:auto [lindex] $localIndexMdWidth [ct] $contentMdWidth [rs] auto;
+		}
+	}
+}

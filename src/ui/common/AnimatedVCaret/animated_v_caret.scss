@@ -1,0 +1,22 @@
+/*
+
+Classes :
+.animated_v_caret : default
+
+*/
+
+.animated_v_caret {
+  cursor: pointer;
+  display: inline;
+
+  line {
+    stroke: var(--z, var(--on-y, var(--black, black)));
+    transition: stroke .3s;
+  }
+
+  &.active {
+    line {
+      stroke: var(--z, var(--on-y, var(--black, black)));
+    }
+  }
+}

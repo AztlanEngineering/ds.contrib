@@ -1,0 +1,228 @@
+/*
+
+Classes :
+.button : default
+
+*/
+
+$paddingSide:.8em;
+$paddingTop:.50em;
+$paddingBottom:.55em;
+$padding:$paddingTop $paddingSide $paddingBottom;
+$fontFamily:var(--fontHeaders);
+$fontWeight:normal;
+$willChange:'';
+$tapColor:transparent;
+$lineHeight:1.3em;
+$iconOpacity:.9;
+$iconOpacityHover:.96;
+$iconBackOpacity:.20;
+$iconBackOpacityHover:.4;
+$iconBackWidth:2em;
+$iconPadding:$paddingTop .5em $paddingBottom;
+$iconTransitionMovement:.25em;
+$iconTransitionTime:.3s;
+
+.button
+{
+  position:relative;
+
+  &:not(.i)
+  {
+    padding:$padding;
+  }
+
+  :not(.g-button) > &
+  {
+    height:$lineHeight + $paddingTop + $paddingBottom;
+  }
+
+  font-family:$fontFamily;
+  font-weight:$fontWeight;
+  border:0;
+  border-radius:var(--r);
+  cursor:pointer;
+  user-select:none;
+  outline:none;
+  overflow:hidden;
+  line-height:$lineHeight;
+  will-change:$willChange;
+  -webkit-tap-highlight-color:$tapColor;
+
+  &.il
+  {
+    padding-left:$paddingSide + $iconBackWidth;
+  }
+
+  &.ir
+  {
+    padding-right:$paddingSide + $iconBackWidth;
+  }
+
+  &.ic 
+  {
+    padding:5em;
+  }
+
+  &.ir,
+  &.il
+  {
+    i
+    {
+      z-index:0;
+      opacity:$iconOpacity;
+      position:absolute;
+      padding:$iconPadding;
+      top:0;
+      bottom:0;
+      line-height:$lineHeight;
+			transition:all $iconTransitionTime;
+
+      &:before
+      {
+        content:' ';
+        z-index:-1;
+        background:var(--white);
+        opacity:$iconBackOpacity;
+        position:absolute;
+        top:0;
+        bottom:0;
+        width:$iconBackWidth;
+				transition:all $iconTransitionTime;
+      }
+    }
+
+    &[class*='bh-']
+    {
+      &:hover,
+      &:focus
+      {
+        i
+        {
+          opacity:$iconOpacityHover;
+          &:before
+          {
+            opacity:$iconBackOpacityHover;
+          }
+        }
+      }
+      &:active
+      {
+        i
+        {
+          box-shadow:var(--ish-sm);
+        }
+      }
+    }
+  }
+
+  &.i i,
+  &.il i
+  {
+    left:0;
+    &:before
+    {
+      left:0;
+    }
+  }
+
+  &.i i,
+  &.ir i
+  {
+    right:0;
+    &:before
+    {
+      right:0;
+    }
+  }
+	&.it {
+		&:hover,
+		&:focus,
+		&:active {
+			&.il {
+				i {
+					transform:translateX(-#{$iconTransitionMovement});
+					&:before {
+						width:$iconBackWidth + $iconTransitionMovement;
+					}
+				}
+			}
+
+			&.ir {
+				i {
+					transform:translateX(#{$iconTransitionMovement});
+					&:before {
+						width:$iconBackWidth + $iconTransitionMovement;
+					}
+				}
+			}
+		}
+	}
+
+
+}
+
+.g-button
+{
+  display:flex;
+
+  &:not(.vrt)
+  {
+    flex-direction:row;
+    flex-wrap:nowrap;
+
+    .button
+    {
+      border-radius:0;
+    }
+
+		> *:not(.button){
+			> .button {
+				height:inherit;
+			}
+		}
+
+    > :first-child,
+    > :first-child .button,	
+    {
+      border-radius:var(--r-left);
+    }
+
+    > :last-child,
+    > :last-child .button,	
+    {
+      border-radius:var(--r-right);
+    }
+  }
+
+  &.vrt
+  {
+    flex-direction:column;
+    flex-wrap:nowrap;
+
+    .button
+    {
+      border-radius:0;
+    }
+
+		> *:not(.button){
+			width:100%;
+			> .button {
+				width:inherit;
+			}
+		}
+
+
+    > :first-child,
+    > :first-child .button,
+    {
+      border-radius:var(--r-top);
+    }
+
+    > :last-child,
+    > :last-child .button,
+    {
+      border-radius:var(--r-bottom);
+    }
+  }
+}

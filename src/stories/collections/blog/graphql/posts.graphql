@@ -1,0 +1,62 @@
+query posts($category:String, $page:Int){
+  posts(category:$category, page:$page) {
+    totalDocs
+    limit
+    hasNextPage
+    hasPrevPage
+    page
+    totalPages
+    prevPage
+    nextPage
+    docs {
+      id
+      title
+      title_tag
+      itemtype
+      url
+      meta_description
+      content
+      description
+      ts_created
+      ts_updated
+      published
+      word_count
+      main_image
+      related {
+        id
+        title
+        description
+        content
+        word_count
+        main_image
+      }
+      user {
+        id
+        first_name
+        last_name
+        username
+      }
+      category {
+        id
+        name
+        meta_description
+        seotext
+        slug
+        star
+      }
+      services {
+        id
+        name
+        car
+        motorcycle
+        slug
+        seotext
+        carbutton
+        motobutton
+        generic_cta
+      }
+    }
+  }
+}
+
+

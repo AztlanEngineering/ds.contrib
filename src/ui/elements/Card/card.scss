@@ -1,0 +1,146 @@
+/*
+
+Classes :
+.card : default
+
+*/
+$transitionDuration:.2s;
+$selectionAnimationHeight:.1em;
+$transformHoverScale:1.02;
+$section-padding:1.4em;
+$shadow:var(--shadow);
+$shadow-hover:var(--shadow-hover, var(--shadow));
+
+
+.scene {
+  perspective: 600px;
+}
+
+.scene > .ensemble {
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: all 1s;
+
+  .flip {
+    color: var(--dark-x, var(--on-y));
+    opacity:.8;
+    cursor: pointer;
+    display: block;
+    font-size: calc(var(--s-1) * 1em);
+    opacity: .34;
+    position: absolute;
+    right: $section-padding / 2;
+    top: $section-padding / 2;
+    z-index: 1;
+  }
+
+  .front-face {
+  }
+
+  .back-face.back-face.back-face {
+    overflow-y:scroll;
+    top:0;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    transform: rotateY(180deg);
+    z-index: 2;
+  }
+
+  &.flipped {
+    transform: rotateY(180deg);
+  }
+}
+
+
+.card {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+
+  //display:flex;
+  //flex-direction:column;
+  //background: var(--y, transparent);
+  border-radius: var(--r);
+
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  -webkit-perspective: 0;
+  position: relative;
+  -webkit-transform: translate3d(0, 0, 0);
+  transition: all $transitionDuration;
+  visibility: visible;
+  width: 100%;
+
+  box-shadow:$shadow;
+
+  &:hover,
+  &:focus {
+    box-shadow:$shadow-hover;
+  }
+
+  & > .section.visible {
+    z-index: 0;
+
+    /*
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    p,
+    span, {
+      color: var(--x, var(--y-on));
+    } */
+    &.img {
+      & > figure,
+      & > img {
+        width: 100%;
+      }
+    }
+
+    &:not(.img) {
+      padding: $section-padding;
+
+      &:not(:first-of-type) {
+        padding-top: $section-padding / 2;
+      }
+
+      &:not(:last-of-type) {
+        padding-bottom: $section-padding / 2;
+      }
+
+      &:first-child:last-child {
+        padding-bottom: $section-padding;
+        padding-top: $section-padding;
+      }
+    }
+
+    &:last-of-type {
+      //flex-grow:99;
+    }
+  }
+
+  & > :first-child {
+    border-radius: var(--r-top);
+    overflow: hidden;
+  }
+
+  & > :last-child {
+    border-radius: var(--r-bottom);
+    overflow: hidden;
+  }
+
+  & > {
+    //&:not
+  }
+
+  &.select {
+    &.active,
+    &:hover,
+    &:focus {
+      transform: scale($transformHoverScale);
+    }
+  }
+}

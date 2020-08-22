@@ -1,0 +1,42 @@
+/* @fwrlines/generator-react-component 1.4.0 */
+
+/*
+
+Classes :
+.downshift_combobox : default
+
+*/
+
+.downshift_combobox {
+  .popup {
+
+    //background: var(--y);
+    border-radius: var(--r);
+    box-shadow: var(--shadow);
+    margin-top: 2px;
+    text-align: left;
+    width: 100%;
+    max-height:350px;
+    overflow-y:scroll;
+    z-index: 1;
+
+    li {
+      padding: var(--form-input-padding);
+      padding-top:0;
+      padding-bottom:0;
+      line-height: var(--form-input-line-height);
+      color: var(--form-input-color);
+      font-size: var(--form-input-font-size);
+   }
+    //font-weight: var(--form-input-font-weight);
+  }
+
+  .inside {
+    overflow-x: visible;
+
+    .selected-item {
+      flex-grow:99;
+      padding:var(--form-input-compact-padding);
+    }
+  }
+}

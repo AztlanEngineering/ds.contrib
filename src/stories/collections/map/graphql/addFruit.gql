@@ -1,0 +1,27 @@
+mutation addFruit(
+  $name: String
+  $taste: String
+  $pricePerKilo: Float
+  $edible: Boolean
+) {
+  addFruit(
+    input:{
+      name: $name
+      taste: $taste
+      pricePerKilo:$pricePerKilo
+      edible:$edible
+    })
+  {
+    id
+    #name
+    #taste
+    #createdAt
+    #updatedAt
+  }
+}
+
+
+
+
+
+

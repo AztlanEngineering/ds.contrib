@@ -1,0 +1,17 @@
+/*
+
+Classes :
+.heading : default
+
+*/
+$labelHeadingMargin:.4rem;
+
+.heading{
+	p.label + * {
+		margin-top:$labelHeadingMargin;
+	}
+
+	.content {
+		margin-bottom:.15em;
+	}
+}

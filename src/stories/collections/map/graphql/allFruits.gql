@@ -1,0 +1,11 @@
+query {
+  allFruits{
+    id
+    name
+    taste
+    edible
+    pricePerKilo
+    createdAt
+    updatedAt
+  }
+}

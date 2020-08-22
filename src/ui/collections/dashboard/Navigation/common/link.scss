@@ -1,0 +1,55 @@
+/* @fwrlines/generator-react-component 2.1.1 */
+
+/*
+
+Classes :
+.link : default
+
+*/
+$decoration-color:var(--navlink, inherit);
+$decoration-width:2px;
+$transition:all 0.3s;
+$color:var(--navlink);
+$color-hover:var(--dark-navlink);
+$color-active:var(--dark-navlink);
+
+.dashboard .navlink {
+  @media (min-width: 900px) {
+    a::after {
+      background: $color;
+      content: "";
+      display: block;
+      height: $decoration-width;
+      transition: $transition;
+      width: 0;
+    }
+
+    a:hover::after {
+      background: $color-hover;
+    }
+
+    &.active a::after {
+      background: $color-active;
+    }
+
+    a:hover::after,
+    &.active a::after {
+      width: 100%;
+      //transition: width .3s;
+    }
+  }
+
+  a {
+    color: $color;
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+      color: $color-hover;
+    }
+  }
+
+  &.active a {
+    color: $color-active;
+  }
+}

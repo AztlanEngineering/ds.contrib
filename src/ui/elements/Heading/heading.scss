@@ -1,0 +1,30 @@
+/*
+
+Classes :
+.heading : default
+
+*/
+$labelHeadingMargin:0.5em;
+$heading-margin-bottom:0.5em;
+
+.heading {
+  .label:first-child {
+    margin-bottom: 0;
+  }
+
+  p.label + * {
+    margin-top: $labelHeadingMargin;
+  }
+
+  .content {
+    margin-bottom: 0.15em;
+  }
+
+  &:not(:last-child) {
+    margin-bottom:$heading-margin-bottom;
+  }
+  .label.simple {
+    padding-left:0;
+    padding-right:0;
+  }
+}

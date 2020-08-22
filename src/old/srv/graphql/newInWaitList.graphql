@@ -1,0 +1,14 @@
+
+  mutation newInWaitList(
+    $postcode: String
+    $email: String
+  ) {
+		newInWaitList(input:{
+      postcode: $postcode
+      email: $email
+		})
+	} 
+
+
+
+

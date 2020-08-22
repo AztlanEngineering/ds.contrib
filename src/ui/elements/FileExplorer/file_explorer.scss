@@ -1,0 +1,64 @@
+/*
+
+Classes :
+.file_explorer : default
+
+*/
+
+.file_explorer {
+  font-size: calc(var(--s, 1) * 1rem);
+
+
+  li {
+    margin-bottom: 0;
+  }
+
+  ul {
+    font-size: 1em;
+  }
+
+  span.root {
+    margin-bottom: 0.3em;
+  }
+
+  .file,
+  .folder {
+    & > span {
+      &:hover,
+      &:focus {
+      }
+    }
+  }
+
+  .folder {
+    span {
+      color: var(--folder, var(--subtitle));
+
+      &:hover,
+      &:focus {
+        color: var(--x, var(--heading));
+      }
+    }
+  }
+
+  .file {
+    span {
+      color: var(--file, var(--metadata));
+
+      &:hover,
+      &:focus {
+        color: var(--y, var(--subtitle));
+      }
+    }
+
+    .selected {
+      color: var(--z, var(--accent1));
+    }
+  }
+
+  span {
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: middle;
+  }
+}

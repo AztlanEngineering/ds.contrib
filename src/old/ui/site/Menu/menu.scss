@@ -1,0 +1,9 @@
+@import 'scss/variables/responsive';
+
+.menu
+{
+  @include media($to:$xs-sm)
+  {
+    width:80%;
+  }
+}

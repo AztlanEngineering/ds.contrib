@@ -1,0 +1,28 @@
+/*
+
+Classes :
+.local_index : default
+
+*/
+
+ol.local_index {
+  border-radius: var(--r);
+
+  > li {
+    font-weight: bold;
+
+    ol {
+      > li {
+        font-weight: normal;
+      }
+    }
+  }
+
+  .title {
+    margin-bottom: 0.5em;
+  }
+
+  a {
+    color: inherit;
+  }
+}

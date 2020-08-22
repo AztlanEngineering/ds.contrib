@@ -1,0 +1,115 @@
+/* @fwrlines/generator-react-component 2.1.0 */
+
+/*
+
+Classes :
+.navigation : default
+
+*/
+.dashboard {
+  .horizontal_bar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+  }
+
+    @media (max-width: 899px) {
+
+      width:100vw;
+      overflow-y:hidden;
+    }
+}
+
+.dashboard .navigation {
+  height: 100vh;
+
+  overflow-x: hidden;
+  //background: var(--light-secondary);
+  position: relative;
+
+  @media (max-width: 899px) {
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    .slide {
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 900px) {
+    grid-column: sidebar-start/sidebar-end;
+
+    .slide {
+      width: var(--sidebar-width, 300px);
+    }
+  }
+
+  .slide {
+    box-shadow: -1.5em 0 2em -0.75em rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: flex-start;
+    left: 0;
+    overflow-x: scroll;
+    position: fixed;
+    //width:inherit;
+    top: 0;
+    transition: all 0.3s;
+
+    &:not(.active) {
+      //background: var(--light-grey);
+      z-index: 0;
+      //opacity: 0;
+    }
+
+    &.prev {
+      //left: -30%;
+    }
+
+    &.next {
+      left: calc(100% + 2.25em);
+    }
+
+    &.active {
+      //background: red;
+      z-index: 1;
+    }
+
+    .icon_list {
+      margin: 0;//TODO Clean, figure out how this margin is unherited
+    }
+
+    &.active .horizontal_bar {
+      z-index: 20;
+    }
+
+    .content {
+      flex-grow: 99;
+    }
+
+    footer {
+      //background: green;
+      line-height: 2em;
+    }
+  }
+
+  ul {
+    li {
+      //position: relative;
+      //z-index: 1;
+    }
+
+    li.section {
+      &:not(:first-child) {
+        margin-top: 1.8em;
+      }
+    }
+
+    ul {
+      margin-left: 0;
+    }
+  }
+}

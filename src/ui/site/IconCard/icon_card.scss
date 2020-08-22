@@ -1,0 +1,26 @@
+/* @fwrlines/generator-react-component 2.3.3 */
+
+/*
+
+Classes :
+.icon_card : default
+
+*/
+
+$heading-font-size:calc(var(--s2) * 1em);
+$text-font-size:calc(var(--s,1) * var(--s0) * 1em);
+
+.icon_card {
+  //background:var(--light-indigo);
+  
+  .heading {
+
+    .content {
+      //font-size:$heading-font-size;
+    } 
+
+    & + *{
+      font-size:$text-font-size;
+    }
+  }
+}

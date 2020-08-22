@@ -1,0 +1,16 @@
+/*
+
+Classes :
+.dot_info : default
+
+*/
+$circleSize:0.9em;
+
+.dot_info {
+  .circle {
+    margin-right: 0.5em;
+    background: var(--y, var(--success));
+    width: $circleSize;
+    height: $circleSize;
+  }
+}

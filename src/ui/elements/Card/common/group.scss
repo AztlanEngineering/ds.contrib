@@ -1,0 +1,80 @@
+/* @fwrlines/generator-react-component 2.3.4 */
+/*
+
+Classes :
+.cards : default
+
+*/
+
+//Cards
+$scrollPadding:calc(var(--u, 0) * 1rem);
+$gaps:.5em;
+$card-width:300px;
+
+
+.cards {
+  &.grid {
+    display: grid;
+    grid-gap: $gaps;
+    grid-template-columns: repeat(auto-fit, minmax(var(--card-width, 180px), 1fr));
+    margin: 0 $scrollPadding;
+  }
+
+  &:not(.grid) {
+    @media (max-width: 899px) {
+      align-items: stretch;
+      // Enable Safari touch scrolling physics which is needed for scroll snap
+      display: flex;
+      -webkit-overflow-scrolling: touch;
+      -ms-overflow-style: none;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      scroll-padding: 0 0 0 $scrollPadding;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      > :first-child {
+        margin-left: $scrollPadding;
+      }
+
+      > :last-child {
+        //margin-right: $scrollPadding;
+      }
+
+      .scene {
+        min-width: var(--card-width-xs, var(--card-width, 300px));
+        position: relative;
+        scroll-snap-align: start;
+
+        & + .scene {
+          margin-left: $gaps;
+        }
+
+      }
+        &::after {
+          content: "";
+          flex: 0 0 $scrollPadding;
+        }
+
+      figcaption {
+        display: none;
+      }
+    }
+
+    @media (min-width: 900px) {
+      display: grid;
+      grid-gap: $gaps;
+      grid-template-columns: repeat(auto-fit, minmax(var(--card-width, 200px), 1fr));
+      margin: 0 $scrollPadding;
+
+      .card {
+
+
+      }
+    }
+  }
+}

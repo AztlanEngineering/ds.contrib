@@ -1,0 +1,33 @@
+/*
+
+Classes :
+.file_explorer : default
+
+*/
+
+.file_explorer
+{
+  span.root
+  {
+    margin-bottom:.3em;
+  }
+  .file,
+  .folder
+  {
+    & > span
+    {
+      &:hover,
+      &:focus
+      {
+        background-color:var(--accent1);
+        color:var(--c-accent1);
+      }
+    }
+  }
+  span
+  {
+    cursor:pointer;
+    vertical-align:middle;
+    display:inline-block;
+  }
+}

@@ -1,0 +1,53 @@
+/* @fwrlines/generator-react-component 2.3.3 */
+
+/*
+
+Classes :
+.block_header : default
+
+*/
+
+.block_header {
+  .illustration {
+    .figure {
+      display: inline-block;
+
+      figcaption {
+        font-size: calc(var(--s-2) * 1em);
+      }
+    }
+  }
+
+  &.ctr {
+    text-align: center;
+
+    .illustration {
+      text-align: center;
+      width: 100%;
+
+      .figure {
+        figcaption {
+        }
+      }
+    }
+
+    @media (max-width: 899px) {
+      .illustration {
+        padding-left: 2rem;
+        padding-right: 2rem;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .illustration {
+        .figure {
+          max-width: calc(.8 * 100%);
+
+          img {
+            max-height: 20em;
+          }
+        }
+      }
+    }
+  }
+}

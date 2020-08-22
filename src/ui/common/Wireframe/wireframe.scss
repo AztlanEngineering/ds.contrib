@@ -1,0 +1,32 @@
+/*
+
+Classes :
+.wireframe_text : text wireframe
+.wireframe_img : img wireframe
+
+*/
+.wireframe_text,
+.wireframe_img {
+  background:linear-gradient(
+    to right,
+    var(--dark-grey) 0%,
+    var(--dark-grey) 60%,
+    var(--grey)90%,
+    var(--dark-grey) 100%
+    );
+  background-size:3000px 1px;
+  animation:back-horizontal 5s linear infinite;
+}
+
+.wireframe_text{
+  -webkit-background-clip:text;
+          background-clip:text;
+  -webkit-text-fill-color:transparent;
+	color:transparent;
+}
+
+.wireframe_img{
+	display:inline-block;
+	border-radius:var(--b);
+	overflow:hidden;
+}

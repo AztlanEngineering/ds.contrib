@@ -1,0 +1,12 @@
+query getFruit($id:ID!){
+  getFruit(id:$id) {
+    id
+    name
+    taste
+    edible
+    pricePerKilo
+    createdAt
+    updatedAt
+    _string
+  }
+}

@@ -1,0 +1,138 @@
+/*
+
+Classes :
+.content_index : default
+
+*/
+$min-padding:.5rem;
+$caret-padding:.5rem;
+$caret-width:1.4em;//matches the js
+$min-active-color:var(--paragraph);
+$min-inactive-color:var(--paragraph);
+$min-animation-duration:.3s; //equal to js
+
+
+$min-default-padding:1em;
+$min-active-padding:$min-default-padding $min-default-padding $min-default-padding $min-default-padding + 2em;
+
+$min-height:$min-padding + 2.5rem;
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.content_tree {
+  list-style: none;
+
+  li a {
+    cursor: pointer !important;
+  }
+
+  &.sticky {
+    height: min-content;
+    max-height: calc(100vh - var(--sticky-padding, 0));
+    overflow-y: scroll;
+    -ms-overflow_style: none;
+    position: sticky;
+    scrollbar-width: none;
+    top: var(--sticky-padding, 0);
+    width: 100%;
+    z-index: 1;
+
+    &::after {
+      content: " ";
+      display: block;
+      height: calc(var(--u, 0) * 1em);
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &.min {
+    margin-bottom: 0;
+    min-height: $min-height;
+    padding: $min-padding;
+    position: relative;
+    top: 0;
+    width: 100%;
+
+
+
+    &:not(.active) {
+
+    ol,
+    ol ol,
+    ul,
+    ul ul {
+      margin: 0;
+    }
+      .item {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .item:not(.active) {
+        > span {
+          color: $min-inactive-color;
+          //animation: appear 5s linear 1 reverse forwards;
+          opacity: 0;
+        }
+      }
+
+      .item.active {
+        > span {
+          animation: appear $min-animation-duration linear 1 forwards;
+          color: $min-active-color;
+        }
+      }
+    }
+
+    &.active {
+      background: var(--y);
+      border-radius: 0;
+      //left:0;
+      height: 100%;
+      left: 0;
+      list-style: decimal;
+      overflow-y: scroll;
+      padding: var(--min-active-padding, #{$min-active-padding});
+      position: fixed;
+      right: 0;
+
+      &::after {
+        content: " ";
+        display: block;
+        height: $min-default-padding;
+      }
+
+
+      .item {
+        padding:.25rem;
+      }
+      .animated_v_caret {
+        position: fixed;
+      }
+    }
+
+    & > li {
+      max-width: calc(100% - #{$caret-width} - #{$min-padding + 3 * $caret-padding});
+    }
+
+    .animated_v_caret {
+      position: absolute;
+      right: $caret-padding + $min-padding;
+      top: $min-height /2;
+      transform: translateY(-50%);
+      //top: $caret-padding + $min-padding;
+    }
+  }
+}

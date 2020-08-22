@@ -1,0 +1,229 @@
+/*
+
+Classes :
+.card_radio : default
+
+*/
+
+$defaultHeight:4em!default;
+$compactHeight:3em!default;
+$paddingTop:.6em!default;
+$paddingBottom:.65em!default;
+$paddingSide:.9em!default;
+$innerPadding:$paddingTop $paddingSide $paddingBottom!default;
+$borderWidth:1px;
+
+$boxShadowColor:var(--cc)!default;
+$boxShadowWidth:1px!default;
+$boxShadowDefault:$boxShadowWidth 0 0 0 $boxShadowColor,
+      0 $boxShadowWidth 0 0 $boxShadowColor,
+      $boxShadowWidth $boxShadowWidth 0 0 $boxShadowColor,   /* Just to fix the corner */
+      $boxShadowWidth 0 0 0 $boxShadowColor inset,
+      0 $boxShadowWidth 0 0 $boxShadowColor inset!default;
+//$boxShadow:none;//$boxShadowDefault!default;
+$separationMarginTop:.5em;
+$compactSeparationMarginTop:.3em;
+
+$background:var(--off-white);//transparent!default;
+$border-radius:var(--r)!default;
+
+$inputFontFamily:var(--font-d)!default;
+$inputFontWeight:normal!default;
+$inputLineHeight:1.3em!default;
+
+$labelMaxWidth:75%;
+$labelFontWeight:bold;
+
+$metaFontFamily:var(--font-d);
+$metaColor:var(--dark-grey); //Overrides Subtitle by one tone
+$metaOpacity:.9;
+$prefixOpacity:.9;
+
+$border:$borderWidth solid var(--ld)!default;
+$textOpacity:.75;
+$backgroundOpacity:.3;
+$hoverBackground:var(--light-grey);
+$hoverBackgroundOpacity:.3;
+$hoverTextOpacity:.85;
+$hoverBorder:$borderWidth solid var(--lh);
+$activeBackground:var(--teal);
+$activeBorder:var(--orange);
+$selectBackground:var(--accent1);
+$selectBackgroundOpacity:.1;
+$selectBorder:$borderWidth solid var(--l);
+$selectTextOpacity:1;
+
+$disabledColor:var(--dark-grey);
+$disabledTextOpacity:.5;
+$disabledBackground:var(--light-grey);
+$disabledBackgroundOpacity:.3;
+$disabledMetaOpacity:.55;
+$disabledMetaColor:$disabledColor;
+$disabledSelectBorder:$borderWidth solid var(--grey);
+
+$transitionTime:.3s;
+
+.input{
+	&.card_checkbox,
+	&.card_radio {
+		height:$defaultHeight;
+		position:relative;
+
+		& + & {
+			margin-top:$separationMarginTop;
+		}
+
+		&.compact {
+			height:$compactHeight;
+			& + & {
+				margin-top:$compactSeparationMarginTop;
+			}
+
+		}
+
+		//label:before,
+		input[type=checkbox],
+		input[type=radio]{
+	    width:$defaultHeight;
+	    height:$defaultHeight;
+	    top: 50%;
+	    right:0; 
+	    position: absolute;
+			transform: translateY(-50%);
+	    cursor: pointer;
+			background:blue!important;
+		}
+
+		input[type=checkbox],
+		input[type=radio]{
+  		opacity: 0;
+			-webkit-appearance: none;
+			display: inline-block;
+			vertical-align: middle;
+			z-index: 100;
+
+			&:not(:checked) ~ label {
+				//opacity:$notSelectedOpacity;
+			}
+
+			&:not(:disabled):checked ~ .content {
+				border:$selectBorder;
+
+				label.input_label {
+					opacity:$selectTextOpacity;
+				}
+				
+				&:before {
+					background:$selectBackground;
+					opacity:$selectBackgroundOpacity;
+				}
+			}
+			&:not(:disabled):not(:checked) ~ .content {
+
+			  &:hover{
+			   	border:$hoverBorder;
+
+					label.input_label {
+						opacity:$hoverTextOpacity;
+					}
+
+			   	&:before {
+			   		background:$hoverBackground;
+			   		opacity:$hoverBackgroundOpacity;
+			   	}
+
+			  }
+			}
+
+			&:disabled ~ .content {
+				label.input_label {
+					color:$disabledColor;
+					opacity:$disabledTextOpacity;
+					cursor:unset;
+				}
+			  &:before {
+			  	background:$disabledBackground;
+			  	opacity:$disabledBackgroundOpacity;
+			  }
+				.meta {
+					color:$disabledMetaColor;
+					opacity:$disabledMetaOpacity;
+				}
+			}
+
+			&:disabled:checked ~ .content {
+			   	border:$disabledSelectBorder;
+			}
+		}
+
+		
+		> .content {
+			//background:var(--cb, $background)aa;
+			
+			border:$border;
+			border-radius:$border-radius;
+			height:100%;
+			line-height:$inputLineHeight;	
+			position:relative;
+			//overflow:hidden;
+			z-index:1;
+			width:100%;
+			transition:all $transitionTime;
+
+			&:focus {
+			 	outline:none; //Applies only on focus, put here to save a condition
+			}
+
+			&:before {
+				transition:all $transitionTime;
+				position:absolute;
+				top:0;
+				left:0;
+				content:'';
+				//background:$hoverBackground;
+				z-index:-1;
+				display:block;
+				width:100%;
+				height:100%;
+				opacity:$backgroundOpacity;
+				-webkit-backdrop-filter: blur(3px);
+				backdrop-filter: blur(3px);
+			}
+
+			.meta {
+				top: 50%;
+				right:$paddingSide; 
+				position: absolute;
+				transform: translateY(-50%);
+				font-family:$metaFontFamily;
+				color:$metaColor;
+				opacity:$metaOpacity;
+
+				.prefix {
+					opacity:$prefixOpacity;
+				}
+			}
+
+		}
+
+		label.input_label {
+			font-weight:$labelFontWeight;
+			display:block;
+			position:relative;
+			height:100%;
+			width:100%;
+			padding:$innerPadding;
+			transition:all $transitionTime;
+			opacity:$textOpacity;
+
+			> * {
+				position:absolute;
+				left:$paddingSide;
+				top:50%;
+				max-width:$labelMaxWidth;
+				transform: translateY(-50%);
+			}
+			
+		}
+	}		
+}

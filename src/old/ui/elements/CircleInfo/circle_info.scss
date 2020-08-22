@@ -1,0 +1,36 @@
+/*
+
+Classes :
+.circle_info : default
+
+*/
+$circleSize:3em;
+$maxWidth:22em;
+
+.circle_info
+{
+	position:relative;
+	min-width:max-content;
+  height:$circleSize;
+  .c
+  {
+    height:$circleSize;
+    width:$circleSize;
+  }
+  .content
+  {
+ 		position:relative;
+		width:calc(#{$maxWidth} - #{$circleSize});
+		height:$circleSize;
+
+		p {
+			min-width:max-content;
+		}
+
+		.inside {
+			position:absolute;
+			top:50%;
+			transform:translateY(-50%);
+		}
+  }
+}

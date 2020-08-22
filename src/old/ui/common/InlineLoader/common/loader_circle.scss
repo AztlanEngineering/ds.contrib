@@ -1,0 +1,47 @@
+/*
+
+Classes :
+.loader_circle : default
+
+*/
+@keyframes rotate
+{
+  100%
+  {
+    transform:rotate(360deg);
+  }
+}
+
+@keyframes dash
+{
+  0%
+  {
+    stroke-dasharray:1, 200;
+    stroke-dashoffset:0;
+  }
+  50%
+  {
+    stroke-dasharray:89, 200;
+    stroke-dashoffset:-35px;
+  }
+  100%
+  {
+    stroke-dasharray:89, 200;
+    stroke-dashoffset:-124px;
+  }
+}
+
+svg.loader_circle
+{
+  animation:rotate 2s linear infinite;
+  transform-origin:center center;
+  margin:auto;
+
+  circle
+  {
+    stroke:var(--cc, var(--sc));
+    stroke-dasharray:1, 200;
+    stroke-dashoffset:0;
+    animation:dash 1.5s ease-in-out infinite;
+  }
+}

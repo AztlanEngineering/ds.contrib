@@ -1,0 +1,44 @@
+# Write your query or mutation here
+query {
+  postBySlug(slug: "alternatore-auto-cosa-e") {
+    id
+    title
+    title_tag
+    url
+    meta_description
+    main_image
+    content
+    description
+    ts_updated
+    published
+    word_count
+    itemtype
+    default_size
+    label
+    category {
+      id
+      name
+      slug
+      meta_description
+      seotext
+    }
+    related {
+      id
+      title
+      title_tag
+      main_image
+      published
+      word_count
+      label
+    }
+    user {
+      id
+      first_name
+      last_name
+      username
+      profile_picture
+      handle
+    }
+  }
+}
+

@@ -1,0 +1,22 @@
+/* @fwrlines/generator-react-component 2.1.0 */
+/*
+
+Classes :
+.figure : default
+
+*/
+
+.figure{
+  width:100%;
+
+  > img {
+    width:100%;
+    border-radius:var(--r);
+    overflow:hidden;
+  }
+
+  > figcaption {
+    font-size:calc( var(--s, 1) * 1em );
+   }
+
+}

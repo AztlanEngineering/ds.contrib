@@ -1,0 +1,64 @@
+/* @fwrlines/generator-react-component 2.3.4 */
+
+/*
+
+Classes :
+.accordion : default
+
+*/
+$icon-width:2em;
+
+.accordion {
+  .card {
+    //background: var(--light-y);
+
+    .title {
+      display: grid;
+      grid-auto-flow: dense;
+
+      &.plus {
+        column-gap: $icon-width/2;
+        grid-column-gap: $icon-width/2;
+        grid-template-columns: [icon-start] $icon-width [content] auto;
+
+        .icon {
+          text-align: center;
+        }
+      }
+
+      &.caret {
+        column-gap: $icon-width;
+        grid-column-gap: $icon-width;
+        grid-template-columns: [content] auto [icon-start] $icon-width;
+
+        .icon {
+          margin-top: $icon-width / 3;
+        }
+
+        > .content {
+          //margin-right: $icon-width;
+        }
+      }
+
+      .content {
+        grid-column: content /span 1;
+      }
+
+      .icon {
+        grid-column: icon-start / span 1;
+      }
+    }
+
+    .content {
+      &.plus {
+        & > * {
+          padding-left: calc((#{$icon-width} * 3 / 2)/var(--s, 1)) ;
+        }
+      }
+    }
+
+    & + .card {
+      margin-top: .2em;
+    }
+  }
+}

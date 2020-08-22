@@ -1,0 +1,35 @@
+/* @fwrlines/generator-react-component 1.5.0 */
+
+/*
+
+Classes :
+.horizontal_bar : default
+
+*/
+
+.horizontal_bar {
+
+  //height: 50px;
+  color: var(--on-x, var(--heading));
+  display: block;
+  position: relative;
+
+  //background: var(--x);
+  width: 100%;
+
+  > div.inside {
+    align-items: center;
+    justify-content: space-between;
+    padding: calc(var(--u, 0) * 1rem);
+    position: relative;
+
+    //top: 50%;
+    //transform: translateY(-50%);
+    //background: var(--dark-background);
+    //vertical-align: center;
+
+    > * {
+      align-self: center;
+    }
+  }
+}

@@ -1,0 +1,28 @@
+/* @fwrlines/generator-react-component 2.4.1 */
+
+/*
+
+Classes :
+.keys : default
+
+*/
+
+.keys {
+  .key {
+    border: 1px solid var(--x, var(--subtitle));
+    border-radius: var(--r);
+    padding-left:.2em;
+    height: 2em;
+    width: 2em;
+    display:inline-block;
+    color:var(--x, var(--subtitle));
+
+    & + .key {
+      margin-left: .15em;
+    }
+
+    &.long {
+      width:4em;
+    }
+  }
+}
