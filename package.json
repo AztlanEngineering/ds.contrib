@@ -9,7 +9,7 @@
   "sideEffects": false,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 6007 -s ./src/assets/fonts,./src/assets/images,./src/assets/favicon",
+    "storybook": "start-storybook -p 6008 -s ./src/assets/fonts,./src/assets/images,./src/assets/favicon",
     "build-storybook": "rm -rf ./public/* && build-storybook -c .storybook -o public --quiet -s ./src/assets/fonts,./src/assets/images,./src/assets/favicon",
     "build": "echo",
     "test-eslint": "eslint .storybook/main.js --no-ignore",
@@ -78,6 +78,7 @@
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-module-resolver": "^4.0.0",
+    "babel-plugin-syntax-jsx": "^6.18.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "copyfiles": "^2.3.0",
     "eslint": "^7.2.0",

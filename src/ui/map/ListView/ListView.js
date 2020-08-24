@@ -66,6 +66,8 @@ const ListView = ({
     generateLocalPath
   } = useObjectMap()
 
+  console.log('CT', currentType)
+
   const { view, ...routeParams } = useParams()
 
   const availableViews = useMemo(() => {
@@ -141,72 +143,72 @@ const ListView = ({
       id={ id }
       style={ style }
     >
-        <Button.Group
-          independent
-          vertical
-          className='yb'
-        >
-          { (availableViews.length > 1) && availableViews.map((e, i) =>{
-            const isActive = e === currentView
-            return (
-              <Link
-                to={ getViewUrl(e.view) }
+      <Button.Group
+        independent
+        className='yb'
+      >
+        { (availableViews.length > 1) && availableViews.map((e, i) =>{
+          const isActive = e === currentView
+          return (
+            <Link
+              to={ getViewUrl(e.view) }
+              key={i}
+            >
+              <Button
+                className={ isActive ? e.className : 'x-grey' }
                 key={i}
               >
-                <Button
-                  className={ isActive ? e.className : 'x-grey' }
-                  key={i}
-                >
-                  <strong>
-                    { e.name }
-                  </strong>
-                  {' '}
-                  <Shortcut
-                    className='s-2 k-s x-white ul'
-                    action={
-                      () => history.push(getViewUrl(e.view))
-                    }
-                    keys={[
-                      e.shortcut
-                    ]}
-                  />
-                </Button>
-              </Link>
+                <strong>
+                  { e.name }
+                  BTBT
+                </strong>
+                {' '}
+                <Shortcut
+                  className='s-2 k-s x-white ul'
+                  action={
+                    () => history.push(getViewUrl(e.view))
+                  }
+                  keys={[
+                    e.shortcut
+                  ]}
+                />
+              </Button>
+            </Link>
 
-            )
-          }
-          ) }
-          <Link to={
-            generateLocalPath(
-              'new',
-              {
-                ...routeParams
-              }
-            )
-          }
-          >
-            <Button className='x-orange'>
-              New
-              {' '}
-              <Shortcut
-                className='s-2 k-s x-white ul'
-                action={
-                  () => history.push(
-                    generateLocalPath(
-                      'new',
-                      {
-                        ...routeParams
-                      }
-                    )
+          )
+        }
+        ) }
+        <Link to={
+          generateLocalPath(
+            'new',
+            {
+              ...routeParams
+            }
+          )
+        }
+        >
+          <Button className='x-orange'>
+            New
+            {' '}
+            <Shortcut
+              className='s-2 k-s x-white ul'
+              action={
+                () => history.push(
+                  generateLocalPath(
+                    'new',
+                    {
+                      ...routeParams
+                    }
                   )
-                }
-                keys={[
-                  'n'
-                ]}
-              />
-            </Button>
-          </Link>
-        </Button.Group>
+                )
+              }
+              keys={[
+                'n'
+              ]}
+            />
+          </Button>
+        </Link>
+      </Button.Group>
 
       { currentType.name ?
         <ViewComponent/>
