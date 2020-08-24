@@ -1,3 +1,4 @@
+/* @fwrlines/generator-react-component 1.2.2 */
 import * as React from 'react'
 import PropTypes from 'prop-types'
 
@@ -30,9 +31,9 @@ const MapContextProvider = ({
 
   const generateLocalPath = (to, params) => {
     const path = generatePath(
-      routes[to],
-      params
-    )
+    routes[to],
+    params
+  )
     return path
 
   }
