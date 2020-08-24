@@ -160,7 +160,6 @@ const ListView = ({
               >
                 <strong>
                   { e.name }
-                  BTBT
                 </strong>
                 {' '}
                 <Shortcut

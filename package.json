@@ -27,7 +27,7 @@
     "prepare": "npm run compile",
     "commit": "git add . && git commit -m 'Version bump' && git push",
     "bd": "npm run build&&npm run commit ",
-    "npre": "nodemon --watch src --exec 'npm run build:es && echo done'",
+    "npre": "nodemon --watch src --ignore 'src/stories' --exec 'npm run build:es && echo done'",
     "postinstall": "node ./scripts/postinstall.js",
     "relink": "npm link @fwrlines/ds.core && npm link @fwrlines/ds.form && npm link @fwrlines/swatch && npm link @fwrlines/utils",
     "relink:old": "npm link @fwrlines/ds.core && npm link @fwrlines/ds.form && npm link @fwrlines/alphabet-scss && npm link @fwrlines/swatch && npm link @fwrlines/utils"

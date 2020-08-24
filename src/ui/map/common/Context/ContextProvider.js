@@ -27,6 +27,8 @@ const MapContextProvider = ({
 
   const currentType = typeList.find(e => e.baseUrl === type)
 
+  //console.log('INIT CTX PRO', typeList, currentType)
+
   const generateLocalPath = (to, params) => {
     const path = generatePath(
     routes[to],
