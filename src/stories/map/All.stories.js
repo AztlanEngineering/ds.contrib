@@ -4,8 +4,8 @@ import { useEffect } from 'react'
 import faker from 'faker'
 //import {} from 'react'
 
-//import { action } from '@storybook/addon-actions'
-//
+/* import { action } from '@storybook/addon-actions'
+    */
 import {
   Button,
   Card,
@@ -17,7 +17,7 @@ import {
 import {
   MapContextProvider,
   MapListView as ListView,
-  MapSingleView as SingleView,
+  //MapSingleView as SingleView,
 } from 'ui'
 
 import QUERY_ONE from './graphql/getFruit.gql'
@@ -41,7 +41,7 @@ import {
 
 const typeList = [{
   name        :'Fruit',
-  plural:'fruits',
+  plural      :'fruits',
   // This will be accessible from `URLS.MAP.${urlKey}`
   urlKey      :'FRUITS',
   // Used to catch the relevant urls in the mapper
@@ -99,7 +99,7 @@ const typeList = [{
         {
           Header  :'updatedAt',
           accessor:'updatedAt',
-          Cell    :(v) => 
+          Cell    :(v) =>
             <Timestamp time={ new Date(v.value) }/>
             //<Timestamp time={ v.value }/>
         },
@@ -257,6 +257,7 @@ export const List = () => {
     list   :_u(basePath,),
     listAlt:_u(basePath,viewUrlParam),
     single :_u(basePath,idUrlParam),
+    singleAlt :_u(basePath,idUrlParam, viewUrlParam),
     new    :_u(basePath,'new')
   }
 
@@ -282,6 +283,7 @@ export const List = () => {
 
 }
 
+/*
 export const Single = () => {
   const Redirector = () => {
     const history=useHistory()
@@ -305,6 +307,7 @@ export const Single = () => {
     list   :_u(basePath,),
     listAlt:_u(basePath,viewUrlParam),
     single :_u(basePath,idUrlParam),
+    singleAlt :_u(basePath,idUrlParam, viewUrlParam),
     new    :_u(basePath,'new')
   }
 
@@ -342,10 +345,11 @@ export const New = () => {
 
   const urls = {
   //LOGIN  :'login',
-    list   :_u(basePath,),
-    listAlt:_u(basePath,viewUrlParam),
-    single :_u(basePath,idUrlParam),
-    new    :_u(basePath,'new')
+    list     :_u(basePath,),
+    listAlt  :_u(basePath,viewUrlParam),
+    single   :_u(basePath,idUrlParam),
+    singleAlt:_u(basePath,idUrlParam, viewUrlParam),
+    new      :_u(basePath,'new')
   }
 
 
@@ -375,3 +379,4 @@ export const New = () => {
 
 
 //Variant.parameters = storyParameters
+*/

@@ -1,5 +1,6 @@
 export {
   Context,
   ContextProvider,
-  useObjectMap
+  useModelMap
 } from './Context'
+export { ActionGrid } from './ActionGrid'
