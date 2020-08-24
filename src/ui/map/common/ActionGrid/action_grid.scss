@@ -7,5 +7,14 @@ Classes :
 */
 
 .action_grid{
+  display:grid;
+  grid-template-columns:auto max-content;
+  position:relative;
+  z-index:5;
+
+  .actions .button {
+    display:flex;
+    justify-content:space-between;
+  }
 
 }

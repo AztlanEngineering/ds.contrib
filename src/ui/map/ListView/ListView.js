@@ -4,13 +4,11 @@ import { useCallback, useMemo, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import {
-  useModelMap
-} from '../common'
-
-import {
+  useModelMap,
   TableView,
   CardView,
-} from './common'
+} from '../common'
+
 
 import {
   Button,
@@ -56,36 +54,12 @@ const ListView = ({
 
   const {
     currentType={},
-    generateLocalPath
+    generateLocalPath,
+    availableListViews:availableViews
   } = useModelMap()
 
   const { view, ...routeParams } = useParams()
 
-  const availableViews = useMemo(() => {
-    var views = []
-    if (currentType.name) {
-      views.push(
-        {
-          view     :'',
-          name     :'Table',
-          shortcut :'t',
-          className:'x-blue',
-          Component:TableView
-        })
-
-      currentType.defaultViews.card && views.push(
-        {
-          view     :'cards',
-          name     :'Cards',
-          shortcut :'c',
-          className:'x-violet',
-          Component:CardView
-        })
-
-    }
-    return views
-  }
-  , [currentType.name])
 
   const findCurrentView = useCallback(viewParam =>
     availableViews.find(e => e.view === viewParam) || availableViews[0]
@@ -143,72 +117,6 @@ const ListView = ({
       id={ id }
       style={ style }
     >
-      <Button.Group
-        independent
-        className='yb'
-      >
-        { (availableViews.length > 1) && availableViews.map((e, i) =>{
-          const isActive = e === currentView
-          return (
-            <Link
-              to={ getViewUrl(e.view) }
-              key={i}
-            >
-              <Button
-                className={ isActive ? e.className : 'x-grey' }
-                key={i}
-              >
-                <strong>
-                  { e.name }
-                </strong>
-                {' '}
-                <Shortcut
-                  className='s-2 k-s x-white ul'
-                  action={
-                    () => history.push(getViewUrl(e.view))
-                  }
-                  keys={[
-                    e.shortcut
-                  ]}
-                />
-              </Button>
-            </Link>
-
-          )
-        }
-        ) }
-        <Link to={
-          generateLocalPath(
-            'new',
-            {
-              ...routeParams
-            }
-          )
-        }
-        >
-          <Button className='x-orange'>
-            New
-            {' '}
-            <Shortcut
-              className='s-2 k-s x-white ul'
-              action={
-                () => history.push(
-                  generateLocalPath(
-                    'new',
-                    {
-                      ...routeParams
-                    }
-                  )
-                )
-              }
-              keys={[
-                'n'
-              ]}
-            />
-          </Button>
-        </Link>
-      </Button.Group>
-
       { currentType.name ?
         <ViewComponent/>
         :

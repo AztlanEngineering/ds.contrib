@@ -5,8 +5,9 @@ import PropTypes from 'prop-types'
 
 import { 
   useModelMap ,
-  ActionGrid,
-} from '../../common'
+} from '../Context'
+
+import { ActionGrid } from '../ActionGrid'
 
 import { useTable, useSortBy } from 'react-table'
 
@@ -107,13 +108,7 @@ const TableView = ({
       id={ id }
       style={ style }
     >
-      { error && JSON.stringify(error) }
-      <Button.Group
-        style={{
-          justifyContent:'flex-end'
-        }}
-        independent
-      >
+      <ActionGrid currentListView='Table'>
         <Button
           className='x-grey b-dark-x ui-dark'
           disabled
@@ -210,7 +205,9 @@ const TableView = ({
             ]}
           />
         </Button>
-      </Button.Group>
+      </ActionGrid>
+
+      { error && JSON.stringify(error) }
 
       <br />
 

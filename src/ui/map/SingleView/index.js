@@ -1,6 +1,2 @@
 /* @fwrlines/generator-react-component 2.4.1 */
 export { default as SingleView } from './SingleView'
-export { 
-  EditView,
-  AssociationsView
-} from './common'

@@ -6,9 +6,11 @@ import PropTypes from 'prop-types'
 
 import { 
   useModelMap,
-  ActionGrid
+} from '../Context'
 
-} from '../../common'
+import {
+  ActionGrid
+} from '../ActionGrid'
 
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/client'
@@ -73,18 +75,10 @@ const CardView = ({
       id={ id }
       style={ style }
     >
-      <div className="l-cheading">
-        <Heading
-          className='i-heading'
-          heading={ currentType.name }
-          headingAs='h1'
-        />
-        <div className="i-content">
-          Content here
-        </div>
-      </div>
+      <ActionGrid currentListView='Cards'>
+      </ActionGrid>
       { loading && 'LOADING' }
-      { error && JSON.stringify(error) }
+      { error && JSON.stringify(error, null, 2) }
 
       { data &&
         <Card.Group
