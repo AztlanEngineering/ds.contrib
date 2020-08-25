@@ -5,7 +5,8 @@ import faker from 'faker'
 
 //import { action } from '@storybook/addon-actions'
 
-import { Curriculum, IconList } from 'ui'
+import { IconList } from 'core'
+import { Curriculum } from 'ui'
 /* import QUERY from './graphql/query.graphql'
    import { AplProvider } from 'stories/utils'
    import { Router } from 'stories/utils'

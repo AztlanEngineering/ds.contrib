@@ -3,7 +3,7 @@ import * as React from 'react'
 //import {} from 'react'
 import PropTypes from 'prop-types'
 
-import { Button } from '@fwrlines/ds/elements'
+import { Button } from 'ds-core'
 
 import { BlogLink } from '../Link'
 //Intl

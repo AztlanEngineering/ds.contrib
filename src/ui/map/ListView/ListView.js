@@ -3,10 +3,6 @@ import * as React from 'react'
 import { useMemo, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
-import { Button, Heading } from 'ui/elements'
-
-
-
 import {
   MapTableView as TableView,
   MapCardView as CardView,
@@ -14,8 +10,10 @@ import {
 } from '../common'
 
 import {
+  Button,
+  Heading,
   Shortcut
-} from 'ui/site'
+} from 'ds-core'
 
 import gql from 'graphql-tag'
 import { useQuery, useMutation } from '@apollo/client'
@@ -67,6 +65,8 @@ const ListView = ({
     currentType={},
     generateLocalPath
   } = useObjectMap()
+
+  console.log('CT', currentType)
 
   const { view, ...routeParams } = useParams()
 
@@ -143,72 +143,72 @@ const ListView = ({
       id={ id }
       style={ style }
     >
-        <Button.Group
-          independent
-          vertical
-          className='yb'
-        >
-          { (availableViews.length > 1) && availableViews.map((e, i) =>{
-            const isActive = e === currentView
-            return (
-              <Link
-                to={ getViewUrl(e.view) }
+      <Button.Group
+        independent
+        className='yb'
+      >
+        { (availableViews.length > 1) && availableViews.map((e, i) =>{
+          const isActive = e === currentView
+          return (
+            <Link
+              to={ getViewUrl(e.view) }
+              key={i}
+            >
+              <Button
+                className={ isActive ? e.className : 'x-grey' }
                 key={i}
               >
-                <Button
-                  className={ isActive ? e.className : 'x-grey' }
-                  key={i}
-                >
-                  <strong>
-                    { e.name }
-                  </strong>
-                  {' '}
-                  <Shortcut
-                    className='s-2 k-s x-white ul'
-                    action={
-                      () => history.push(getViewUrl(e.view))
-                    }
-                    keys={[
-                      e.shortcut
-                    ]}
-                  />
-                </Button>
-              </Link>
+                <strong>
+                  { e.name }
+                  BTBT
+                </strong>
+                {' '}
+                <Shortcut
+                  className='s-2 k-s x-white ul'
+                  action={
+                    () => history.push(getViewUrl(e.view))
+                  }
+                  keys={[
+                    e.shortcut
+                  ]}
+                />
+              </Button>
+            </Link>
 
-            )
-          }
-          ) }
-          <Link to={
-            generateLocalPath(
-              'new',
-              {
-                ...routeParams
-              }
-            )
-          }
-          >
-            <Button className='x-orange'>
-              New
-              {' '}
-              <Shortcut
-                className='s-2 k-s x-white ul'
-                action={
-                  () => history.push(
-                    generateLocalPath(
-                      'new',
-                      {
-                        ...routeParams
-                      }
-                    )
+          )
+        }
+        ) }
+        <Link to={
+          generateLocalPath(
+            'new',
+            {
+              ...routeParams
+            }
+          )
+        }
+        >
+          <Button className='x-orange'>
+            New
+            {' '}
+            <Shortcut
+              className='s-2 k-s x-white ul'
+              action={
+                () => history.push(
+                  generateLocalPath(
+                    'new',
+                    {
+                      ...routeParams
+                    }
                   )
-                }
-                keys={[
-                  'n'
-                ]}
-              />
-            </Button>
-          </Link>
-        </Button.Group>
+                )
+              }
+              keys={[
+                'n'
+              ]}
+            />
+          </Button>
+        </Link>
+      </Button.Group>
 
       { currentType.name ?
         <ViewComponent/>

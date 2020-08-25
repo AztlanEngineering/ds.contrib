@@ -2,7 +2,7 @@
 import * as React from 'react'
 import { useState, useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { Button } from 'ui/elements'
+import { Button } from 'ds-core'
 
 import { useObjectMap } from '../Context'
 
@@ -14,9 +14,8 @@ import { useQuery, useMutation } from '@apollo/client'
 import { SingleActions } from '../SingleActions'
 import { Row } from './common'
 
-import { Keys, Popup, InlineLoader } from 'ui/common'
+import { Shortcut, Keys, Popup, InlineLoader } from 'ds-core'
 
-import { Shortcut } from 'ui/site'
 
 /* import { FormattedMessage} from "react-intl";
    import messages from "./messages";

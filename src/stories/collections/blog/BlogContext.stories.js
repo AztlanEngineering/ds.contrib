@@ -5,7 +5,8 @@ import faker from 'faker'
 
 //import { action } from '@storybook/addon-actions'
 
-import { Button, CategoryButton, BlogLink, BlogContextProvider, BlogContextTester } from 'ui'
+import { Button } from 'core'
+import { CategoryButton, BlogLink, BlogContextProvider, BlogContextTester } from 'ui'
 import { Router } from 'stories/utils'
 
 /* import QUERY from './graphql/query.graphql'

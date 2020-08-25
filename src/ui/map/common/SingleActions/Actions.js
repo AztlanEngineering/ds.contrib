@@ -3,7 +3,7 @@ import * as React from 'react'
 import { useMemo } from 'react'
 import PropTypes from 'prop-types'
 
-import { Button } from 'ui/elements'
+import { Button } from 'ds-core'
 
 import { useObjectMap } from '../Context'
 

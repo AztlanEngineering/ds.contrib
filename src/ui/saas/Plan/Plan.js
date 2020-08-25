@@ -4,14 +4,11 @@ import * as React from 'react'
 import PropTypes from 'prop-types'
 
 import {
+  Card,
+  Heading,
   IconList,
   useSite,
-} from '@fwrlines/ds/common'
-
-import {
-  Card,
-  Heading
-} from '@fwrlines/ds/elements'
+} from 'ds-core'
 
 import {
   Feature ,

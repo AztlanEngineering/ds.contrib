@@ -3,7 +3,7 @@ import * as React from 'react'
 import { useContext } from 'react'
 import PropTypes from 'prop-types'
 
-import { DownshiftSelect } from 'ui/form'
+import { DownshiftSelect } from 'ds-form'
 import { Context as TabContext } from '../Context'
 
 import { Tab } from './common'

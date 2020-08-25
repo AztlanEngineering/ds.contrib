@@ -4,7 +4,7 @@ import { useMemo, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 
-import { Button } from 'ui/elements'
+import { Button } from 'ds-core'
 
 
 import gql from 'graphql-tag'
