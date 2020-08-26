@@ -232,6 +232,7 @@ const EditView = ({
       <ActionGrid
         item={ finalData }
         loadingSingle={ loading || mutationLoading }
+        currentSingleView='Edit'
       >
         <SingleActions
           item={ finalData }
