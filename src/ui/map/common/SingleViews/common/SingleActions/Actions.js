@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import { Button } from 'ds-core'
 
-import { useModelMap } from '../'
+import { useModelMap } from '../../../Context'
 
 import {
   Delete,
@@ -53,7 +53,7 @@ const Actions = ({
 
   const {
     currentType
-  } = useObjectMap()
+  } = useModelMap()
 
   const {
     actions:typeActions
@@ -90,6 +90,17 @@ const Actions = ({
 
 
   return (
+      actions.map(({ Component, ...e }, i) =>
+        <Component
+          {...e}
+          key={ i }
+          item={ item }
+          refetch={ refetch }
+          redirect={ redirectAfterDelete }
+        />
+
+      ) 
+    /*
     <Button.Group
       className={
         [
@@ -102,17 +113,8 @@ const Actions = ({
       style={ style }
       { ...otherProps }
     >
-      { actions.map(({ Component, ...e }, i) =>
-        <Component
-          {...e}
-          key={ i }
-          item={ item }
-          refetch={ refetch }
-          redirect={ redirectAfterDelete }
-        />
-
-      ) }
     </Button.Group>
+    */
   )}
 
 Actions.propTypes = {

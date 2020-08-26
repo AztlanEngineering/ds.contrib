@@ -7,8 +7,6 @@ import PropTypes from 'prop-types'
 
 import {
   useModelMap,
-  EditView,
-  AssociationsView
 } from '../common'
 
 
@@ -103,17 +101,16 @@ const SingleView = ({
       }
       id={ id }
       style={ style }
-    >
-      You are in the single view
 
-      here will be buttons to switch btw the views 
+    >
       { currentType.name ?
         <ViewComponent/>
         :
         'Type not found'
       }
     </div>
-  )}
+  )
+  }
 
 SingleView.propTypes = {
   /**

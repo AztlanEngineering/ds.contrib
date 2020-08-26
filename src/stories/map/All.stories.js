@@ -1,6 +1,6 @@
 /* @fwrlines/generator-storybook-story 1.7.0 */
 import * as React from 'react'
-import { useEffect } from 'react'
+import { useState,useEffect } from 'react'
 import faker from 'faker'
 //import {} from 'react'
 
@@ -17,7 +17,7 @@ import {
 import {
   MapContextProvider,
   MapListView as ListView,
-  //MapSingleView as SingleView,
+  MapSingleView as SingleView,
 } from 'ui'
 
 import QUERY_ONE from './graphql/getFruit.gql'
@@ -30,7 +30,7 @@ import { Router } from 'stories/utils'
 /* import {ALL_COLORS, SIZES } from 'stories/config.js'
    import { LIST, LIST_XS, TEXT_XXS_ESC, TEXT_XXS, TEXT_XS, TEXT } from 'stories/utils/Dummy'
     */
-import { Route, useHistory, useParams } from 'react-router-dom'
+import { Link, Route, useHistory, useParams } from 'react-router-dom'
 
 import {
   urljoin as _u
@@ -254,11 +254,11 @@ export const List = () => {
 
   const urls = {
   //LOGIN  :'login',
-    list   :_u(basePath,),
-    listAlt:_u(basePath,viewUrlParam),
-    single :_u(basePath,idUrlParam),
-    singleAlt :_u(basePath,idUrlParam, viewUrlParam),
-    new    :_u(basePath,'new')
+    list     :_u(basePath,),
+    listAlt  :_u(basePath,viewUrlParam),
+    single   :_u(basePath,idUrlParam),
+    singleAlt:_u(basePath,idUrlParam, viewUrlParam),
+    new      :_u(basePath,'new')
   }
 
 
@@ -283,7 +283,6 @@ export const List = () => {
 
 }
 
-/*
 export const Single = () => {
   const Redirector = () => {
     const history=useHistory()
@@ -304,13 +303,16 @@ export const Single = () => {
 
   const urls = {
   //LOGIN  :'login',
-    list   :_u(basePath,),
-    listAlt:_u(basePath,viewUrlParam),
-    single :_u(basePath,idUrlParam),
-    singleAlt :_u(basePath,idUrlParam, viewUrlParam),
-    new    :_u(basePath,'new')
+    list     :_u(basePath,),
+    listAlt  :_u(basePath,viewUrlParam),
+    single   :_u(basePath,idUrlParam),
+    singleAlt:_u(basePath,idUrlParam, viewUrlParam),
+    new      :_u(basePath,'new')
   }
 
+  const [itemId, setItemId] = useState()
+
+  const onInputChange = (e) => setItemId(e.target.value)
 
   return (
     <MapContextProvider
@@ -318,23 +320,37 @@ export const Single = () => {
       testParam='fruits'
       routes={ urls }
     >
+      <div>
+        <label htmlFor='itemId'>Enter item <code>fullId</code> or type <code>new</code> and click link below</label>
+        <input
+          name='itemId'
+          type='text'
+          onChange={ onInputChange }
+          className='yb'
+          style={{ border: '2px solid black' }}
+        />
+      </div>
+      <Link to={ `/${itemId}`} >{ itemId }</Link>
+
       <Route
         path={[
-          urls.list,
-          urls.listAlt
+          urls.single,
+          urls.singleAlt,
+          urls.new
 
         ]}
         exact={ true }
       >
-        <SingleView
-          itemId='12b28d8b-cb0e-4be8-82eb-3f75768fd0a3'
-        />
+        <SingleView>
+        </SingleView>
       </Route>
     </MapContextProvider>
   )
 
 }
 
+
+/*
 export const New = () => {
 
   const basePath = '/'

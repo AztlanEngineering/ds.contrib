@@ -14,10 +14,11 @@ import {
 
 import {
   Button,
-  Shortcut
+  Shortcut,
+  InlineLoader
 } from 'ds-core'
 
-import { 
+import {
   useModelMap ,
 } from '../Context'
 
@@ -54,7 +55,13 @@ const ActionGrid = ({
 
   currentListView,
   currentSingleView,
-  item
+
+  loadingSingle,
+  loadingList,
+
+  item,
+
+  lean
 }) => {
 
   const history = useHistory()
@@ -82,74 +89,86 @@ const ActionGrid = ({
       style={ style }
 
     >
-      <span className='h3 f-m'>{JSON.stringify({ __typename:currentType.name })}</span>
+      { !lean &&
+        <>
+          <span className='h3 f-m'>
+            {
+              loadingList ?
+                <InlineLoader type='circle'/>:
+                JSON.stringify({ __typename: currentType.name })}
+          </span>
 
-      <Actions>
-        { (availableListViews.length > 1) && availableListViews.map((e, i) =>{
-          const isActive = e.name === currentListView
-          return (
-            <Link
-              to={ getListViewUrl(e.view) }
-              key={i}
-            >
-              <Button
-                className={ isActive ? e.className : 'x-grey' }
-                key={i}
-              >
-                <strong>
-                  { e.name }
-                </strong>
+          <Actions>
+            { (availableListViews.length > 1) && availableListViews.map((e, i) =>{
+              const isActive = e.name === currentListView
+              return (
+                <Link
+                  to={ getListViewUrl(e.view) }
+                  key={i}
+                >
+                  <Button
+                    className={ isActive ? e.className : 'x-grey' }
+                    key={i}
+                  >
+                    <strong>
+                      { e.name }
+                    </strong>
+                    {' '}
+                    <Shortcut
+                      className='s-2 k-s x-white ul'
+                      action={
+                        () => history.push(getListViewUrl(e.view))
+                      }
+                      keys={[
+                        e.shortcut
+                      ]}
+                    />
+                  </Button>
+                </Link>
+
+              )
+            }
+            ) }
+            <Link to={ newViewUrl } >
+              <Button className='x-orange'>
+                New
                 {' '}
                 <Shortcut
                   className='s-2 k-s x-white ul'
                   action={
-                    () => history.push(getListViewUrl(e.view))
+                    () => history.push(newViewUrl)
                   }
                   keys={[
-                    e.shortcut
+                    'n'
                   ]}
                 />
               </Button>
             </Link>
-
-          )
-        }
-        ) }
-        <Link to={ newViewUrl } >
-          <Button className='x-orange'>
-            New
-            {' '}
-            <Shortcut
-              className='s-2 k-s x-white ul'
-              action={
-                () => history.push(newViewUrl)
-              }
-              keys={[
-                'n'
-              ]}
-            />
-          </Button>
-        </Link>
-      </Actions>
-      { item &&
-        <>
-      <span className='h3 f-m'>
-          {JSON.stringify({ object:item._string })}
-      </span>
-          <Actions>
           </Actions>
+          { item &&
+            <>
+              <span className='h3 f-m'>
+
+                {loadingSingle ?
+                  <InlineLoader type='circle'/>:
+                  JSON.stringify({ _string: item._string })}
+              </span>
+              <Actions>
+              </Actions>
+            </>
+          }
         </>
       }
       {
         children &&
           <>
-      <span className='h3 f-m'>
-        Options
-      </span>
+            <span className='h3 f-m'>
+              Options
+            </span>
             <Actions>
               { children }
             </Actions>
-            </>
+          </>
       }
     </div>
   )}
@@ -212,6 +231,22 @@ ActionGrid.propTypes = {
   item:PropTypes.object,
 
 
+  /**
+   * Whether a list view is loading
+   */
+  loadingList:PropTypes.bool,
+
+  /**
+   * Whether a single view is loading
+   */
+  loadingSingle:PropTypes.bool,
+
+  /**
+   * Only displays the options
+   */
+  lean:PropTypes.bool,
+
+
   /*
   : PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -224,11 +259,10 @@ ActionGrid.propTypes = {
   */
 }
 
-/*
 ActionGrid.defaultProps = {
-  status: 'neutral',
-  //height:'2.2em',
-  //as:'p',
+  loadingSingle:false,
+  loadingList  :false,
+  /* height:'2.2em',
+     as:'p', */
 }
-*/
 export default ActionGrid
