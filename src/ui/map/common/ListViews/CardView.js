@@ -75,7 +75,7 @@ const CardView = ({
       id={ id }
       style={ style }
     >
-      <ActionGrid currentListView='Cards'>
+      <ActionGrid currentListView='Cards' title='Cards'>
       </ActionGrid>
       { loading && 'LOADING' }
       { error && JSON.stringify(error, null, 2) }

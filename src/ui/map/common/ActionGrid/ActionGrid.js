@@ -1,6 +1,6 @@
 /* @fwrlines/generator-react-component 2.4.1 */
 import * as React from 'react'
-//import {} from 'react'
+import { useCallback } from 'react'
 import PropTypes from 'prop-types'
 
 import { Actions } from './common'
@@ -9,6 +9,7 @@ import { Actions } from './common'
 
 import {
   useHistory,
+  useParams,
   Link
 } from 'react-router-dom'
 
@@ -61,20 +62,61 @@ const ActionGrid = ({
 
   item,
 
+  title,
+
   lean
 }) => {
 
   const history = useHistory()
+
+  const routeParams = useParams()
 
   const {
     currentType,
     availableListViews,
     availableSingleViews,
     generateLocalPath,
-    getListViewUrl,
-    getSingleViewUrl,
-    getNewViewUrl
   } = useModelMap()
+
+  const getListViewUrl = useCallback((newView) => {
+    return newView.length ? generateLocalPath(
+      'listAlt',
+      {
+        ...routeParams,
+        view:newView
+      }
+    ) : generateLocalPath(
+      'list',
+      {
+        ...routeParams
+      }
+    )
+  }, [routeParams])
+
+  const getSingleViewUrl = useCallback((newView) => {
+    return newView.length ? generateLocalPath(
+      'singleAlt',
+      {
+        ...routeParams,
+        view:newView,
+      }
+    ) : generateLocalPath(
+      'single',
+      {
+        ...routeParams,
+      }
+    )
+  }, [routeParams])
+
+  const getNewViewUrl = useCallback(() => {
+    return generateLocalPath(
+      'new',
+      {
+        ...routeParams,
+        //view:newView
+      }
+    )
+  }, [routeParams])
 
 
   const newViewUrl = getNewViewUrl()
@@ -93,11 +135,12 @@ const ActionGrid = ({
     >
       { !lean &&
         <>
-          <span className='h3 f-m'>
+          <span className='h3 x-subtitle c-x f-m'>
             {
               loadingList ?
                 <InlineLoader type='circle'/>:
-                JSON.stringify({ __typename: currentType.name })}
+                //JSON.stringify({ __typename: currentType.name })}
+                currentType.name}
           </span>
 
           <Actions>
@@ -147,16 +190,17 @@ const ActionGrid = ({
               </Button>
             </Link>
           </Actions>
-          { item &&
+          { item && item.id &&
             <>
-              <span className='h3 f-m'>
+              <span className='h3 x-subtitle c-x f-m'>
 
                 {loadingSingle ?
                   <InlineLoader type='circle'/>:
-                  JSON.stringify({ _string: item._string })}
+                  //JSON.stringify({ _string: item._string })}
+                  item._string || item.name }
               </span>
               <Actions>
-                { item.id && (availableSingleViews.length > 0) && availableSingleViews.map((e, i) =>{
+                { (availableSingleViews.length > 1) && availableSingleViews.map((e, i) =>{
                   const isActive = e.name === currentSingleView
                   return (
                     <Link
@@ -192,17 +236,15 @@ const ActionGrid = ({
           }
         </>
       }
-      {
-        children &&
           <>
             <span className='h3 f-m'>
-              Options
+              { title || ' ' }
             </span>
-            <Actions>
+            { children && 
+            <Actions independent>
               { children }
-            </Actions>
+            </Actions>}
           </>
-      }
     </div>
   )}
 
@@ -279,6 +321,10 @@ ActionGrid.propTypes = {
    */
   lean:PropTypes.bool,
 
+  /**
+   * The title to display of the element
+   */
+  title:PropTypes.string,
 
   /*
   : PropTypes.shape({

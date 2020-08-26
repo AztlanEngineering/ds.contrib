@@ -233,6 +233,7 @@ const EditView = ({
         item={ finalData }
         loadingSingle={ loading || mutationLoading }
         currentSingleView='Edit'
+        title={ finalData.id ? 'Edit' : 'New' }
       >
         <SingleActions
           item={ finalData }

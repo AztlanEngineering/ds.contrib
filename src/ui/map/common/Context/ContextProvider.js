@@ -70,22 +70,6 @@ const MapContextProvider = ({
   }
   , [currentType.name])
 
-  const getListViewUrl = useCallback((newView) => {
-    return newView.length ? generateLocalPath(
-      'listAlt',
-      {
-        ...routeParams,
-        type,
-        view:newView
-      }
-    ) : generateLocalPath(
-      'list',
-      {
-        type,
-        ...routeParams
-      }
-    )
-  }, [type])
 
   const availableSingleViews = useMemo(() => {
     var views = []
@@ -115,34 +99,6 @@ const MapContextProvider = ({
   }
   , [currentType.name])
 
-  const getSingleViewUrl = useCallback((newView) => {
-    return newView.length ? generateLocalPath(
-      'singleAlt',
-      {
-        ...routeParams,
-        type,
-        view:newView
-      }
-    ) : generateLocalPath(
-      'single',
-      {
-        type,
-        ...routeParams
-      }
-    )
-  }, [type])
-
-  const getNewViewUrl = useCallback(() => {
-    return generateLocalPath(
-      'new',
-      {
-        ...routeParams,
-        type,
-        //view:newView
-      }
-    )
-  }, [type])
-
 
 
   return (
@@ -154,9 +110,7 @@ const MapContextProvider = ({
         currentType,
         availableListViews,
         availableSingleViews,
-        getListViewUrl,
-        getSingleViewUrl,
-        getNewViewUrl
+ 
       }}
     >
       { children }

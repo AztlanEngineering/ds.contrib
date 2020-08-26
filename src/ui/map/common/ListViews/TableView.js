@@ -109,7 +109,7 @@ const TableView = ({
       id={ id }
       style={ style }
     >
-      <ActionGrid currentListView='Table'>
+      <ActionGrid currentListView='Table' title='Table'>
         <Button
           className='x-grey b-dark-x ui-dark'
           disabled
@@ -266,7 +266,7 @@ const TableView = ({
                         </td>
                       )
                     })}
-                    <td className='actions'>
+                    <td className='actionsi s-2 k-s'>
                       <Button.Group stretch='horizontal'>
                         <SingleActions
                           className='s-2 k-s'

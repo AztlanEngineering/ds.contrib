@@ -21,6 +21,7 @@ import {
 } from 'ui'
 
 import QUERY_ONE from './graphql/getFruit.gql'
+import QUERY_ONE_ASSOCIATIONS from './graphql/getFruit.gql'
 import QUERY_ALL from './graphql/allFruits.gql'
 import MUTATION_ADD from './graphql/addFruit.gql'
 import MUTATION_DELETE from './graphql/deleteFruit.gql'
@@ -210,7 +211,8 @@ const typeList = [{
   graphql:{
     queries:{
       ALL:QUERY_ALL,
-      ONE:QUERY_ONE
+      ONE:QUERY_ONE,
+      ONE_ASSOCIATIONS:QUERY_ONE_ASSOCIATIONS
     },
     mutations:{
       ADD   :MUTATION_ADD,

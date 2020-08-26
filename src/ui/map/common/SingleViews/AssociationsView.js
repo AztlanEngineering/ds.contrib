@@ -33,7 +33,7 @@ import {
 import { Link, useLocation, useParams, useHistory } from 'react-router-dom'
 
 import gql from 'graphql-tag'
-import { useLazyQuery, useMutation } from '@apollo/client'
+import { useQuery, useMutation } from '@apollo/client'
 //Intl
 
 /* import { FormattedMessage} from "react-intl";
@@ -76,12 +76,12 @@ const EditView = ({
     generateLocalPath
   } = useModelMap()
 
-  const [getItem, {
+  const {
     loading,
     error,
     data,
     refetch
-  }] = useLazyQuery(gql(currentType.graphql.queries.ONE),
+  } = useQuery(gql(currentType.graphql.queries.ONE_ASSOCIATIONS),
     {
       variables:{
         id:itemId || currentId
@@ -100,11 +100,6 @@ const EditView = ({
   },
   [currentType.name, loading, location, data])
 
-  useEffect(() => {
-    if(currentId && (!finalData.id)) {
-      getItem({variables: {id: currentId}})
-    }
-  }, [])
 
   //console.log(777, loading, error, data, finalData, currentId)
 
@@ -137,6 +132,7 @@ const EditView = ({
         item={ finalData }
         loadingSingle={ loading }
         currentSingleView='Associations'
+        title='Associations'
       >
         <SingleActions
           item={ finalData }
