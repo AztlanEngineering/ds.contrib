@@ -1,11 +1,11 @@
 /* @fwrlines/generator-storybook-story 1.7.0 */
 import * as React from 'react'
-import { useEffect } from 'react'
+import { useState,useEffect } from 'react'
 import faker from 'faker'
 //import {} from 'react'
 
-//import { action } from '@storybook/addon-actions'
-//
+/* import { action } from '@storybook/addon-actions'
+    */
 import {
   Button,
   Card,
@@ -21,6 +21,7 @@ import {
 } from 'ui'
 
 import QUERY_ONE from './graphql/getFruit.gql'
+import QUERY_ONE_ASSOCIATIONS from './graphql/getFruit.gql'
 import QUERY_ALL from './graphql/allFruits.gql'
 import MUTATION_ADD from './graphql/addFruit.gql'
 import MUTATION_DELETE from './graphql/deleteFruit.gql'
@@ -30,7 +31,7 @@ import { Router } from 'stories/utils'
 /* import {ALL_COLORS, SIZES } from 'stories/config.js'
    import { LIST, LIST_XS, TEXT_XXS_ESC, TEXT_XXS, TEXT_XS, TEXT } from 'stories/utils/Dummy'
     */
-import { Route, useHistory, useParams } from 'react-router-dom'
+import { Link, Route, useHistory, useParams } from 'react-router-dom'
 
 import {
   urljoin as _u
@@ -41,7 +42,7 @@ import {
 
 const typeList = [{
   name        :'Fruit',
-  plural:'fruits',
+  plural      :'fruits',
   // This will be accessible from `URLS.MAP.${urlKey}`
   urlKey      :'FRUITS',
   // Used to catch the relevant urls in the mapper
@@ -99,7 +100,7 @@ const typeList = [{
         {
           Header  :'updatedAt',
           accessor:'updatedAt',
-          Cell    :(v) => 
+          Cell    :(v) =>
             <Timestamp time={ new Date(v.value) }/>
             //<Timestamp time={ v.value }/>
         },
@@ -188,10 +189,30 @@ const typeList = [{
     ]
 
   },
+
+  associations:{
+    belongsTo:[
+      {
+        as        :'combineWith',
+        to        :'Fruit',
+        foreignKey:'combineWithId',
+      }
+    ],
+    hasMany:[
+      {
+        as        :'combinations',
+        from      :'Fruit',
+        foreignKey:'combineWithId',
+      }
+    ]
+
+  },
+
   graphql:{
     queries:{
       ALL:QUERY_ALL,
-      ONE:QUERY_ONE
+      ONE:QUERY_ONE,
+      ONE_ASSOCIATIONS:QUERY_ONE_ASSOCIATIONS
     },
     mutations:{
       ADD   :MUTATION_ADD,
@@ -254,10 +275,11 @@ export const List = () => {
 
   const urls = {
   //LOGIN  :'login',
-    list   :_u(basePath,),
-    listAlt:_u(basePath,viewUrlParam),
-    single :_u(basePath,idUrlParam),
-    new    :_u(basePath,'new')
+    list     :_u(basePath,),
+    listAlt  :_u(basePath,viewUrlParam),
+    single   :_u(basePath,idUrlParam),
+    singleAlt:_u(basePath,idUrlParam, viewUrlParam),
+    new      :_u(basePath,'new')
   }
 
 
@@ -302,36 +324,62 @@ export const Single = () => {
 
   const urls = {
   //LOGIN  :'login',
-    list   :_u(basePath,),
-    listAlt:_u(basePath,viewUrlParam),
-    single :_u(basePath,idUrlParam),
-    new    :_u(basePath,'new')
+    list     :_u(basePath,),
+    listAlt  :_u(basePath,viewUrlParam),
+    single   :_u(basePath,idUrlParam),
+    singleAlt:_u(basePath,idUrlParam, viewUrlParam),
+    new      :_u(basePath,'new')
   }
 
+  const [itemId, setItemId] = useState()
+
+  const onInputChange = (e) => setItemId(e.target.value)
 
   return (
-    <MapContextProvider
-      typeList={ typeList }
-      testParam='fruits'
-      routes={ urls }
-    >
-      <Route
-        path={[
-          urls.list,
-          urls.listAlt
+    <Route
+      path={[
+        urls.single,
+        urls.singleAlt,
+        urls.new
 
-        ]}
-        exact={ true }
+      ]}
+      exact={ true }
+    >
+      <MapContextProvider
+        typeList={ typeList }
+        testParam='fruits'
+        routes={ urls }
       >
-        <SingleView
-          itemId='12b28d8b-cb0e-4be8-82eb-3f75768fd0a3'
-        />
-      </Route>
-    </MapContextProvider>
+        <div>
+          <label htmlFor='itemId'>
+            Enter item
+            <code>fullId</code>
+            {' '}
+            or type
+            <code>new</code>
+            {' '}
+            and click link below
+          </label>
+          <input
+            name='itemId'
+            type='text'
+            onChange={ onInputChange }
+            className='yb'
+            style={{ border: '2px solid black' }}
+          />
+        </div>
+        <Link to={ `/${itemId}`} >{ itemId }</Link>
+
+        <SingleView>
+        </SingleView>
+      </MapContextProvider>
+    </Route>
   )
 
 }
 
+
+/*
 export const New = () => {
 
   const basePath = '/'
@@ -342,10 +390,11 @@ export const New = () => {
 
   const urls = {
   //LOGIN  :'login',
-    list   :_u(basePath,),
-    listAlt:_u(basePath,viewUrlParam),
-    single :_u(basePath,idUrlParam),
-    new    :_u(basePath,'new')
+    list     :_u(basePath,),
+    listAlt  :_u(basePath,viewUrlParam),
+    single   :_u(basePath,idUrlParam),
+    singleAlt:_u(basePath,idUrlParam, viewUrlParam),
+    new      :_u(basePath,'new')
   }
 
 
@@ -375,3 +424,4 @@ export const New = () => {
 
 
 //Variant.parameters = storyParameters
+*/

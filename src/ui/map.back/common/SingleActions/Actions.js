@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import { Button } from 'ds-core'
 
-import { useObjectMap } from '../Context'
+import { useModelMap } from '../'
 
 import {
   Delete,

@@ -1,9 +1,11 @@
-/* @fwrlines/generator-react-component 1.2.2 */
 import * as React from 'react'
+import { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 
+import { TableView, CardView } from '../ListViews'
+import { AssociationsView, EditView } from '../SingleViews'
 
-import { generatePath, useLocation, useParams } from 'react-router-dom'
+import { generatePath, useLocation, useParams, useRouteMatch } from 'react-router-dom'
 
 /* Config
    import C from 'ui/cssClasses' */
@@ -22,19 +24,82 @@ const MapContextProvider = ({
 }) => {
 
   const {
-    type=testParam
+    type=testParam,
+    view,
+    ...routeParams
   } = useParams()
+
+  //console.log('MCP', routeParams, type, view, useParams(), useRouteMatch())
 
   const currentType = typeList.find(e => e.baseUrl === type)
 
+  //console.log('INIT CTX PRO', typeList, currentType)
+
   const generateLocalPath = (to, params) => {
     const path = generatePath(
-    routes[to],
-    params
-  )
+      routes[to],
+      params
+    )
     return path
 
   }
+
+  const availableListViews = useMemo(() => {
+    var views = []
+    if (currentType.name) {
+      views.push(
+        {
+          view     :'',
+          name     :'Table',
+          shortcut :'t',
+          className:'x-blue',
+          Component:TableView
+        })
+
+      currentType.defaultViews.card && views.push(
+        {
+          view     :'cards',
+          name     :'Cards',
+          shortcut :'c',
+          className:'x-violet',
+          Component:CardView
+        })
+
+    }
+    return views
+  }
+  , [currentType.name])
+
+
+  const availableSingleViews = useMemo(() => {
+    var views = []
+    if (currentType.name) {
+      views.push(
+        {
+          view     :'',
+          name     :'Edit',
+          shortcut :'s',
+          className:'x-blue',
+          Component:EditView
+        })
+
+    }
+
+    currentType.associations && views.push(
+      {
+        view     :'assocations',
+        name     :'Associations',
+        shortcut :'a',
+        className:'x-secondary',
+        Component:AssociationsView
+
+      }
+    )
+    return views
+  }
+  , [currentType.name])
+
+
 
   return (
     <MapContext.Provider
@@ -42,7 +107,10 @@ const MapContextProvider = ({
         routes,
         typeSlug:type,
         generateLocalPath,
-        currentType
+        currentType,
+        availableListViews,
+        availableSingleViews,
+ 
       }}
     >
       { children }

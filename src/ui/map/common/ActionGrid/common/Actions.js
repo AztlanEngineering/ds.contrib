@@ -1,13 +1,13 @@
 /* @fwrlines/generator-react-component 2.4.1 */
 import * as React from 'react'
-import { useCallback, useMemo, useState, useEffect } from 'react'
 //import {} from 'react'
 import PropTypes from 'prop-types'
 
 
 import {
-  useModelMap,
-} from '../common'
+  Button,
+  Shortcut
+} from 'ds-core'
 
 
 //Intl
@@ -21,77 +21,31 @@ import {
 //import C from 'ui/cssClasses'
 
 /* Relative imports
-   import styles from './single_view.scss' */
+   import styles from './actions.scss' */
+import { isBackend } from 'ui/isBackend'
 
-const baseClassName = 'single_view'
+if(!isBackend) {
+  import('./actions.scss')
+}
+
+const baseClassName = 'actions'
 
 
-import {
-  useHistory,
-  useLocation,
-  useParams,
-  Link
-} from 'react-router-dom'
 /**
- * Use `SingleView` to
+ * Use `Actions` to
  * Has color `x`
  */
-const SingleView = ({
+const Actions = ({
   id,
   className,
   style,
-  //setCurrentTab
+  children,
+  ...otherProps
 }) => {
 
-  const location = useLocation()
-
-  const history = useHistory()
-
-  const {
-    currentType={},
-    generateLocalPath,
-    availableSingleViews:availableViews
-  } = useModelMap()
-
-  const {
-    guid:currentId,
-    view,
-    ...routeParams
-  } = useParams()
-
-  
-  const findCurrentView = useCallback(viewParam =>
-    currentId ? availableViews.find(e => e.view === viewParam) || availableViews[0] : availableViews[0]
-    ,
-    [availableViews, currentId]
-  )
-
-  const [currentView, setCurrentView] = useState(
-    findCurrentView(view)
-  )
-
-  useEffect(() => {
-    if(view !== currentView.view) {
-      setCurrentView(findCurrentView(view))
-    }
-    /*
-    if(setCurrentTab) {
-      setCurrentTab({
-        path :`${location.pathname}`,
-        title:`${currentType.name} | ${currentView.name}`
-      })
-    }*/
-  }, [view])
-
-
-
-
-  const {
-    Component:ViewComponent=null
-  } = currentView
 
   return (
-    <div
+    <Button.Group
       className={
         [
         //styles[baseClassName],
@@ -101,18 +55,14 @@ const SingleView = ({
       }
       id={ id }
       style={ style }
-
+      stretch='horizontal'
+      { ...otherProps }
     >
-      { currentType.name ?
-        <ViewComponent/>
-        :
-        'Type not found'
-      }
-    </div>
-  )
-  }
+      { children }
+    </Button.Group>
+  )}
 
-SingleView.propTypes = {
+Actions.propTypes = {
   /**
    * Provide an HTML id to this element
    */
@@ -164,10 +114,10 @@ SingleView.propTypes = {
 }
 
 /*
-SingleView.defaultProps = {
+Actions.defaultProps = {
   status: 'neutral',
   //height:'2.2em',
   //as:'p',
 }
 */
-export default SingleView
+export default Actions

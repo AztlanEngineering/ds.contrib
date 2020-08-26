@@ -1,14 +1,21 @@
 /* @fwrlines/generator-react-component 2.4.1 */
 import * as React from 'react'
-import { useCallback, useMemo, useState, useEffect } from 'react'
-//import {} from 'react'
+import { useMemo } from 'react'
 import PropTypes from 'prop-types'
 
 
-import {
+import { 
   useModelMap,
-} from '../common'
+} from '../Context'
 
+import {
+  ActionGrid
+} from '../ActionGrid'
+
+import gql from 'graphql-tag'
+import { useQuery } from '@apollo/client'
+
+import { Heading, Card } from 'ds-core'
 
 //Intl
 
@@ -21,74 +28,40 @@ import {
 //import C from 'ui/cssClasses'
 
 /* Relative imports
-   import styles from './single_view.scss' */
+   import styles from './card_view.scss' */
 
-const baseClassName = 'single_view'
+const baseClassName = 'card_view'
 
 
-import {
-  useHistory,
-  useLocation,
-  useParams,
-  Link
-} from 'react-router-dom'
 /**
- * Use `SingleView` to
+ * Use `CardView` to
  * Has color `x`
  */
-const SingleView = ({
+const CardView = ({
   id,
   className,
-  style,
-  //setCurrentTab
+  style
 }) => {
 
-  const location = useLocation()
-
-  const history = useHistory()
-
   const {
-    currentType={},
-    generateLocalPath,
-    availableSingleViews:availableViews
+    currentType
   } = useModelMap()
 
-  const {
-    guid:currentId,
-    view,
-    ...routeParams
-  } = useParams()
-
-  
-  const findCurrentView = useCallback(viewParam =>
-    currentId ? availableViews.find(e => e.view === viewParam) || availableViews[0] : availableViews[0]
-    ,
-    [availableViews, currentId]
-  )
-
-  const [currentView, setCurrentView] = useState(
-    findCurrentView(view)
-  )
-
-  useEffect(() => {
-    if(view !== currentView.view) {
-      setCurrentView(findCurrentView(view))
-    }
-    /*
-    if(setCurrentTab) {
-      setCurrentTab({
-        path :`${location.pathname}`,
-        title:`${currentType.name} | ${currentView.name}`
-      })
-    }*/
-  }, [view])
-
-
-
+  const CardComponent = currentType.defaultViews.card.Component
 
   const {
-    Component:ViewComponent=null
-  } = currentView
+    loading,
+    error,
+    data={}
+  } = useQuery(gql(currentType.graphql.queries.ALL),
+    {
+      skip:!currentType.name
+    })
+
+  const finalData = useMemo(() => (data && data[Object.keys(data).reduce((a, e) => {
+    return e
+  }, '')]) || [],
+  [currentType.name, loading])
 
   return (
     <div
@@ -101,18 +74,40 @@ const SingleView = ({
       }
       id={ id }
       style={ style }
-
     >
-      { currentType.name ?
-        <ViewComponent/>
-        :
-        'Type not found'
+      <ActionGrid currentListView='Cards' title='Cards'>
+      </ActionGrid>
+      { loading && 'LOADING' }
+      { error && JSON.stringify(error, null, 2) }
+
+      { data &&
+        <Card.Group
+          style={{
+            '--card-width':currentType.defaultViews.card.minWidth || '200px'
+          }}
+          className='u0'
+        >
+          { finalData.map((e, i) =>
+            <CardComponent
+              backFace={
+                <Card.Section>
+                  <pre className='x-paragraph c-x'>
+                    { JSON.stringify(e, null, 2) }
+                  </pre>
+                </Card.Section>
+
+              }
+              item={ e }
+              key={ i }
+              className='y-background b-y'
+            />
+          ) }
+        </Card.Group>
       }
     </div>
-  )
-  }
+  )}
 
-SingleView.propTypes = {
+CardView.propTypes = {
   /**
    * Provide an HTML id to this element
    */
@@ -164,10 +159,10 @@ SingleView.propTypes = {
 }
 
 /*
-SingleView.defaultProps = {
+CardView.defaultProps = {
   status: 'neutral',
   //height:'2.2em',
   //as:'p',
 }
 */
-export default SingleView
+export default CardView
