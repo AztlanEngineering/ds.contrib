@@ -3,7 +3,7 @@ import * as React from 'react'
 import { useState, useMemo } from 'react'
 import PropTypes from 'prop-types'
 
-import { 
+import {
   useModelMap ,
 } from '../Context'
 
@@ -13,15 +13,16 @@ import { useTable, useSortBy } from 'react-table'
 
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/client'
-/* Intl
-   import { SingleActions } from '../SingleActions' */
+/* Intl */
 
-import { 
-  Button, 
-  Shortcut, 
-  Keys, 
-  Popup, 
-  InlineLoader 
+import { SingleActions } from '../SingleViews/common'
+
+import {
+  Button,
+  Shortcut,
+  Keys,
+  Popup,
+  InlineLoader
 } from 'ds-core'
 
 
@@ -266,17 +267,17 @@ const TableView = ({
                       )
                     })}
                     <td className='actions'>
-                      {/*}
-                      <SingleActions
-                        className='s-2 k-s'
-                        style={{ justifyContent: 'flex-end' }}
-                        item={ e.values }
-                        refetch={ refetch }
-                        extraActions={
-                          currentType.actions ? currentType.actions.extraActions: undefined
-                        }
-                      />
-                      {*/}
+                      <Button.Group stretch='horizontal'>
+                        <SingleActions
+                          className='s-2 k-s'
+                          style={{ justifyContent: 'flex-end' }}
+                          item={ e.values }
+                          refetch={ refetch }
+                          extraActions={
+                            currentType.actions ? currentType.actions.extraActions: undefined
+                          }
+                        />
+                      </Button.Group>
                     </td>
                   </tr>
                 )}

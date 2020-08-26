@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { TableView, CardView } from '../ListViews'
 import { AssociationsView, EditView } from '../SingleViews'
 
-import { generatePath, useLocation, useParams } from 'react-router-dom'
+import { generatePath, useLocation, useParams, useRouteMatch } from 'react-router-dom'
 
 /* Config
    import C from 'ui/cssClasses' */
@@ -28,6 +28,8 @@ const MapContextProvider = ({
     view,
     ...routeParams
   } = useParams()
+
+  //console.log('MCP', routeParams, type, view, useParams(), useRouteMatch())
 
   const currentType = typeList.find(e => e.baseUrl === type)
 
@@ -92,12 +94,23 @@ const MapContextProvider = ({
         {
           view     :'',
           name     :'Edit',
-          shortcut :'t',
+          shortcut :'s',
           className:'x-blue',
           Component:EditView
         })
 
     }
+
+    currentType.associations && views.push(
+      {
+        view     :'assocations',
+        name     :'Associations',
+        shortcut :'a',
+        className:'x-secondary',
+        Component:AssociationsView
+
+      }
+    )
     return views
   }
   , [currentType.name])
@@ -127,10 +140,10 @@ const MapContextProvider = ({
         type,
         //view:newView
       }
-    ) 
+    )
   }, [type])
 
-  
+
 
   return (
     <MapContext.Provider

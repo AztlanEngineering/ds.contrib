@@ -188,6 +188,25 @@ const typeList = [{
     ]
 
   },
+
+  associations:{
+    belongsTo:[
+      {
+        as        :'combineWith',
+        to        :'Fruit',
+        foreignKey:'combineWithId',
+      }
+    ],
+    hasMany:[
+      {
+        as        :'combinations',
+        from      :'Fruit',
+        foreignKey:'combineWithId',
+      }
+    ]
+
+  },
+
   graphql:{
     queries:{
       ALL:QUERY_ALL,
@@ -315,36 +334,44 @@ export const Single = () => {
   const onInputChange = (e) => setItemId(e.target.value)
 
   return (
-    <MapContextProvider
-      typeList={ typeList }
-      testParam='fruits'
-      routes={ urls }
+    <Route
+      path={[
+        urls.single,
+        urls.singleAlt,
+        urls.new
+
+      ]}
+      exact={ true }
     >
-      <div>
-        <label htmlFor='itemId'>Enter item <code>fullId</code> or type <code>new</code> and click link below</label>
-        <input
-          name='itemId'
-          type='text'
-          onChange={ onInputChange }
-          className='yb'
-          style={{ border: '2px solid black' }}
-        />
-      </div>
-      <Link to={ `/${itemId}`} >{ itemId }</Link>
-
-      <Route
-        path={[
-          urls.single,
-          urls.singleAlt,
-          urls.new
-
-        ]}
-        exact={ true }
+      <MapContextProvider
+        typeList={ typeList }
+        testParam='fruits'
+        routes={ urls }
       >
+        <div>
+          <label htmlFor='itemId'>
+            Enter item
+            <code>fullId</code>
+            {' '}
+            or type
+            <code>new</code>
+            {' '}
+            and click link below
+          </label>
+          <input
+            name='itemId'
+            type='text'
+            onChange={ onInputChange }
+            className='yb'
+            style={{ border: '2px solid black' }}
+          />
+        </div>
+        <Link to={ `/${itemId}`} >{ itemId }</Link>
+
         <SingleView>
         </SingleView>
-      </Route>
-    </MapContextProvider>
+      </MapContextProvider>
+    </Route>
   )
 
 }
