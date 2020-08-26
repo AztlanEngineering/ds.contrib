@@ -181,6 +181,7 @@ const EditView = ({
          isValid */
     } = useForm()
 
+
     const mutate = useCallback(() => {
       const variables = values ? Object.keys(values).reduce((a, e) => {
         if (Object.keys(touched).includes(e)) {
@@ -199,11 +200,11 @@ const EditView = ({
     }, [values])
 
     useEffect(() => {
-      if (mutationResponse.id) {
+      if (mergeValues && mutationResponse.id) {
         mergeValues(mutationResponse)
 
       }
-    }, [mutationResponse])
+    }, [mutationResponse.id])
 
     return(
       <Button
@@ -234,6 +235,7 @@ const EditView = ({
         loadingSingle={ loading || mutationLoading }
         currentSingleView='Edit'
         title={ finalData.id ? 'Edit' : 'New' }
+        editMode
       >
         <SingleActions
           item={ finalData }
