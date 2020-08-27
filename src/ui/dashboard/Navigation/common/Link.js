@@ -3,7 +3,7 @@ import * as React from 'react'
 //import {} from 'react'
 import PropTypes from 'prop-types'
 
-import { Heading } from '@fwrlines/ds/elements'
+//import { Heading } from 'ds-core'
 
 import { useRouteMatch, Link as RouterLink } from 'react-router-dom'
 

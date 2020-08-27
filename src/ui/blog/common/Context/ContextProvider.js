@@ -7,7 +7,7 @@ import Context from './Context'
 
 import { generatePath } from 'react-router-dom'
 
-import { useSite } from '@fwrlines/ds/common'
+import { useSite } from 'core'
 //Intl
 
 /* import { FormattedMessage} from "react-intl";

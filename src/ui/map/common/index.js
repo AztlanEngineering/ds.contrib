@@ -1,8 +1,20 @@
 export {
-  MapContext,
-  MapContextProvider,
-  useObjectMap
+  Context,
+  ContextProvider,
+  useModelMap
 } from './Context'
-export { TableView as MapTableView } from './TableView'
-export { CardView as MapCardView } from './CardView'
-export { SingleActions as MapSingleActions } from './SingleActions'
+
+export { 
+  ActionGrid,
+  Actions
+} from './ActionGrid'
+
+export { 
+  TableView,
+  CardView
+} from './ListViews'
+
+export { 
+  EditView,
+  AssociationsView
+} from './SingleViews'

@@ -3,8 +3,7 @@ import * as React from 'react'
 //import {} from 'react'
 import PropTypes from 'prop-types'
 
-import { Heading } from '@fwrlines/ds/elements'
-import { Accordion } from '@fwrlines/ds/site'
+import { Accordion, Heading } from 'ds-core'
 
 import { Item } from './common'
 

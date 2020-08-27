@@ -7,7 +7,7 @@ import Cookies from 'universal-cookie'
 
 /* Config
    import C from 'ui/cssClasses' */
-import { SiteContext } from '@fwrlines/ds/common'
+import { SiteContext } from 'ds-core'
 import { DashboardContext } from './common'
 
 import gql from 'graphql-tag'

@@ -4,7 +4,7 @@ import * as React from 'react'
 import PropTypes from 'prop-types'
 
 import { DashboardContext } from '../../common'
-import { Subtitle, IconList } from '@fwrlines/ds/common'
+//import { Subtitle, IconList } from 'ds-core'
 import Slide from './Slide.js' //Circular recursion by design
 import NavLink from './Link.js'
 

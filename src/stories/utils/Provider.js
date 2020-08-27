@@ -1,7 +1,7 @@
 import React from 'react'
 import { ApolloProvider } from '@apollo/client'
 import getClient from './getClient'
-import CONFIG from 'config'
+import CONFIG from 'config.js'
 
 
 const Provider = ({endpoint=CONFIG.ENDPOINT, children, ...props}) => (
