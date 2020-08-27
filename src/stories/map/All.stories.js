@@ -227,7 +227,7 @@ const typeList = [{
 }]
 
 export default {
-  title        :'collections/map/All',
+  title        :'map/All',
   component    :ListView,
   //componentSubtitle:'Component subtitle',
   subcomponents:{

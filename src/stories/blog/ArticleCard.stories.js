@@ -14,12 +14,12 @@ import { Router } from 'stories/utils'
 
 const endpoint = 'https://meccamico.com/graphql'
 
-  const paginationParam = ':page([0-9]{1,5})'
-  const slugUrlParam = ':slug([0-9a-z-]{5,80})'
-  const categoryUrlParam = ':category([0-9a-z-]{5,80})'
+const paginationParam = ':page([0-9]{1,5})'
+const slugUrlParam = ':slug([0-9a-z-]{5,80})'
+const categoryUrlParam = ':category([0-9a-z-]{5,80})'
 
 export default {
-  title        :'collections/blog/common/ArticleCard',
+  title        :'blog/common/ArticleCard',
   component    :ArticleCard,
   //componentSubtitle:'Component subtitle',
   subcomponents:{
@@ -28,17 +28,18 @@ export default {
   parameters:{
     decorators:[
       storyfn => <BlogContextProvider
-      routes={{
+        routes={{
 
-        BASE              :'/blog',
-        HOME              :'/blog',
-        HOME_PAGINATED    :`/blog/${paginationParam}`,
-        CATEGORY          :`/blog/c/${categoryUrlParam}`,
-        CATEGORY_PAGINATED:`/blog/c/${categoryUrlParam}/${paginationParam}`,
-        SINGLE            :`/blog/${slugUrlParam}/`,
-      }}
-    >
-      { storyfn() }</BlogContextProvider>,
+          BASE              :'/blog',
+          HOME              :'/blog',
+          HOME_PAGINATED    :`/blog/${paginationParam}`,
+          CATEGORY          :`/blog/c/${categoryUrlParam}`,
+          CATEGORY_PAGINATED:`/blog/c/${categoryUrlParam}/${paginationParam}`,
+          SINGLE            :`/blog/${slugUrlParam}/`,
+        }}
+      >
+        { storyfn() }
+      </BlogContextProvider>,
       storyfn => <AplProvider endpoint={ endpoint }>{ storyfn() }</AplProvider>,
       storyfn => <Router>{ storyfn() }</Router>,
     ]

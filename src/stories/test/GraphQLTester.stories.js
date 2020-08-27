@@ -14,7 +14,7 @@ import { AplProvider } from 'stories/utils'
 //const endpoint = 'https://api.fwrlines.com/graphql'
 
 export default {
-  title        :'collections/test/GraphQLTester',
+  title        :'test/GraphQLTester',
   component    :GraphQLTester,
   //componentSubtitle:'Component subtitle',
   subcomponents:{
