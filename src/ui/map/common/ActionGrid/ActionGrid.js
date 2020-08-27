@@ -63,6 +63,7 @@ const ActionGrid = ({
   item,
 
   title,
+  editMode,
 
   lean
 }) => {
@@ -159,6 +160,7 @@ const ActionGrid = ({
                       { e.name }
                     </strong>
                     {' '}
+                        { !editMode && 
                     <Shortcut
                       className='s-2 k-s x-white ul'
                       action={
@@ -168,6 +170,7 @@ const ActionGrid = ({
                         e.shortcut
                       ]}
                     />
+                    }
                   </Button>
                 </Link>
 
@@ -178,6 +181,7 @@ const ActionGrid = ({
               <Button className='x-orange'>
                 New
                 {' '}
+                        { !editMode && 
                 <Shortcut
                   className='s-2 k-s x-white ul'
                   action={
@@ -187,6 +191,7 @@ const ActionGrid = ({
                     'n'
                   ]}
                 />
+                }
               </Button>
             </Link>
           </Actions>
@@ -215,6 +220,7 @@ const ActionGrid = ({
                           { e.name }
                         </strong>
                         {' '}
+                        { !editMode && 
                         <Shortcut
                           className='s-2 k-s x-white ul'
                           action={
@@ -223,7 +229,7 @@ const ActionGrid = ({
                           keys={[
                             e.shortcut
                           ]}
-                        />
+                        />}
                       </Button>
                     </Link>
 
@@ -322,6 +328,11 @@ ActionGrid.propTypes = {
   lean:PropTypes.bool,
 
   /**
+   * Whether edit mode is enabled (no shortcuts) 
+   */
+  editMode:PropTypes.bool,
+
+  /**
    * The title to display of the element
    */
   title:PropTypes.string,
@@ -341,6 +352,8 @@ ActionGrid.propTypes = {
 ActionGrid.defaultProps = {
   loadingSingle:false,
   loadingList  :false,
+  editMode:false,
+  lean:false,
   /* height:'2.2em',
      as:'p', */
 }
