@@ -167,7 +167,7 @@ const Main = ({
   const location = useLocation()
 
   const openNewTab = (payload) => {
-    console.log('opening new tab', payload)
+    //console.log('opening new tab', payload)
     dispatch({
       type   :'OPEN_NEW_TAB',
       payload:{
@@ -230,7 +230,7 @@ const Main = ({
   useEffect(() => {
     if (state.ready) {
       const tabOpen = state.tabs.find(e => e.path === location.pathname)
-      console.warn(state, state.tabs, location.pathname, tabOpen)
+      //console.warn(state, state.tabs, location.pathname, tabOpen)
       !tabOpen ?
         openNewTab({
           path :location.pathname,
@@ -253,7 +253,7 @@ const Main = ({
 
   // Pushing to the url on each focus change
   useEffect(() => {
-    console.log('will push to', focusedTab.path)
+    //console.log('will push to', focusedTab.path)
     state.ready && history.push(focusedTab.path)
   }, [focusedTab])
 
