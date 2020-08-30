@@ -93,7 +93,7 @@ const Album = ({
   }
 
   const moveForward = () => {
-    console.log('movin frwd to', index+1, 'out of ', slides.length,'modular',  (index +1) %( slides.length ))
+    //console.log('movin frwd to', index+1, 'out of ', slides.length,'modular',  (index +1) %( slides.length ))
     dispatch({
       type:'MOVE_FORWARD',
     })
@@ -102,9 +102,9 @@ const Album = ({
   //Get initial slide
   useEffect( () => {
     const matchId = match ? match.params.slideid : null
-    console.log('matched', matchId)
+    //console.log('matched', matchId)
     const initialPictureIndex = matchId ? slides.findIndex(e => e.id === match.params.slideid) : null
-    console.log('INITIAL', initialPictureIndex)
+    //console.log('INITIAL', initialPictureIndex)
     setInitialPicture(initialPictureIndex)
   },
   []
@@ -112,7 +112,7 @@ const Album = ({
 
 
   useEffect( ()=> {
-    console.log('slide chqnged', index, currentSlide)
+    //console.log('slide chqnged', index, currentSlide)
     if (index > 0) {
       history.push(getPath(currentSlide.id))
     } else history.push(baseUrl)
