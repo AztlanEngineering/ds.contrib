@@ -8,7 +8,6 @@ import faker from 'faker'
     */
 import {
   Button,
-  Card,
   DotInfo,
   Shortener,
   Timestamp,
@@ -18,6 +17,7 @@ import {
   MapContextProvider,
   MapListView as ListView,
   MapSingleView as SingleView,
+  MapObjectCard as Card
 } from 'ui'
 
 import QUERY_ONE from './graphql/getFruit.gql'
@@ -122,7 +122,7 @@ const typeList = [{
     },
     card:{
       Component:({item, ...props}) => (
-        <Card { ...props }>
+        <Card item={item} { ...props }>
           <Card.Section>
             <p className='h2'>{ item.name }</p>
           </Card.Section>
