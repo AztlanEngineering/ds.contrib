@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 
 import { TableView, CardView } from '../ListViews'
-import { AssociationsView, EditView } from '../SingleViews'
+import { AssociationsView, EditView, StateView } from '../SingleViews'
 
 import { generatePath, useLocation, useParams, useRouteMatch } from 'react-router-dom'
 
@@ -78,7 +78,7 @@ const MapContextProvider = ({
         {
           view     :'',
           name     :'Edit',
-          shortcut :'s',
+          shortcut :'e',
           className:'x-blue',
           Component:EditView
         })
@@ -92,6 +92,17 @@ const MapContextProvider = ({
         shortcut :'a',
         className:'x-secondary',
         Component:AssociationsView
+
+      }
+    )
+
+    currentType.defaultViews.state && views.push(
+      {
+        view     :'state',
+        name     :'State',
+        shortcut :'s',
+        className:'x-warning',
+        Component:StateView
 
       }
     )

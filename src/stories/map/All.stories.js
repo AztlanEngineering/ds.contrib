@@ -175,6 +175,9 @@ const typeList = [{
         }
       ]
 
+    },
+    state:{
+      enabled:true,
     }
   },
   actions:{
@@ -340,7 +343,8 @@ export const Single = () => {
       path={[
         urls.single,
         urls.singleAlt,
-        urls.new
+        urls.new,
+        '/'
 
       ]}
       exact={ true }
@@ -370,8 +374,18 @@ export const Single = () => {
         </div>
         <Link to={ `/${itemId}`} >{ itemId }</Link>
 
+    <Route
+      path={[
+        urls.single,
+        urls.singleAlt,
+        urls.new,
+
+      ]}
+      exact={ true }
+    >
         <SingleView>
         </SingleView>
+    </Route>
       </MapContextProvider>
     </Route>
   )

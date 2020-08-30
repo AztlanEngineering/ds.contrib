@@ -28,7 +28,7 @@ import {
 
 import {
   SingleActions
-} from './common'
+} from '../SingleActions'
 
 /*
 import {

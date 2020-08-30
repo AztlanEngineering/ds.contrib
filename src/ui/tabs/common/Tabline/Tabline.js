@@ -51,8 +51,8 @@ const Tabline = ({
 
   const onSelectedItemChange = ({selectedItem}) => {
     openNewTab({
-      path :selectedItem.value,
-      title:selectedItem.label,
+      path     :selectedItem.value,
+      title    :selectedItem.label,
       className:selectedItem.className
     })
   }
@@ -80,7 +80,7 @@ const Tabline = ({
           className={ e.className }
         >
           <strong>
-          { e.title || e.label }
+            { e.title || e.label }
           </strong>
         </Tab>
       ) }

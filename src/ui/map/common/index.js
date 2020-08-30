@@ -16,7 +16,8 @@ export {
 
 export { 
   EditView,
-  AssociationsView
+  AssociationsView,
+  StateView
 } from './SingleViews'
 
 export { 
@@ -26,3 +27,4 @@ export {
 export {
   ObjectCard
 } from './ObjectCard'
+export { ObjectState } from './ObjectState'
