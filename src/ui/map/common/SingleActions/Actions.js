@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import { Button } from 'ds-core'
 
-import { useModelMap } from '../../../Context'
+import { useModelMap } from '../Context'
 
 import {
   Delete,
@@ -159,7 +159,7 @@ Actions.propTypes = {
   reverse:PropTypes.bool,
 
   /**
-   *  Whether to reverse the order of the actions
+   *  Whether to redirect to the list after deletion. This is only needed in singleviews
    */
   redirectAfterDelete:PropTypes.bool,
 

@@ -10,7 +10,7 @@ import { Button } from 'ds-core'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/client'
 
-import { useModelMap } from '../../../../Context'
+import { useModelMap } from '../../Context'
 
 import { useHistory, useParams } from 'react-router-dom'
 //Intl
