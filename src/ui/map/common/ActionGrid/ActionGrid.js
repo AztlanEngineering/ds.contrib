@@ -142,7 +142,8 @@ const ActionGrid = ({
         (
           <>
             <Label
-              className='x-violet s-2 k-s'
+              className='x-accent2 s-2 k-s'
+              basic
               style={{ margin: 0 }}
             >
               { currentSingleView }
@@ -157,7 +158,8 @@ const ActionGrid = ({
         (
           <>
             <Label
-              className='x-link s-2 k-s'
+              className='x-accent1 s-2 k-s'
+              basic
               style={{ margin: 0 }}
             >
               { currentListView }
