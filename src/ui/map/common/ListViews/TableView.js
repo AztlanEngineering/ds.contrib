@@ -15,7 +15,7 @@ import gql from 'graphql-tag'
 import { useQuery } from '@apollo/client'
 /* Intl */
 
-import { SingleActions } from '../SingleViews/common'
+import { SingleActions } from '../SingleActions'
 
 import {
   Button,

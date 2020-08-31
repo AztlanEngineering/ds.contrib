@@ -28,16 +28,16 @@ export default {
   // Label
   'dash'             :'dash',
   // Unused, but pairs with the dash one
-  'dashHover'             :'hdash',
+  'dashHover'        :'hdash',
   'disabled'         :'disabled',
   // Card (For the backface)
-  'ensemble':'ensemble',
+  'ensemble'         :'ensemble',
   // Input
   'error'            :'error',
   // StatusBar
   'fixed'            :'fixed',
   // Group (Cards)
-  'grid':'grid',
+  'grid'             :'grid',
   // Group (Button)
   'group'            :'group',
   'headSection'      :'head section',
@@ -102,7 +102,7 @@ export default {
   'shadow'           :'sh-',
   'shadowActive'     :'sha',
   'shadowHover'      :'shh-',
-  // Label, Button, HamburgerIcon
+  // Label, Button, HamburgerIcon, ObjectState(map)
   'simple'           :'simple',
   // Button
   'simpleHover'      :'hsimple',
