@@ -47,14 +47,14 @@ import { useQuery, useMutation } from '@apollo/client'
 /* Relative imports
    import styles from './single_view.scss' */
 
-const baseClassName = 'edit_view'
+const baseClassName = 'associations_view'
 
 
 /**
  * Use `EditView` to
  * Has color `x`
  */
-const EditView = ({
+const AssociationsView = ({
   id,
   className,
   style,
@@ -130,50 +130,11 @@ const EditView = ({
     >
       <ActionGrid
         item={ finalData }
-        loadingSingle={ loading }
+        loadingSingle={ loading  }
         currentSingleView='Associations'
-        title='Associations'
+        title='Object Associations'
       >
-        <SingleActions
-          item={ finalData }
-          enableEdit={false}
-          enableDelete={ false }
-          independent
-          reverse={ false }
-          redirectAfterDelete={ true }
-          style={{
-            justifyContent:'end'
-          }}
-          /*
-          extraActions={[
-            {
-              condition:(user) => true,
-              Component:SubmitButton
-            }
-           ]}*/
-        />
-      </ActionGrid>
-      <div className='pv-v v2'>
-
-        { finalData.createdAt &&
-          <Timestamp
-            time={ finalData.createdAt }
-            className={ 'x-subtitle c-x' }
-            prefix={
-              <strong>Created</strong>
-            }
-          />
-        }
-        { finalData.updatedAt &&
-          <Timestamp
-            time={ finalData.updatedAt }
-            className={ 'x-primary c-x' }
-            prefix={
-              <strong>Updated</strong>
-            }
-          />
-        }
-      </div>
+              </ActionGrid>
       { currentType.associations.belongsTo.length &&
         <div className='pv-v'>
           <Heading
@@ -227,32 +188,35 @@ const EditView = ({
           heading='Reverse associations'
         />
         <ul>
-          { currentType.associations.hasMany && currentType.associations.hasMany.map((e, i) =>
-            <li>
-              <p>
-                <DotInfo
-                  subtitleUpper={ false }
-                  //className={ (finalData[e.foreignKey]) ? 'y-success' : 'y-warning'}
-                >
-                </DotInfo>
-              </p>
-              <p className='s-1 k-s'>
-                <span>
-                  <code className='x-primary c-x'>
-                    { finalData.__typename }
-                    .
-                    { e.as }
-                  </code>
-                  {' is the reserve plural FK relationship from '}
-                  <code className='x-accent1 c-x'>
-                    { e.from }
-                    .
-                    { e.foreignKey }
-                  </code>
-                </span>
-              </p>
-            </li>
-          ) }
+          { currentType.associations.hasMany &&
+            <>
+              {currentType.associations.hasMany.map((e, i) =>
+                <li>
+                  <p>
+                    <DotInfo
+                      subtitleUpper={ false }
+                      //className={ (finalData[e.foreignKey]) ? 'y-success' : 'y-warning'}
+                    >
+                    </DotInfo>
+                  </p>
+                  <p className='s-1 k-s'>
+                    <span>
+                      <code className='x-primary c-x'>
+                        { finalData.__typename }
+                        .
+                        { e.as }
+                      </code>
+                      {' is the reserve plural FK relationship from '}
+                      <code className='x-accent1 c-x'>
+                        { e.from }
+                        .
+                        { e.foreignKey }
+                      </code>
+                    </span>
+                  </p>
+                </li>
+              ) }
+            </>}
 
         </ul>
       </div>
@@ -272,7 +236,13 @@ const EditView = ({
       id={ id }
       style={ style }
     >
-      { loading && <InlineLoader/> }
+      <ActionGrid
+        item={ finalData }
+        loadingSingle={ loading  }
+        currentSingleView='Associations'
+        title={ name }
+      >
+              </ActionGrid>
 
       <pre className='c-x'>
         { error && JSON.stringify(error, null, 2) }
@@ -290,7 +260,7 @@ const EditView = ({
   )
 }
 
-EditView.propTypes = {
+AssociationsView.propTypes = {
   /**
    * Provide an HTML id to this element
    */
@@ -340,4 +310,4 @@ EditView.defaultProps = {
   //as:'p',
 }
 */
-export default EditView
+export default AssociationsView

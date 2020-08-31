@@ -75,9 +75,7 @@ const Tab = ({
       style={ style }
       onClick={ onTabClick }
     >
-      <span>
         { children }
-      </span>
 
       { closable &&
         <Button

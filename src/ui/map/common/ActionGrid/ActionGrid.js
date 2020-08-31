@@ -1,6 +1,6 @@
 /* @fwrlines/generator-react-component 2.4.1 */
 import * as React from 'react'
-import { useCallback } from 'react'
+import { useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 
 import { Actions } from './common'
@@ -9,15 +9,21 @@ import { Actions } from './common'
 
 import {
   useHistory,
+  useLocation,
   useParams,
   Link
 } from 'react-router-dom'
 
 import {
   Button,
+  Label,
   Shortcut,
   InlineLoader
 } from 'ds-core'
+
+import {
+  useTabline
+} from 'ui/tabs'
 
 import {
   useModelMap ,
@@ -73,6 +79,10 @@ const ActionGrid = ({
   const routeParams = useParams()
 
   const {
+    setCurrentTab
+  } = useTabline()
+
+  const {
     currentType,
     availableListViews,
     availableSingleViews,
@@ -121,6 +131,48 @@ const ActionGrid = ({
 
 
   const newViewUrl = getNewViewUrl()
+
+  const name = (item && item.id) ? (item._string || item.name || (item.id && item.id.substring(0, 8)) || 'Loading') : `New ${currentType.name}`
+
+  useEffect(() =>
+  {
+    !lean && setCurrentTab && setCurrentTab({
+      path :`${location.pathname}`,
+      title:(item && item.id) ?
+        (
+          <>
+            <Label
+              className='x-violet s-2 k-s'
+              style={{ margin: 0 }}
+            >
+              { currentSingleView }
+            </Label>
+            <span>
+              &nbsp;
+              {name }
+            </span>
+          </>
+
+        ) :
+        (
+          <>
+            <Label
+              className='x-link s-2 k-s'
+              style={{ margin: 0 }}
+            >
+              { currentListView }
+            </Label>
+            <span>
+              &nbsp;
+              { currentType.name }
+            </span>
+          </>
+
+        )
+    })
+  },
+  [item, currentSingleView, currentListView, currentType.name]
+  )
   return (
     <div
       className={
@@ -160,16 +212,16 @@ const ActionGrid = ({
                       { e.name }
                     </strong>
                     {' '}
-                        { !editMode && 
-                    <Shortcut
-                      className='s-2 k-s x-white ul'
-                      action={
-                        () => history.push(getListViewUrl(e.view))
-                      }
-                      keys={[
-                        e.shortcut
-                      ]}
-                    />
+                    { !editMode &&
+                      <Shortcut
+                        className='s-2 k-s x-white ul'
+                        action={
+                          () => history.push(getListViewUrl(e.view))
+                        }
+                        keys={[
+                          e.shortcut
+                        ]}
+                      />
                     }
                   </Button>
                 </Link>
@@ -181,16 +233,16 @@ const ActionGrid = ({
               <Button className='x-orange'>
                 New
                 {' '}
-                        { !editMode && 
-                <Shortcut
-                  className='s-2 k-s x-white ul'
-                  action={
-                    () => history.push(newViewUrl)
-                  }
-                  keys={[
-                    'n'
-                  ]}
-                />
+                { !editMode &&
+                  <Shortcut
+                    className='s-2 k-s x-white ul'
+                    action={
+                      () => history.push(newViewUrl)
+                    }
+                    keys={[
+                      'n'
+                    ]}
+                  />
                 }
               </Button>
             </Link>
@@ -220,16 +272,16 @@ const ActionGrid = ({
                           { e.name }
                         </strong>
                         {' '}
-                        { !editMode && 
-                        <Shortcut
-                          className='s-2 k-s x-white ul'
-                          action={
-                            () => history.push(getSingleViewUrl(e.view))
-                          }
-                          keys={[
-                            e.shortcut
-                          ]}
-                        />}
+                        { !editMode &&
+                          <Shortcut
+                            className='s-2 k-s x-white ul'
+                            action={
+                              () => history.push(getSingleViewUrl(e.view))
+                            }
+                            keys={[
+                              e.shortcut
+                            ]}
+                          />}
                       </Button>
                     </Link>
 
@@ -242,15 +294,15 @@ const ActionGrid = ({
           }
         </>
       }
-          <>
-            <span className='h3 f-m'>
-              { title || ' ' }
-            </span>
-            { children && 
-            <Actions independent>
-              { children }
-            </Actions>}
-          </>
+      <>
+        <span className='h3 f-m'>
+          { title || ' ' }
+        </span>
+        { children &&
+          <Actions independent>
+            { children }
+          </Actions>}
+      </>
     </div>
   )}
 
@@ -328,7 +380,7 @@ ActionGrid.propTypes = {
   lean:PropTypes.bool,
 
   /**
-   * Whether edit mode is enabled (no shortcuts) 
+   * Whether edit mode is enabled (no shortcuts)
    */
   editMode:PropTypes.bool,
 
@@ -352,8 +404,8 @@ ActionGrid.propTypes = {
 ActionGrid.defaultProps = {
   loadingSingle:false,
   loadingList  :false,
-  editMode:false,
-  lean:false,
+  editMode     :false,
+  lean         :false,
   /* height:'2.2em',
      as:'p', */
 }
