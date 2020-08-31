@@ -21,8 +21,9 @@ $tab-between-margin:.2em;
 .tabline {
   background: $tabline-background;
   display: flex;
+  margin: 0;
   padding: $tabline-padding;
-  margin:0;
+  z-index: 9;
 
   > li {
     margin-bottom: 0;

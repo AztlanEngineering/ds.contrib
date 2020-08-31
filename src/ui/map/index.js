@@ -7,7 +7,10 @@ export {
   TableView as MapTableView,
   CardView as MapCardView,
   EditView as MapEditView,
-  AssociationsView as MapAssociationsView
+  StateView as MapStateView,
+  AssociationsView as MapAssociationsView,
+  ObjectCard as MapObjectCard,
+  ObjectState as MapObjectState
 } from './common'
 
 export { 

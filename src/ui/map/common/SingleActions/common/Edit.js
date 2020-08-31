@@ -22,7 +22,7 @@ import { useParams, Link } from 'react-router-dom'
    import styles from './edit.scss' */
 import { isBackend } from 'ui/isBackend'
 
-import { useModelMap } from '../../../../Context'
+import { useModelMap } from '../../Context'
 
 if(!isBackend) {
   import('./edit.scss')
