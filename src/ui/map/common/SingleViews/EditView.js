@@ -65,7 +65,6 @@ const EditView = ({
   className,
   style,
   itemId,
-  setCurrentTab
 }) => {
 
   const location = useLocation()
@@ -136,15 +135,7 @@ const EditView = ({
   [mutationLoading, mutationData])
 
 
-  useEffect(() =>
-  {
-    setCurrentTab && setCurrentTab({
-      path :`${location.pathname}`,
-      title:`${name}`
-    })
-  },
-  [finalData.id]
-  )
+
 
   useEffect(() =>
   {
@@ -444,10 +435,6 @@ EditView.propTypes = {
    */
   itemId:PropTypes.string,
 
-  /**
-   * For the case this needs to be executed inside of a tab context, we use this to change the current tab context
-   */
-  setCurrentTab:PropTypes.func
 
   /*
   : PropTypes.shape({

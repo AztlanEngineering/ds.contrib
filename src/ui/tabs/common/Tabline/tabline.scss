@@ -40,6 +40,7 @@ $tab-between-margin:.2em;
   }
 
   > li.tab {
+    font-weight:bold;
     align-items: center;
     border-top-left-radius: $tab-border-radius;
     border-top-right-radius: $tab-border-radius;

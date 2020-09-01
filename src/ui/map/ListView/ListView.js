@@ -45,7 +45,6 @@ const ListView = ({
   id,
   className,
   style,
-  setCurrentTab
 }) => {
 
   const location = useLocation()
@@ -76,13 +75,7 @@ const ListView = ({
     if(view !== currentView.view) {
       setCurrentView(findCurrentView(view))
     }
-    if(setCurrentTab) {
-      setCurrentTab({
-        path :`${location.pathname}`,
-        title:`${currentType.name} | ${currentView.name}`
-      })
-    }
-  }, [view])
+      }, [view])
 
 
 
@@ -164,11 +157,6 @@ ListView.propTypes = {
     PropTypes.object
   ]),
   //as: PropTypes.string,
-
-  /**
-   * For the case this needs to be executed inside of a tab context, we use this to change the current tab context
-   */
-  setCurrentTab:PropTypes.func
   /*
   : PropTypes.shape({
     id: PropTypes.string.isRequired,
