@@ -94,7 +94,7 @@ const MultiFormView = ({
     error,
     data,
     refetch
-  } = useQuery(gql(currentType.graphql.queries.ONE_ASSOCIATIONS),
+  } = useQuery(gql(currentType.graphql.queries.ONE),
     {
       variables:{
         id:itemId || currentId
@@ -117,43 +117,6 @@ const MultiFormView = ({
   //console.log(777, loading, error, data, finalData, currentId)
 
   const name = currentId ? (finalData._string || finalData.name || (finalData.id && finalData.id.substring(0, 8)) || 'Loading') : `New ${currentType.name}`
-
-
-  const inputMap = [
-    {
-    //context,
-      name       :'id',
-      type       :'text',
-      placeholder:'placeholder',
-      label      :'id',
-      description:'',
-      inputId    :'id',
-    },
-    {
-    //context,
-      name       :'name',
-      type       :'text',
-      placeholder:'placeholder',
-      label      :'name',
-      description:'',
-      inputId    :'story',
-    },{
-    //context,
-      type       :'checkbox',
-      name       :'edible',
-      label      :'edible',
-      description:'',
-      inputId    :'edible',
-
-    },{
-    //context,
-      type       :'text',
-      name       :'taste',
-      label      :'Please select an illustration',
-      description:'',
-      inputId    :'taste',
-    },
-  ]
 
   const actionsProps = useMemo(() => ({
     enableDelete:true,
@@ -196,7 +159,7 @@ const MultiFormView = ({
           useObjects
         >
           <FormQueryMultiObject
-            inputMap={ inputMap }
+            inputMap={ currentRelatedType.defaultViews.single.fields }
             maxExtra={ 3 }
             query={ currentMultiFormInfo.query }
             ObjectActions={({objectId}) => 
@@ -231,8 +194,9 @@ const MultiFormView = ({
       <ActionGrid
         item={ finalData }
         loadingSingle={ loading  }
-        currentSingleView={ `Multi ${currentMultiFormInfo.type}` }
-        title={ name }
+//        currentSingleView={ `Multi ${currentMultiFormInfo.type}` }
+  //      title={ `Multi ${currentMultiFormInfo.type}` }
+        //title={ name }
       >
         <Button
           onClick={ refetch }

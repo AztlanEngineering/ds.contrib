@@ -28,3 +28,4 @@ export {
   ObjectCard
 } from './ObjectCard'
 export { ObjectState } from './ObjectState'
+export { TypeButton } from './TypeButton'

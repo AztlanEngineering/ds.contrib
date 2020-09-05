@@ -1,16 +1,17 @@
 export {
-  Context as MapContext,
-  ContextProvider as MapContextProvider,
-  useModelMap,
   ActionGrid as MapActionGrid,
   Actions as MapActions,
-  TableView as MapTableView,
-  CardView as MapCardView,
-  EditView as MapEditView,
-  StateView as MapStateView,
   AssociationsView as MapAssociationsView,
+  CardView as MapCardView,
+  Context as MapContext,
+  ContextProvider as MapContextProvider,
+  EditView as MapEditView,
   ObjectCard as MapObjectCard,
-  ObjectState as MapObjectState
+  ObjectState as MapObjectState,
+  StateView as MapStateView,
+  TableView as MapTableView,
+  TypeButton as MapTypeButton,
+  useModelMap,
 } from './common'
 
 export { 
