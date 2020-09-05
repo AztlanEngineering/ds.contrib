@@ -14,7 +14,7 @@ import { Logout } from 'ui'
 //const endpoint = 'https://api.fwrlines.com/graphql'
 
 export default {
-  title        :'collections/dashboard/Logout',
+  title        :'dashboard/Logout',
   component    :Logout,
   //componentSubtitle:'Component subtitle',
   subcomponents:{

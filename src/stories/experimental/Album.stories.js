@@ -14,7 +14,7 @@ import { Router } from 'stories/utils'
 //const endpoint = 'https://api.fwrlines.com/graphql'
 
 export default {
-  title        :'collections/experimental/Album',
+  title        :'experimental/Album',
   component    :Album,
   //componentSubtitle:'Component subtitle',
   subcomponents:{

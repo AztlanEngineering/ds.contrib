@@ -14,7 +14,7 @@ import { SwitchRouteMap } from 'ui'
 //const endpoint = 'https://api.fwrlines.com/graphql'
 
 export default {
-  title        :'collections/Dashboard/Routes/SwitchRouteMap',
+  title        :'Dashboard/Routes/SwitchRouteMap',
   component    :SwitchRouteMap,
   //componentSubtitle:'Component subtitle',
   subcomponents:{

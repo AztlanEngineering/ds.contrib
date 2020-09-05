@@ -6,26 +6,26 @@ import faker from 'faker'
 //import { action } from '@storybook/addon-actions'
 
 import { AnalyticsLink } from 'ui'
-//import QUERY from './graphql/query.graphql'
-//import { AplProvider } from 'stories/utils'
+/* import QUERY from './graphql/query.graphql'
+   import { AplProvider } from 'stories/utils' */
 
 import { Router } from 'stories/utils'
-//import {ALL_COLORS, SIZES } from 'stories/config.js'
-//import { LIST, LIST_XS, TEXT_XXS_ESC, TEXT_XXS, TEXT_XS, TEXT } from 'stories/utils/Dummy'
+/* import {ALL_COLORS, SIZES } from 'stories/config.js'
+   import { LIST, LIST_XS, TEXT_XXS_ESC, TEXT_XXS, TEXT_XS, TEXT } from 'stories/utils/Dummy' */
 
 //const endpoint = 'https://api.fwrlines.com/graphql'
 
 export default {
-  title: 'collections/analytics/AnalyticsLink',
-  component:AnalyticsLink,
+  title        :'analytics/AnalyticsLink',
+  component    :AnalyticsLink,
   //componentSubtitle:'Component subtitle',
-  subcomponents: {
+  subcomponents:{
     //Item:AnalyticsLink.Item
   },
-  parameters: {
-    decorators: [ 
-      //storyfn => <div className="">{ storyfn() }</div>,
-      //storyfn => <AplProvider endpoint={ endpoint }>{ storyfn() }</AplProvider>,
+  parameters:{
+    decorators:[
+      /* storyfn => <div className="">{ storyfn() }</div>,
+         storyfn => <AplProvider endpoint={ endpoint }>{ storyfn() }</AplProvider>, */
       storyfn => <Router>{ storyfn() }</Router>,
     ]
   }
@@ -44,7 +44,7 @@ const storyParameters = {
  */
 
 export const Default = () => (
-  <AnalyticsLink event={{category:'category', action:'click on special link'}}>Link</AnalyticsLink> 
+  <AnalyticsLink event={{category: 'category', action: 'click on special link'}}>Link</AnalyticsLink>
 )
 
 //Default.parameters = storyParameters
