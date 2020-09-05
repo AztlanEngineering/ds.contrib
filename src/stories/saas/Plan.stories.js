@@ -14,12 +14,12 @@ import { Plan } from 'ui'
 //const endpoint = 'https://api.fwrlines.com/graphql'
 
 export default {
-  title        :'collections/saas/Plan',
+  title        :'saas/Plan',
   component    :Plan,
   //componentSubtitle:'Component subtitle',
   subcomponents:{
     Feature:Plan.Feature,
-    Price:Plan.Price
+    Price  :Plan.Price
     //Item:Plan.Item
   },
   parameters:{
@@ -32,7 +32,7 @@ export default {
 }
 
 export const Default = () => (
-  <Plan 
+  <Plan
     className='y-secondary'
     name='Pro plano'
     price={ 49.89 }
@@ -45,7 +45,7 @@ export const Default = () => (
 )
 
 export const Variant = () => (
-  <Plan 
+  <Plan
     className='y-violet'
     name='Entreprise'
     price={ 109.89 }
@@ -59,7 +59,7 @@ export const Variant = () => (
 )
 
 export const Free = () => (
-  <Plan 
+  <Plan
     className='y-indigo'
     name='Pro bono'
     price={ 0 }

@@ -16,7 +16,7 @@ import { Curriculum } from 'ui'
 //const endpoint = 'https://api.fwrlines.com/graphql'
 
 export default {
-  title        :'collections/experimental/Curriculum',
+  title        :'experimental/Curriculum',
   component    :Curriculum,
   //componentSubtitle:'Component subtitle',
   subcomponents:{
@@ -163,7 +163,7 @@ export const Plus = () => {
       title   :'Senior developper, Space X',
       subtitle:'2012 - present, Palo Alto, California',
       id      :'ms',
-      simple   :true
+      simple  :true
     },
     {
       className:'y-green x-black',

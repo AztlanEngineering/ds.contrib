@@ -14,7 +14,7 @@ import { PrivateRoute } from 'ui'
 //const endpoint = 'https://api.fwrlines.com/graphql'
 
 export default {
-  title        :'collections/dashboard/Routes/PrivateRoute',
+  title        :'dashboard/Routes/PrivateRoute',
   component    :PrivateRoute,
   //componentSubtitle:'Component subtitle',
   subcomponents:{

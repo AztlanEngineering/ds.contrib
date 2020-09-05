@@ -7,7 +7,7 @@ import { OLoginButton } from 'ui'
 import { AplProvider } from 'stories/utils'
 
 export default {
-  title     :'collections/oAuth2/OLoginButton',
+  title     :'oAuth2/OLoginButton',
   component :OLoginButton,
   parameters:{
     decorators:[

@@ -17,7 +17,7 @@ import { Router } from 'stories/utils'
 //const endpoint = 'https://api.fwrlines.com/graphql'
 
 export default {
-  title        :'collections/blog/common/BlogContextProvider',
+  title        :'blog/common/BlogContextProvider',
   component    :BlogContextProvider,
   //componentSubtitle:'Component subtitle',
   subcomponents:{
@@ -97,7 +97,10 @@ export const Default = () => {
           </Button>
         </BlogLink>
       </Button.Group>
-        <CategoryButton name='name' slug='diy-advice' / >
+      <CategoryButton
+        name='name'
+        slug='diy-advice'
+      />
     </BlogContextProvider>
   )
 
