@@ -199,11 +199,11 @@ const Main = ({
   }, [])
 
   const setCurrentTab = useMemo(() => (payload) => {
-    dispatch({
+    state.ready ? dispatch({
       type:'SET_CURRENT_TAB',
       payload
-    })
-  }, [])
+    }) : () => null
+  }, [state.ready])
 
   const focusedTab = useMemo(() => state.tabs.find(e => e.id === state.focus),
     [state.focus]

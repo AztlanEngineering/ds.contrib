@@ -23,6 +23,7 @@ import {
 import QUERY_ONE from './graphql/getFruit.gql'
 import QUERY_ONE_ASSOCIATIONS from './graphql/getFruit.gql'
 import QUERY_ALL from './graphql/allFruits.gql'
+
 import MUTATION_ADD from './graphql/addFruit.gql'
 import MUTATION_DELETE from './graphql/deleteFruit.gql'
 import MUTATION_UPDATE from './graphql/updateFruit.gql'
@@ -37,7 +38,7 @@ import {
   urljoin as _u
 } from '@fwrlines/utils'
 
-
+const QUERY_FULL = QUERY_ONE
 //const endpoint = 'https://api.fwrlines.com/graphql'
 
 const typeList = [{
@@ -178,7 +179,15 @@ const typeList = [{
     },
     state:{
       enabled:true,
-    }
+    },
+    multi:[
+      {
+        type:'Fruit',
+        foreignKey:'eatWithId',
+        query:QUERY_ALL,
+        shortcut:'o'
+      }
+    ],
   },
   actions:{
     defaultActions:{
@@ -215,7 +224,8 @@ const typeList = [{
     queries:{
       ALL:QUERY_ALL,
       ONE:QUERY_ONE,
-      ONE_ASSOCIATIONS:QUERY_ONE_ASSOCIATIONS
+      ONE_ASSOCIATIONS:QUERY_ONE_ASSOCIATIONS,
+      FULL:QUERY_FULL
     },
     mutations:{
       ADD   :MUTATION_ADD,
@@ -272,7 +282,7 @@ export const List = () => {
 
   const basePath = '/'
   const typeUrlParam = ':type([0-9a-z-]{3,80})'
-  const viewUrlParam = ':view([0-9a-z]{3,80})'
+  const viewUrlParam = ':view([-0-9a-z]{3,80})'
   const idUrlParam = ':guid([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'
   //const redeemParam = ':slug([0-9a-f]{24})'
 
@@ -308,20 +318,10 @@ export const List = () => {
 }
 
 export const Single = () => {
-  const Redirector = () => {
-    const history=useHistory()
-
-    useEffect(() =>
-    {
-      history.push('/fruits')
-    }, [])
-    return 'Redirected'
-
-  }
 
   const basePath = '/'
   const typeUrlParam = ':type([0-9a-z-]{3,80})'
-  const viewUrlParam = ':view([0-9a-z]{3,80})'
+  const viewUrlParam = ':view([-0-9a-z]{3,80})'
   const idUrlParam = ':guid([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'
   //const redeemParam = ':slug([0-9a-f]{24})'
 

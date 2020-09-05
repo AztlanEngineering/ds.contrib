@@ -3,7 +3,13 @@ import { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 
 import { TableView, CardView } from '../ListViews'
-import { AssociationsView, EditView, StateView } from '../SingleViews'
+import {
+  AssociationsView,
+  EditView,
+  StateView,
+  FullView,
+  MultiFormView
+} from '../SingleViews'
 
 import { generatePath, useLocation, useParams, useRouteMatch } from 'react-router-dom'
 
@@ -32,6 +38,9 @@ const MapContextProvider = ({
   //console.log('MCP', routeParams, type, view, useParams(), useRouteMatch())
 
   const currentType = typeList.find(e => e.baseUrl === type)
+
+  const getType = useCallback((typeName) => typeList.find(e => e.name === typeName), 
+    [typeList])
 
   //console.log('INIT CTX PRO', typeList, currentType)
 
@@ -106,6 +115,34 @@ const MapContextProvider = ({
 
       }
     )
+
+    currentType.graphql.queries.FULL && views.push(
+      {
+        view     :'full',
+        name     :'Full',
+        shortcut :'f',
+        className:'x-white',
+        Component:FullView
+
+      }
+    )
+
+    if (currentType.defaultViews.multi) {
+      currentType.defaultViews.multi.forEach(e =>
+      {
+        views.push(
+          {
+            view     :`multi-${e.type.toLowerCase()}`,
+            name     :`Multi ${e.type}`,
+            shortcut :e.shortcut,
+            className:'x-yellow',
+            Component:MultiFormView
+
+          }
+        )
+
+      })
+    }
     return views
   }
   , [currentType.name])
@@ -119,9 +156,10 @@ const MapContextProvider = ({
         typeSlug:type,
         generateLocalPath,
         currentType,
+        getType,
         availableListViews,
         availableSingleViews,
- 
+
       }}
     >
       { children }

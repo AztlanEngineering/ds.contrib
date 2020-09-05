@@ -43,6 +43,7 @@ const Delete = ({
   className,
   style,
   item,
+  itemId:userItemId,
   refetch,
   redirect,
   ...otherProps
@@ -53,11 +54,17 @@ const Delete = ({
   const history = useHistory()
 
   const {
-    currentType,
+    currentType:localType,
     generateLocalPath,
-  } = useObjectMap()
+    getType
+  } = useModelMap()
+
+  const currentType = useMemo(() => objectType ? getType(objectType) : localType, [routeParams])
 
   const { DELETE } = currentType.graphql.mutations
+
+  const itemName = item ? item._string || item.name || item.id : itemId
+  const itemId = item ? item.id || userItemId
 
   const [deleteItem, {
     data={},
@@ -72,9 +79,9 @@ const Delete = ({
 
   const onClick = (e) => {
     const variables = {
-      id:item.id
+      id:itemId
     }
-    if (confirm(`Please confirm you want to delete ${item._string || item.name || item.id }`) == true) {
+    if (confirm(`Please confirm you want to delete ${itemName }`) == true) {
       deleteItem({ variables })
     }
   }

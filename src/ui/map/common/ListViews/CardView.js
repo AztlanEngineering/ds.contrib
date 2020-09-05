@@ -83,9 +83,9 @@ const CardView = ({
       { data &&
         <Card.Group
           style={{
-            '--card-width':currentType.defaultViews.card.minWidth || '200px'
+            '--card-width':currentType.defaultViews.card.minWidth || '16.5em'
           }}
-          className='u0'
+          className='u0 s-1 k-s'
         >
           { finalData.map((e, i) =>
             <CardComponent
