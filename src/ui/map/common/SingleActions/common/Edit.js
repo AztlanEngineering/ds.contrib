@@ -1,6 +1,6 @@
 /* @fwrlines/generator-react-component 2.4.1 */
 import * as React from 'react'
-//import {} from 'react'
+import { useMemo } from 'react'
 import PropTypes from 'prop-types'
 
 
@@ -40,6 +40,9 @@ const Edit = ({
   className,
   style,
   item,
+  itemId:userItemId,
+
+  objectType,
 
   //These are extracted not to be passed to the children button
   refetch,
@@ -47,20 +50,26 @@ const Edit = ({
 
   ...otherProps
 }) => {
-
-  const {
-    currentType,
-    generateLocalPath
-  } = useModelMap()
+  const itemId = item ? item.id : userItemId
 
   const routeParams = useParams()
 
+  const {
+    currentType:localType,
+    generateLocalPath,
+    getType
+  } = useModelMap()
+
+  const currentType = useMemo(() => objectType ? getType(objectType) : localType, [routeParams])
+
+
   return (
-    <Link to={ item.id && generateLocalPath(
+    <Link to={ itemId && generateLocalPath(
       'single',
       {
-        guid:item.id,
-        ...routeParams
+        ...routeParams,
+        guid:itemId,
+        type:currentType.baseUrl
       }
     ) }
     >

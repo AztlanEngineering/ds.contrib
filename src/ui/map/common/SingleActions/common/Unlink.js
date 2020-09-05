@@ -4,57 +4,60 @@ import { useMemo, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 
+
 import { Button } from 'ds-core'
 
 
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/client'
-
 import { useModelMap } from '../../Context'
 
+
 import { useHistory, useParams } from 'react-router-dom'
+
 //Intl
 
-/* import { FormattedMessage} from "react-intl";
-   import messages from "./messages";
-    <FormattedMessage {...messages.title} /> */
+//import { FormattedMessage} from "react-intl";
+//import messages from "./messages";
+// <FormattedMessage {...messages.title} />
 
 //Config
 
 //import C from 'ui/cssClasses'
 
-/* Relative imports
-   import styles from './delete.scss' */
+//Relative imports
+//import styles from './unlink.scss'
 import { isBackend } from 'ui/isBackend'
 
 if(!isBackend) {
-  import('./delete.scss')
+  import('./unlink.scss')
 }
 
-const baseClassName = 'delete'
+const baseClassName = 'unlink'
 
 
 /**
- * Use `Delete` to
- * Has color `x`
+ * Use `Unlink` to
+ * Has color `x` 
  */
-const Delete = ({
+const Unlink = ({
   id,
   className,
   style,
+
   item,
   itemId:userItemId,
 
   objectType,
+  foreignKey,
 
   refetch,
-  redirect,
-  ...otherProps
 }) => {
 
-  const routeParams = useParams()
-
-  const history = useHistory()
+  const {
+    guid:currentId,
+    ...routeParams
+  } = useParams()
 
   const {
     currentType:localType,
@@ -64,16 +67,16 @@ const Delete = ({
 
   const currentType = useMemo(() => objectType ? getType(objectType) : localType, [routeParams])
 
-  const { DELETE } = currentType.graphql.mutations
-
+  const { UPDATE } = currentType.graphql.mutations
+  
   const itemName = item ? item._string || item.name || item.id : userItemId
   const itemId = item ? item.id : userItemId
-
-  const [deleteItem, {
+  
+  const [unlinkItem, {
     data={},
     loading,
     error
-  }] = useMutation(gql(DELETE))
+  }] = useMutation(gql(UPDATE))
 
   const finalData = useMemo(() => (data && data[Object.keys(data).reduce((a, e) => {
     return e
@@ -82,24 +85,13 @@ const Delete = ({
 
   const onClick = (e) => {
     const variables = {
-      id:itemId
+      id:itemId,
+      [foreignKey]:null
     }
-    if (confirm(`Please confirm you want to delete ${itemName }`) == true) {
-      deleteItem({ variables })
+    if (confirm(`Please confirm you know what youre doing. You will now unlink ${itemName} from ${objectType}:${currentId}`) == true) {
+      unlinkItem({ variables })
     }
   }
-
-  useEffect(() => {
-    if(redirect && (finalData === item.id)) {
-      const url = generateLocalPath(
-        'list',
-        {
-          ...routeParams
-        }
-      )
-      history.push(url)
-    }
-  }, [finalData])
 
   useEffect(() => {
     //console.log('WILL NOW REFETCH', finalData)
@@ -107,7 +99,9 @@ const Delete = ({
   }
   , [finalData] )
 
+  
   return (
+
     <Button
       className={
         [
@@ -122,55 +116,67 @@ const Delete = ({
       onClick={ !loading ? onClick : undefined }
     >
       { error && JSON.stringify(error) }
-      Delete
+      Unlink{' '}{ objectType }
     </Button>
-  )}
 
-Delete.propTypes = {
+)}
+
+Unlink.propTypes = {
   /**
    * Provide an HTML id to this element
    */
-  id:PropTypes.string,
+  id: PropTypes.string,
 
   /**
    * The html class names to be provided to this element
    */
-  className:PropTypes.string,
+  className: PropTypes.string,
 
   /**
    * The JSX-Written, css styles to apply to the element.
    */
-  style:PropTypes.object,
-
-
+  style: PropTypes.object,
 
   /**
    *  The children JSX
    */
-  children:PropTypes.node,
+  children: PropTypes.node,
 
   /**
-   * A dict of values representing the current item. Must have key id
+   * Which html tag to use
    */
-  item:PropTypes.object.isRequired,
-
-
-  /**
-   *  function that will be executed after the end of the mutation
-   */
-  refetch:PropTypes.func,
+  as: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]), 
+  //as: PropTypes.string,
 
   /**
-   *  Whether to redirect to the main list page after deletion 
+   * The height of the element
    */
-  redirect:PropTypes.bool
+  height: PropTypes.string,
+
+  /**
+   * The width of the element
+   */
+  width: PropTypes.string,
+  /*
+  : PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    state: PropTypes.string.isRequired,
+  }),
+  : PropTypes.func,
+  : PropTypes.func,
+  : PropTypes.oneOf(['', ''])
+  */
 }
 
 /*
-Delete.defaultProps = {
+Unlink.defaultProps = {
   status: 'neutral',
   //height:'2.2em',
   //as:'p',
 }
 */
-export default Delete
+export default Unlink
