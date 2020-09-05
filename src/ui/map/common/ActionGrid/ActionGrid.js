@@ -256,7 +256,7 @@ const ActionGrid = ({
                 {loadingSingle ?
                   <InlineLoader type='circle'/>:
                   //JSON.stringify({ _string: item._string })}
-                  item._string || item.name }
+                  item._string || item.name || ' '}
               </span>
               <Actions>
                 { (availableSingleViews.length > 1) && availableSingleViews.map((e, i) =>{

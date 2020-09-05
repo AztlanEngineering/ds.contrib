@@ -83,7 +83,6 @@ const TypeButton = ({
         }
         id={ id }
         style={ style }
-        { ...otherProps }
       >
         <Label className='x-secondary s-2 k-s'>{ typename }</Label>
         <span>

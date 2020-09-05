@@ -7,5 +7,15 @@ Classes :
 */
 
 .object_card{
+  &.front-face {
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+
+  main {
+    flex-grow:99;
+  }
+
+  }
 
 }

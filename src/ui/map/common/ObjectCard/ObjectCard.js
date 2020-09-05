@@ -75,6 +75,14 @@ const ObjectCard = ({
       }
       id={ id }
       style={ style }
+      backFaceClassName='y-paragraph b-y'
+      backFace={
+        <Card.Section>
+          <div>
+          <pre className='s-2 k-s c-x x-background'>{ JSON.stringify(item, null, 2) }</pre>
+          </div>
+        </Card.Section>
+      }
     >
       { children }
       { item && item.tests &&
