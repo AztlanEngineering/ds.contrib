@@ -207,7 +207,7 @@ const ActionGrid = ({
                   key={i}
                 >
                   <Button
-                    className={ isActive ? e.className : 'x-grey' }
+                    className={ isActive ? e.className : 'x-background' }
                     key={i}
                   >
                     <strong>
@@ -216,7 +216,7 @@ const ActionGrid = ({
                     {' '}
                     { !editMode &&
                       <Shortcut
-                        className='s-2 k-s x-white ul'
+                        className='s-2 k-s x-paragraph ul'
                         action={
                           () => history.push(getListViewUrl(e.view))
                         }
@@ -237,7 +237,10 @@ const ActionGrid = ({
                 {' '}
                 { !editMode &&
                   <Shortcut
-                    className='s-2 k-s x-white ul'
+                    className='s-2 k-s ul'
+                            style={{
+                              '--z':"var(--on-x)"
+                            }}
                     action={
                       () => history.push(newViewUrl)
                     }
@@ -267,7 +270,7 @@ const ActionGrid = ({
                       key={i}
                     >
                       <Button
-                        className={ isActive ? e.className : 'x-grey' }
+                        className={ isActive ? e.className : 'x-background' }
                         key={i}
                       >
                         <strong>
@@ -276,8 +279,8 @@ const ActionGrid = ({
                         {' '}
                         { !editMode &&
                           <Shortcut
-                            className='s-2 k-s x-white ul'
-                            action={
+                            className='s-2 k-s ul x-paragraph'
+                                                        action={
                               () => history.push(getSingleViewUrl(e.view))
                             }
                             keys={[

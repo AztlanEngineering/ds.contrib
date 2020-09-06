@@ -1,4 +1,5 @@
 /* @fwrlines/generator-react-component 2.4.1 */
+
 /*
 
 Classes :
@@ -6,16 +7,14 @@ Classes :
 
 */
 
-.object_card{
+.object_card {
   &.front-face {
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
-  main {
-    flex-grow:99;
+    main {
+      flex-grow: 99;
+    }
   }
-
-  }
-
 }

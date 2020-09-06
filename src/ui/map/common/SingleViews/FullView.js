@@ -113,7 +113,7 @@ const FullView = ({
           Refetch
           </Button>
       </ActionGrid>
-      <pre className='s-1 k-s'>
+      <pre className='s-1 k-s x-paragraph c-x'>
         { JSON.stringify(finalData, null, 2) }
       </pre>
     </div>

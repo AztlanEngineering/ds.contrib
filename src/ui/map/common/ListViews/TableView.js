@@ -271,7 +271,7 @@ const TableView = ({
                         <SingleActions
                           className='s-2 k-s'
                           style={{ justifyContent: 'flex-end' }}
-                          item={ e.values }
+                          item={ e.original }
                           refetch={ refetch }
                           extraActions={
                             currentType.actions ? currentType.actions.extraActions: undefined

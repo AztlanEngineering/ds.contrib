@@ -70,7 +70,7 @@ const MapContextProvider = ({
           view     :'cards',
           name     :'Cards',
           shortcut :'c',
-          className:'x-violet',
+          className:'x-indigo',
           Component:CardView
         })
 
@@ -121,7 +121,7 @@ const MapContextProvider = ({
         view     :'full',
         name     :'Full',
         shortcut :'f',
-        className:'x-white',
+        className:'x-background',
         Component:FullView
 
       }

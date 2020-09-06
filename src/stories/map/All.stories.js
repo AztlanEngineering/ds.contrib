@@ -18,7 +18,8 @@ import {
   MapListView as ListView,
   MapSingleView as SingleView,
   MapObjectCard as Card,
-  MapTypeButton
+  MapTypeButton,
+  MapReverseAssociationButton
 } from 'ui'
 
 import QUERY_ONE from './graphql/getFruit.gql'
@@ -188,7 +189,8 @@ const typeList = [{
       {
         type      :'Fruit',
         foreignKey:'eatWithId',
-        query     :QUERY_ALL,
+        accessor  :'relatedFruits',
+        //query     :QUERY_ALL, //If query is used then accessor is not needed
         shortcut  :'o'
       }
     ],
@@ -396,7 +398,7 @@ export const Single = () => {
 
 }
 
-export const TypeButton = () => {
+export const Buttons = () => {
 
   const basePath = '/'
   const typeUrlParam = ':type([0-9a-z-]{3,80})'
@@ -428,18 +430,48 @@ export const TypeButton = () => {
       ]}
       exact={ true }
     >
-  <MapContextProvider
-    typeList={ typeList }
-    testParam='fruits'
-    routes={ urls }
-  >
-    <MapTypeButton typename='Fruit' item={{_string:'Grapefruit', 'id':'46a7be79-b013-431d-b2d3-1c1e99dc97f2'}}>
-    </MapTypeButton>
-    <MapTypeButton typename='Fruit' itemId='46a7be79-b013-431d-b2d3-1c1e99dc97f2'>
-    </MapTypeButton>
-  </MapContextProvider>
+      <MapContextProvider
+        typeList={ typeList }
+        testParam='fruits'
+        routes={ urls }
+      >
+        <MapTypeButton
+          typename='Fruit'
+          item={{_string: 'Grapefruit', 'id': '46a7be79-b013-431d-b2d3-1c1e99dc97f2'}}
+        >
+        </MapTypeButton>
+        <MapTypeButton
+          typename='Fruit'
+          itemId='46a7be79-b013-431d-b2d3-1c1e99dc97f2'
+        >
+        </MapTypeButton>
+        <MapReverseAssociationButton
+          itemId='46a7be79-b013-431d-b2d3-1c1e99dc97f2'
+          item={{
+            _string: 'Grapefruit', 
+            'id': '46a7be79-b013-431d-b2d3-1c1e99dc97f2',
+            'contents':[
+              { 'id': '46a7be79-b013-431d-b2d3-1c1e99dc97f2', },
+              { 'id': '46a7be79-b013-431d-b2d3-1c1e99dc97f2', }
+            ]
+          }}
+          accessor='contents'
+          typename='Fruit'
+        />
+        <MapReverseAssociationButton
+          itemId='46a7be79-b013-431d-b2d3-1c1e99dc97f2'
+          item={{
+            _string: 'Grapefruit', 
+            'id': '46a7be79-b013-431d-b2d3-1c1e99dc97f2',
+            'contents':[
+            ]
+          }}
+          accessor='contents'
+          typename='Fruit'
+        />
+      </MapContextProvider>
     </Route>
-)
+  )
 }
 
 

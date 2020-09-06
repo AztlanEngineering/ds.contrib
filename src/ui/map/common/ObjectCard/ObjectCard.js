@@ -79,7 +79,7 @@ const ObjectCard = ({
       backFace={
         <Card.Section>
           <div>
-          <pre className='s-2 k-s c-x x-background'>{ JSON.stringify(item, null, 2) }</pre>
+            <pre className='s-2 k-s c-x x-background'>{ JSON.stringify(item, null, 2) }</pre>
           </div>
         </Card.Section>
       }
@@ -90,7 +90,11 @@ const ObjectCard = ({
         </Card.Section>
       }
       <Card.Section>
-        <Button.Group className='s-2 k-s' style={{ justifyContent:'flex-end' }}>
+        <Button.Group
+          independent
+          className='s-2 k-s'
+          style={{ justifyContent: 'flex-end' }}
+        >
           <SingleActions
             { ...actionProps }
           />

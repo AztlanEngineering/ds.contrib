@@ -17,7 +17,8 @@ import {
 import {
   FormContextProvider,
   FormContextDebugger,
-  FormQueryMultiObject
+  FormQueryMultiObject,
+  FormMultiObject
 } from 'ds-form'
 
 import {
@@ -58,8 +59,8 @@ const MultiFormView = ({
   id,
   className,
   style,
-  itemId
-}) => {
+  itemId,
+  foreignKey}) => {
 
   const location = useLocation()
 
@@ -118,11 +119,17 @@ const MultiFormView = ({
 
   const name = currentId ? (finalData._string || finalData.name || (finalData.id && finalData.id.substring(0, 8)) || 'Loading') : `New ${currentType.name}`
 
+  const existingItems = finalData[currentMultiFormInfo.accessor] || []
+
+  console.log(8877, 'existing items are', existingItems, finalData, currentMultiFormInfo)
+
+  const MultiFormComponent = currentMultiFormInfo.query ? FormQueryMultiObject : FormMultiObject
+
   const actionsProps = useMemo(() => ({
     enableDelete:true,
     enableEdit  :true,
     enableUnlink:true,
-    foreignKey:currentMultiFormInfo.foreignKey,
+    foreignKey  :currentMultiFormInfo.foreignKey,
     objectType  :currentMultiFormInfo.type,
     refetch,
   }), [currentMultiFormInfo, refetch])
@@ -158,19 +165,20 @@ const MultiFormView = ({
         <FormContextProvider
           useObjects
         >
-          <FormQueryMultiObject
-            inputMap={ currentRelatedType.defaultViews.single.fields }
-            maxExtra={ 3 }
-            query={ currentMultiFormInfo.query }
-            ObjectActions={({objectId}) => 
+          <MultiFormComponent
+            inputMap={ currentRelatedType.defaultViews.single.fields.filter(e => e.name !== currentMultiFormInfo.foreignKey) }
+            maxExtra={ currentMultiFormInfo.maxExtra || 4 }
+            extra={ currentMultiFormInfo.extra }
+            //query={ currentMultiFormInfo.query }
+            existing={ existingItems }
+            ObjectActions={({objectId}) =>
               <SingleActions
                 { ...actionsProps }
                 itemId={ objectId }
               />
             }
-          >
+          />
 
-          </FormQueryMultiObject>
           <FormContextDebugger/>
         </FormContextProvider>
       </div>
@@ -194,9 +202,9 @@ const MultiFormView = ({
       <ActionGrid
         item={ finalData }
         loadingSingle={ loading  }
-//        currentSingleView={ `Multi ${currentMultiFormInfo.type}` }
-  //      title={ `Multi ${currentMultiFormInfo.type}` }
-        //title={ name }
+        /*         currentSingleView={ `Multi ${currentMultiFormInfo.type}` }
+                 title={ `Multi ${currentMultiFormInfo.type}` }
+           title={ name } */
       >
         <Button
           onClick={ refetch }
@@ -251,11 +259,6 @@ MultiFormView.propTypes = {
     PropTypes.object
   ]),
   //as: PropTypes.string,
-
-  /**
-   * The height of the element
-   */
-  height:PropTypes.string,
 
   /**
    * The width of the element

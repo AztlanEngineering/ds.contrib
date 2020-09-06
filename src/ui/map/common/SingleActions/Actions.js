@@ -105,7 +105,7 @@ const Actions = ({
 
 
   return (
-    actions.map(({ Component, ...e }, i) =>
+    actions.map(({ Component, extraProps, ...e }, i) =>
       <Component
         {...e}
         key={ i }
@@ -115,6 +115,7 @@ const Actions = ({
         foreignKey={ foreignKey }
         refetch={ refetch }
         redirect={ redirectAfterDelete }
+        { ...extraProps }
       />
 
     )

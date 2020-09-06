@@ -8,6 +8,7 @@ export {
   EditView as MapEditView,
   ObjectCard as MapObjectCard,
   ObjectState as MapObjectState,
+  ReverseAssociationButton as MapReverseAssociationButton,
   StateView as MapStateView,
   TableView as MapTableView,
   TypeButton as MapTypeButton,
