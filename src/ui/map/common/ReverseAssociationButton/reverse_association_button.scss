@@ -1,0 +1,17 @@
+/* @fwrlines/generator-react-component 2.4.1 */
+/*
+
+Classes :
+.reverse_association_button : default
+
+*/
+
+.reverse_association_button{
+  white-space:nowrap;
+
+  &.bool.false {
+    text-decoration:line-through;
+
+  }
+
+}

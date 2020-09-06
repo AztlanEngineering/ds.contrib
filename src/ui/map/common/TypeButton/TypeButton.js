@@ -1,14 +1,15 @@
 /* @fwrlines/generator-react-component 2.4.1 */
 import * as React from 'react'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import PropTypes from 'prop-types'
 
-import { Button } from 'ui/elements'
+import {
+  Button,
+  Label
+} from 'ds-core'
 
-import { Actions } from '../../Actions'
 
-
-
+import { useModelMap } from '../Context'
 //Intl
 
 /* import { FormattedMessage} from "react-intl";
@@ -20,83 +21,79 @@ import { Actions } from '../../Actions'
 //import C from 'ui/cssClasses'
 
 /* Relative imports
-   import styles from './row.scss' */
-const baseClassName = 'row'
+   import styles from './type_button.scss' */
+import { isBackend } from 'ui/isBackend'
+
+if(!isBackend) {
+  import('./type_button.scss')
+}
+
+const baseClassName = 'type_button'
 
 
+import { Link, useHistory, useParams } from 'react-router-dom'
 /**
- * Use `Row` to
+ * Use `TypeButton` to
  * Has color `x`
  */
-const Row = ({
+const TypeButton = ({
   id,
   className,
   style,
+  children,
 
-  row,
-
-  refetch,
-  extraActions,
+  item,
+  itemId,
+  typename,
+  ...otherProps
 }) => {
 
-  const [displayDetails, setDisplayDetails] = useState(false)
+  const {
+    currentType:localType,
+    generateLocalPath,
+    getType
+  } = useModelMap()
 
-  const toggleDisplayDetails = setDisplayDetails(!displayDetails)
+  const typeUrl = useMemo(() => (getType(typename)||{}).baseUrl, [typename])
 
-  const DisplayJsonButton = useMemo(() => () => {
-    return (
-      <Button
-        className='x-yellow'
-        onClick={ toggleDisplayDetails }
-      >
-        JSON
-      </Button>
-    )
-  })
+  const name = useMemo(() => item ? item._string || item.name || item.id.split('-')[0] : itemId.split('-')[0],
+    [item, itemId]
+  )
 
+  const link = useMemo(() => generateLocalPath(
+    'single',
+    {
+      type:typeUrl,
+      guid:item ? item.id : itemId
+    }
+  ),
+    [typename, item, itemId]
+  )
 
   return (
-    <>
-      <tr
-        {...row.getRowProps()}
+    <Link to={ link }>
+      <Button
         className={
           [
             //styles[baseClassName],
             baseClassName,
+            'yif',
             className
           ].filter(e => e).join(' ')
         }
         id={ id }
         style={ style }
       >
-        {row.cells.map(cell => {
-          return (
-
-            <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-          )
-        })}
-        <td className='actions'>
-          <Actions
-            className='s-2 k-s'
-            style={{ justifyContent: 'end' }}
-            item={ row.values }
-            refetch={ refetch }
-          />
-        </td>
-      </tr>
-      { displayDetails &&
-        <tr>
-          <td className='x-paragraph s-1 k-s'>
-            <pre>
-              { JSON.stringify(row.values, null, 2) }
-            </pre>
-          </td>
-        </tr>
-      }
-    </>
+        <Label className='x-secondary s-2 k-s'>{ typename }</Label>
+        <span>
+        &nbsp;
+          { children || name }
+        </span>
+      </Button>
+    </Link>
   )}
 
-Row.propTypes = {
+TypeButton.propTypes = {
   /**
    * Provide an HTML id to this element
    */
@@ -147,7 +144,11 @@ Row.propTypes = {
   */
 }
 
-Row.defaultProps = {
-  extraActions:[]
+/*
+TypeButton.defaultProps = {
+  status: 'neutral',
+  //height:'2.2em',
+  //as:'p',
 }
-export default Row
+*/
+export default TypeButton

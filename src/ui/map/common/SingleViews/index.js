@@ -1,3 +1,5 @@
 export { default as EditView } from './EditView'
 export { default as AssociationsView } from './AssociationsView'
 export { default as StateView } from './StateView'
+export { default as FullView } from './FullView'
+export { default as MultiFormView } from './MultiFormView'

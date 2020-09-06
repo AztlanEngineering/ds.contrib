@@ -59,7 +59,7 @@ const AssociationsView = ({
   className,
   style,
   itemId,
-  setCurrentTab
+  //setCurrentTab
 }) => {
 
   const location = useLocation()
@@ -105,16 +105,6 @@ const AssociationsView = ({
 
   const name = currentId ? (finalData._string || finalData.name || (finalData.id && finalData.id.substring(0, 8)) || 'Loading') : `New ${currentType.name}`
 
-  useEffect(() =>
-  {
-    setCurrentTab && setCurrentTab({
-      path :`${location.pathname}`,
-      title:`${name}`
-    })
-  },
-  [finalData.id]
-  )
-
 
   if(!currentId || finalData.__typename) return (
     <div
@@ -134,6 +124,9 @@ const AssociationsView = ({
         currentSingleView='Associations'
         title='Object Associations'
       >
+        <Button onClick={ refetch } className='pointer x-green'>
+          Refetch
+        </Button>
               </ActionGrid>
       { currentType.associations.belongsTo.length &&
         <div className='pv-v'>
@@ -242,6 +235,7 @@ const AssociationsView = ({
         currentSingleView='Associations'
         title={ name }
       >
+        <Button onClick={ refetch } className='pointer x-green'>Refetch</Button>
               </ActionGrid>
 
       <pre className='c-x'>
