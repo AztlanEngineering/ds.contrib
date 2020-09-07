@@ -106,6 +106,7 @@ const TypeButton = ({
           style,
           className:[
             baseClassName,
+            'yf',
             className
           ].filter(e => e).join(' ')
         }
@@ -131,34 +132,36 @@ const TypeButton = ({
               'x-secondary',
             ].filter(e => e).join(' ')
           }
-          //id={ id }
-          //style={ style }
+          /* id={ id }
+             style={ style } */
         >
           { typename }
         </Button>
       </Link>
-      { guid && 
-      <Link
-        to={ linkToObject }
-        key='link-object'
-      >
-        <Button
-          className={
-            [
-              'x-grey',
-              'yif',
-            //styles[baseClassName],
-            ].filter(e => e).join(' ')
-          }
-          //id={ id }
-          //style={ style }
-          style={{
-            whiteSpace:'nowrap'
-          }}
+      { guid &&
+        <Link
+          to={ linkToObject }
+          key='link-object'
+          style={ wrapGroup && { flexGrow: 99 }}
         >
+          <Button
+            className={
+              [
+                'x-grey',
+                'yif',
+                //styles[baseClassName],
+              ].filter(e => e).join(' ')
+            }
+            /* id={ id }
+             style={ style } */
+            style={{
+              whiteSpace:'nowrap',
+              width     :'100%'
+            }}
+          >
             { children || name }
-        </Button>
-      </Link>}
+          </Button>
+        </Link>}
     </Wrapper>
   )}
 
