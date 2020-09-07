@@ -17,6 +17,10 @@ import {
 } from '../ActionGrid'
 
 import {
+  GraphQLErrorView
+} from '../GraphQLErrorView'
+
+import {
   useModelMap,
 } from '../Context'
 
@@ -73,6 +77,7 @@ const AssociationsView = ({
 
   const {
     currentType,
+    getType,
     generateLocalPath
   } = useModelMap()
 
@@ -105,8 +110,18 @@ const AssociationsView = ({
 
   const name = currentId ? (finalData._string || finalData.name || (finalData.id && finalData.id.substring(0, 8)) || 'Loading') : `New ${currentType.name}`
 
+  if(!finalData.__typename) return(
+    <GraphQLErrorView
+      item={ finalData }
+      loadingSingle={ loading }
+      currentSingleView='Associations'
+      title='Local Associations'
+      error={ error }
+      refetch={refetch}
+    />
+  )
 
-  if(!currentId || finalData.__typename) return (
+  return (
     <div
       className={
         [
@@ -122,12 +137,11 @@ const AssociationsView = ({
         item={ finalData }
         loadingSingle={ loading  }
         currentSingleView='Associations'
-        title='Object Associations'
+        title='Local Associations'
+        refetch={ refetch }
       >
-        <Button onClick={ refetch } className='pointer x-green'>
-          Refetch
-        </Button>
-              </ActionGrid>
+      </ActionGrid>
+
       { currentType.associations.belongsTo.length &&
         <div className='pv-v'>
           <Heading
@@ -142,6 +156,7 @@ const AssociationsView = ({
                     subtitleUpper={ false }
                     className={ (finalData[e.foreignKey]) ? 'y-success' : 'y-warning'}
                   >
+                    {/*
                     <code>
                       { JSON.stringify(
                         {
@@ -149,6 +164,7 @@ const AssociationsView = ({
                         }
                       ) }
                     </code>
+                    */}
 
                   </DotInfo>
                 </p>
@@ -175,6 +191,7 @@ const AssociationsView = ({
             ) }
           </ul>
         </div>}
+      {/*
       <div className='pv-v'>
         <Heading
           headingAs='h1'
@@ -212,44 +229,7 @@ const AssociationsView = ({
             </>}
 
         </ul>
-      </div>
-    </div>
-  )
-  else return(
-    <div
-      className={
-        [
-          //styles[baseClassName],
-          baseClassName,
-          'x-paragraph',
-          's-2 k-s',
-          className
-        ].filter(e => e).join(' ')
-      }
-      id={ id }
-      style={ style }
-    >
-      <ActionGrid
-        item={ finalData }
-        loadingSingle={ loading  }
-        currentSingleView='Associations'
-        title={ name }
-      >
-        <Button onClick={ refetch } className='pointer x-green'>Refetch</Button>
-              </ActionGrid>
-
-      <pre className='c-x'>
-        { error && JSON.stringify(error, null, 2) }
-      </pre>
-      {!(loading || error) &&
-        <p className='c-x'>
-          If nothing else appears, the object was not found or there was no data returned
-          <pre>
-            { JSON.stringify(finalData) }
-            { JSON.stringify(data) }
-          </pre>
-        </p>}
-
+      </div>*/}
     </div>
   )
 }

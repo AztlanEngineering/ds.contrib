@@ -26,6 +26,10 @@ import {
 } from '../ActionGrid'
 
 import {
+  GraphQLErrorView
+} from '../GraphQLErrorView'
+
+import {
   useModelMap,
 } from '../Context'
 
@@ -134,7 +138,18 @@ const MultiFormView = ({
     refetch,
   }), [currentMultiFormInfo, refetch])
 
-  if(!currentId || finalData.__typename) return (
+  if(!finalData.__typename) return(
+    <GraphQLErrorView
+      item={ finalData }
+      loadingSingle={ loading }
+      currentSingleView={ `Multi ${currentMultiFormInfo.type}` }
+      title={ `Multi ${currentMultiFormInfo.type}` }
+      error={ error }
+      refetch={refetch}
+    />
+  )
+
+  return (
     <div
       className={
         [
@@ -152,14 +167,9 @@ const MultiFormView = ({
         loadingSingle={ loading  }
         currentSingleView={ `Multi ${currentMultiFormInfo.type}` }
         title={ `Multi ${currentMultiFormInfo.type}` }
+        refetch={ refetch }
         editMode
       >
-        <Button
-          onClick={ refetch }
-          className='pointer x-green'
-        >
-          Refetch
-        </Button>
       </ActionGrid>
       <div className='s-1 k-s'>
         <FormContextProvider
@@ -182,50 +192,6 @@ const MultiFormView = ({
           <FormContextDebugger/>
         </FormContextProvider>
       </div>
-    </div>
-  )
-
-  else return(
-    <div
-      className={
-        [
-          //styles[baseClassName],
-          baseClassName,
-          'x-paragraph',
-          's-2 k-s',
-          className
-        ].filter(e => e).join(' ')
-      }
-      id={ id }
-      style={ style }
-    >
-      <ActionGrid
-        item={ finalData }
-        loadingSingle={ loading  }
-        /*         currentSingleView={ `Multi ${currentMultiFormInfo.type}` }
-                 title={ `Multi ${currentMultiFormInfo.type}` }
-           title={ name } */
-      >
-        <Button
-          onClick={ refetch }
-          className='pointer x-green'
-        >
-          Refetch
-        </Button>
-      </ActionGrid>
-
-      <pre className='c-x'>
-        { error && JSON.stringify(error, null, 2) }
-      </pre>
-      {!(loading || error) &&
-        <p className='c-x'>
-          If nothing else appears, the object was not found or there was no data returned
-          <pre>
-            { JSON.stringify(finalData) }
-            { JSON.stringify(data) }
-          </pre>
-        </p>}
-
     </div>
   )
 }
