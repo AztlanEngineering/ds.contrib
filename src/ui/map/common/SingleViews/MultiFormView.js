@@ -64,7 +64,8 @@ const MultiFormView = ({
   className,
   style,
   itemId,
-  foreignKey}) => {
+  foreignKey
+}) => {
 
   const location = useLocation()
 
@@ -93,6 +94,8 @@ const MultiFormView = ({
   const currentRelatedType = useMemo(() => getType(currentMultiFormInfo.type),
     [ currentRelatedType ]
   )
+
+  const ObjectCard = useMemo(() => currentRelatedType.defaultViews.card.Component, [currentRelatedType])
 
   const {
     loading,
@@ -176,6 +179,7 @@ const MultiFormView = ({
           useObjects
         >
           <MultiFormComponent
+            orderField={ currentMultiFormInfo.orderField }
             inputMap={ currentRelatedType.defaultViews.single.fields.filter(e => e.name !== currentMultiFormInfo.foreignKey) }
             maxExtra={ currentMultiFormInfo.maxExtra || 4 }
             extra={ currentMultiFormInfo.extra }
@@ -186,6 +190,18 @@ const MultiFormView = ({
                 { ...actionsProps }
                 itemId={ objectId }
               />
+            }
+            ObjectInfo={({item}) =>
+              <div className='ph-u'>
+                <ObjectCard
+                  className='y-background b-y'
+                  enableUnlink
+                  item={ item || {}}
+                  foreignKey={ currentMultiFormInfo.foreignKey }
+                  typeInfo={ currentRelatedType.name }
+                >
+                </ObjectCard>
+              </div>
             }
           />
 

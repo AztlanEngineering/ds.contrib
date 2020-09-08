@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 
 import {
   Button,
+  Shortener,
   Label
 } from 'ds-core'
 
@@ -46,6 +47,7 @@ const TypeButton = ({
   itemId,
   typename,
   wrapGroup,
+  itemKey,
   ...otherProps
 }) => {
 
@@ -57,7 +59,7 @@ const TypeButton = ({
 
   const typeUrl = useMemo(() => (getType(typename)||{}).baseUrl, [typename])
 
-  const name = useMemo(() => item ? item._string || item.name || item.id.split('-')[0] : itemId.split('-')[0],
+  const name = useMemo(() => item ? item._string || item.name || item.id ? item.id.split('-')[0] :'' : itemId ? itemId.split('-')[0] : '',
     [item, itemId]
   )
 
@@ -67,12 +69,13 @@ const TypeButton = ({
     linkToObject ,
     linkToType
   }= useMemo(() => {
-    const typeLink = generateLocalPath(
+    const typeLink = typeUrl ? generateLocalPath(
       'list',
       {
         type:typeUrl
       }
-    )
+    ) : ''
+
     if (guid) {
       return {
         linkToObject:generateLocalPath(
@@ -156,12 +159,38 @@ const TypeButton = ({
              style={ style } */
             style={{
               whiteSpace:'nowrap',
-              width     :'100%'
+              width     :!itemKey ? '100%': undefined
             }}
           >
-            { children || name }
+            <Shortener
+              className='s-1 k-s'
+              countLetters
+              readMore={false}
+              limit='20'
+            >
+              { children || name }
+            </Shortener>
           </Button>
         </Link>}
+
+      { itemKey && 
+          <Button
+            className={
+              [
+                'x-grey',
+                'yif',
+                //styles[baseClassName],
+              ].filter(e => e).join(' ')
+            }
+            /* id={ id }
+             style={ style } */
+            disabled
+          >
+            <span className="f-mono">
+              .{ itemKey }
+            </span>
+          </Button>
+      }
     </Wrapper>
   )}
 

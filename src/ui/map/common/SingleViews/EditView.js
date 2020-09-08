@@ -287,7 +287,7 @@ const EditView = ({
         initialValues={ finalData }
         parsers={ currentType.graphql.types }
       >
-        <div className='pv-v v2 s-1 k-s'>
+        <div className='pv-v v2 s-1 k-s' style={{ zIndex:6 }}>
           { fields.map((e, i) =>
             <FormInput
               key={i}

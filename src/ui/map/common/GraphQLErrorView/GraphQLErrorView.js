@@ -55,6 +55,9 @@ const GraphQLErrorView = ({
   error
 }) => {
 
+  const loading = loadingSingle || loadingList
+
+  const graphQLState = loading ? 'Loading' : 'Error'
 
   return (
     <div
@@ -74,7 +77,7 @@ const GraphQLErrorView = ({
         loadingList={ loadingList }
         currentSingleView={ currentSingleView }
         currentListView={ currentListView }
-        title={ `${title} (Error)` }
+        title={ `${title} (${graphQLState})` }
         //title={ name }
       >
         <Button
@@ -84,11 +87,17 @@ const GraphQLErrorView = ({
           Refetch
         </Button>
       </ActionGrid>
-      <Heading heading='There was an error executing the GraphQL query or mutation.'>
-      <pre className='c-x'>
-        { error && JSON.stringify(error, null, 2) }
-      </pre>
-      </Heading>
+      { loading ?
+
+        <Heading heading='Getting the data from the GraphQL api ....'>
+        </Heading> :
+
+        <Heading heading='There was an error executing the GraphQL query or mutation.'>
+          <pre className='c-x'>
+            { error && JSON.stringify(error, null, 2) }
+          </pre>
+        </Heading>
+      }
 
     </div>
   )}

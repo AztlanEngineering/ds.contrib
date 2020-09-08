@@ -137,9 +137,9 @@ const ActionGrid = ({
 
   const loading = loadingList || loadingSingle
 
-  useEffect(() =>
+  const setTab = useCallback(() =>
   {
-    !lean && setCurrentTab && setCurrentTab({
+    if(!lean && setCurrentTab) return setCurrentTab({
       path :`${location.pathname}`,
       title:(currentSingleView) ?
         (
@@ -214,6 +214,10 @@ const ActionGrid = ({
   },
   [item, currentSingleView, currentListView, currentType.name]
   )
+
+  useEffect(() => {
+    setTab()
+  }, [item, currentSingleView, currentListView, currentType.name])
 
   return (
     <div
