@@ -26,6 +26,10 @@ import {
 } from '../ActionGrid'
 
 import {
+  GraphQLErrorView
+} from '../GraphQLErrorView'
+
+import {
   useModelMap,
 } from '../Context'
 
@@ -60,7 +64,8 @@ const MultiFormView = ({
   className,
   style,
   itemId,
-  foreignKey}) => {
+  foreignKey
+}) => {
 
   const location = useLocation()
 
@@ -89,6 +94,8 @@ const MultiFormView = ({
   const currentRelatedType = useMemo(() => getType(currentMultiFormInfo.type),
     [ currentRelatedType ]
   )
+
+  const ObjectCard = useMemo(() => currentRelatedType.defaultViews.card.Component, [currentRelatedType])
 
   const {
     loading,
@@ -134,7 +141,18 @@ const MultiFormView = ({
     refetch,
   }), [currentMultiFormInfo, refetch])
 
-  if(!currentId || finalData.__typename) return (
+  if(!finalData.__typename) return(
+    <GraphQLErrorView
+      item={ finalData }
+      loadingSingle={ loading }
+      currentSingleView={ `Multi ${currentMultiFormInfo.type}` }
+      title={ `Multi ${currentMultiFormInfo.type}` }
+      error={ error }
+      refetch={refetch}
+    />
+  )
+
+  return (
     <div
       className={
         [
@@ -152,20 +170,16 @@ const MultiFormView = ({
         loadingSingle={ loading  }
         currentSingleView={ `Multi ${currentMultiFormInfo.type}` }
         title={ `Multi ${currentMultiFormInfo.type}` }
+        refetch={ refetch }
         editMode
       >
-        <Button
-          onClick={ refetch }
-          className='pointer x-green'
-        >
-          Refetch
-        </Button>
       </ActionGrid>
       <div className='s-1 k-s'>
         <FormContextProvider
           useObjects
         >
           <MultiFormComponent
+            orderField={ currentMultiFormInfo.orderField }
             inputMap={ currentRelatedType.defaultViews.single.fields.filter(e => e.name !== currentMultiFormInfo.foreignKey) }
             maxExtra={ currentMultiFormInfo.maxExtra || 4 }
             extra={ currentMultiFormInfo.extra }
@@ -177,55 +191,23 @@ const MultiFormView = ({
                 itemId={ objectId }
               />
             }
+            ObjectInfo={({item}) =>
+              <div className='ph-u'>
+                <ObjectCard
+                  className='y-background b-y'
+                  enableUnlink
+                  item={ item || {}}
+                  foreignKey={ currentMultiFormInfo.foreignKey }
+                  typeInfo={ currentRelatedType.name }
+                >
+                </ObjectCard>
+              </div>
+            }
           />
 
           <FormContextDebugger/>
         </FormContextProvider>
       </div>
-    </div>
-  )
-
-  else return(
-    <div
-      className={
-        [
-          //styles[baseClassName],
-          baseClassName,
-          'x-paragraph',
-          's-2 k-s',
-          className
-        ].filter(e => e).join(' ')
-      }
-      id={ id }
-      style={ style }
-    >
-      <ActionGrid
-        item={ finalData }
-        loadingSingle={ loading  }
-        /*         currentSingleView={ `Multi ${currentMultiFormInfo.type}` }
-                 title={ `Multi ${currentMultiFormInfo.type}` }
-           title={ name } */
-      >
-        <Button
-          onClick={ refetch }
-          className='pointer x-green'
-        >
-          Refetch
-        </Button>
-      </ActionGrid>
-
-      <pre className='c-x'>
-        { error && JSON.stringify(error, null, 2) }
-      </pre>
-      {!(loading || error) &&
-        <p className='c-x'>
-          If nothing else appears, the object was not found or there was no data returned
-          <pre>
-            { JSON.stringify(finalData) }
-            { JSON.stringify(data) }
-          </pre>
-        </p>}
-
     </div>
   )
 }

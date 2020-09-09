@@ -107,6 +107,12 @@ const Delete = ({
   }
   , [finalData] )
 
+  useEffect(() => {
+    if (error && !(typeof window === 'undefined')){
+      alert(JSON.stringify(error, null, 2) )
+    } 
+  }, [error])
+
   return (
     <Button
       className={
@@ -121,7 +127,6 @@ const Delete = ({
       loading={ loading }
       onClick={ !loading ? onClick : undefined }
     >
-      { error && JSON.stringify(error) }
       Delete
     </Button>
   )}

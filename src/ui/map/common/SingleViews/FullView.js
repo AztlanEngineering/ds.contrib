@@ -16,6 +16,10 @@ import {
 } from '../ActionGrid'
 
 import {
+  GraphQLErrorView
+} from '../GraphQLErrorView'
+
+import {
   useModelMap,
 } from '../Context'
 //Intl
@@ -91,7 +95,18 @@ const FullView = ({
   const name = currentId ? (finalData._string || finalData.name || (finalData.id && finalData.id.substring(0, 8)) || 'Loading') : `New ${currentType.name}`
 
 
-  if(!currentId || finalData.__typename) return (
+  if(!finalData.__typename) return(
+    <GraphQLErrorView
+      item={ finalData }
+      loadingSingle={ loading }
+      currentSingleView='Full'
+      title='Full Graph'
+      error={ error }
+      refetch={refetch}
+    />
+  )
+
+  return (
     <div
       className={
         [
@@ -108,10 +123,9 @@ const FullView = ({
         loadingSingle={ loading  }
         currentSingleView='Full'
         title='Full Graph'
+        refetch={ refetch }
       >
-        <Button onClick={ refetch } className='pointer x-green'>
-          Refetch
-          </Button>
+
       </ActionGrid>
       <pre className='s-1 k-s x-paragraph c-x'>
         { JSON.stringify(finalData, null, 2) }
@@ -119,43 +133,6 @@ const FullView = ({
     </div>
   )
 
-  else return(
-    <div
-      className={
-        [
-          //styles[baseClassName],
-          baseClassName,
-          'x-paragraph',
-          's-2 k-s',
-          className
-        ].filter(e => e).join(' ')
-      }
-      id={ id }
-      style={ style }
-    >
-      <ActionGrid
-        item={ finalData }
-        loadingSingle={ loading  }
-        currentSingleView='Full'
-        title={ name }
-      >
-        <Button onClick={ refetch } className='pointer x-green'>Refetch</Button>
-      </ActionGrid>
-
-      <pre className='c-x'>
-        { error && JSON.stringify(error, null, 2) }
-      </pre>
-      {!(loading || error) &&
-        <p className='c-x'>
-          If nothing else appears, the object was not found or there was no data returned
-          <pre>
-            { JSON.stringify(finalData) }
-            { JSON.stringify(data) }
-          </pre>
-        </p>}
-
-    </div>
-  )
 }
 
 FullView.propTypes = {

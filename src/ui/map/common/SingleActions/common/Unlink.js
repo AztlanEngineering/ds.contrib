@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 
 
-import { Button } from 'ds-core'
+import { Button, Label } from 'ds-core'
 
 
 import gql from 'graphql-tag'
@@ -99,6 +99,13 @@ const Unlink = ({
   }
   , [finalData] )
 
+      { error && JSON.stringify(error) }
+
+  useEffect(() => {
+    if (error && !(typeof window === 'undefined')){
+      alert(JSON.stringify(error, null, 2) )
+    } 
+  }, [error])
   
   return (
 
@@ -107,6 +114,7 @@ const Unlink = ({
         [
         //styles[baseClassName],
           baseClassName,
+          'yf',
           className
         ].filter(e => e).join(' ')
       }
@@ -115,8 +123,13 @@ const Unlink = ({
       loading={ loading }
       onClick={ !loading ? onClick : undefined }
     >
-      { error && JSON.stringify(error) }
-      Unlink{' '}{ objectType }
+      <span>
+        { `Unlink ${objectType}` }
+        &nbsp;
+      </span>
+      <Label className='f-mono s-1 k-s x-white'>
+        { foreignKey }
+      </Label>
     </Button>
 
 )}

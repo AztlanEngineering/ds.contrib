@@ -71,7 +71,8 @@ const ActionGrid = ({
   title,
   editMode,
 
-  lean
+  lean,
+  refetch
 }) => {
 
   const history = useHistory()
@@ -134,40 +135,78 @@ const ActionGrid = ({
 
   const name = (item && item.id) ? (item._string || item.name || (item.id && item.id.substring(0, 8)) || 'Loading') : `New ${currentType.name}`
 
-  useEffect(() =>
+  const loading = loadingList || loadingSingle
+
+  const setTab = useCallback(() =>
   {
-    !lean && setCurrentTab && setCurrentTab({
+    if(!lean && setCurrentTab) return setCurrentTab({
       path :`${location.pathname}`,
-      title:(item && item.id) ?
+      title:(currentSingleView) ?
         (
           <>
             <Label
-              className='x-accent2 s-2 k-s'
-              basic
-              style={{ margin: 0 }}
+              className='x-secondary s-2 k-s'
+              //basic
+              style={{ marginRight: '.25em' }}
             >
-              { currentSingleView }
+              { currentType.name }
             </Label>
-            <span>
-              &nbsp;
-              {name }
-            </span>
+            {(location.pathname !== newViewUrl) ?
+              <>
+                <Label
+                  className={[
+                    's-2 k-s',
+                    availableSingleViews.find(e => e.name === currentSingleView).className
+
+                  ].filter(e => e).join(' ')}
+                >
+                  { currentSingleView }
+                </Label>
+                <Label
+                  simple
+                  className={[
+                    's-2 k-s',
+                    'x-paragraph'
+
+                  ].filter(e => e).join(' ')}
+                >
+                  {name }
+                </Label>
+              </>:
+              <Label
+                className={[
+                  's-2 k-s',
+                  'x-orange'
+                ].filter(e => e).join(' ')}
+              >
+                New
+              </Label>
+
+            }
+
           </>
 
-        ) :
-        (
+        )
+        : (
           <>
             <Label
-              className='x-accent1 s-2 k-s'
-              basic
-              style={{ margin: 0 }}
+              className='x-secondary s-2 k-s'
+              /* basic
+                 style={{ margin: 0 }} */
+              style={{ marginRight: '.25em' }}
             >
-              { currentListView }
-            </Label>
-            <span>
-              &nbsp;
               { currentType.name }
-            </span>
+            </Label>
+            { availableListViews && //Weird bug in some views
+              <Label
+                className={[
+                  's-2 k-s',
+                  (availableListViews.find(e => e.name === currentListView) || {}).className
+
+                ].filter(e => e).join(' ')}
+              >
+                { currentListView }
+              </Label>}
           </>
 
         )
@@ -175,6 +214,11 @@ const ActionGrid = ({
   },
   [item, currentSingleView, currentListView, currentType.name]
   )
+
+  useEffect(() => {
+    setTab()
+  }, [item, currentSingleView, currentListView, currentType.name])
+
   return (
     <div
       className={
@@ -191,11 +235,7 @@ const ActionGrid = ({
       { !lean &&
         <>
           <span className='h3 x-subtitle c-x f-m'>
-            {
-              loadingList ?
-                <InlineLoader type='circle'/>:
-                //JSON.stringify({ __typename: currentType.name })}
-                currentType.name}
+            {currentType.name}
           </span>
 
           <Actions>
@@ -216,7 +256,10 @@ const ActionGrid = ({
                     {' '}
                     { !editMode &&
                       <Shortcut
-                        className='s-2 k-s x-paragraph ul'
+                        className='s-2 k-s ul'
+                        style={{
+                          '--z':'var(--on-x, var(--paragraph))'
+                        }}
                         action={
                           () => history.push(getListViewUrl(e.view))
                         }
@@ -238,9 +281,9 @@ const ActionGrid = ({
                 { !editMode &&
                   <Shortcut
                     className='s-2 k-s ul'
-                            style={{
-                              '--z':"var(--on-x)"
-                            }}
+                    style={{
+                      '--z':'var(--on-x)'
+                    }}
                     action={
                       () => history.push(newViewUrl)
                     }
@@ -257,7 +300,7 @@ const ActionGrid = ({
               <span className='h3 x-subtitle c-x f-m'>
 
                 {loadingSingle ?
-                  <InlineLoader type='circle'/>:
+                  'Loading' :
                   //JSON.stringify({ _string: item._string })}
                   item._string || item.name || ' '}
               </span>
@@ -279,8 +322,11 @@ const ActionGrid = ({
                         {' '}
                         { !editMode &&
                           <Shortcut
-                            className='s-2 k-s ul x-paragraph'
-                                                        action={
+                            className='s-2 k-s ul'
+                            style={{
+                              '--z':'var(--on-x, var(--paragraph))'
+                            }}
+                            action={
                               () => history.push(getSingleViewUrl(e.view))
                             }
                             keys={[
@@ -301,11 +347,32 @@ const ActionGrid = ({
       }
       <>
         <span className='h3 f-m'>
-          { title || ' ' }
+          { loadingList ? `Loading ${currentListView}` : title || ' ' }
         </span>
-        { children &&
+        { (children || refetch) &&
           <Actions independent>
-            { children }
+            <>
+              { children }
+              { refetch &&
+                <Button
+                  onClick={ !loading ? () => refetch() : undefined }
+                  className={ 'x-green'}
+                  loading={ loading }
+                >
+                  Refetch
+                  {' '}
+                  {!editMode &&
+                    <Shortcut
+                      className='s-2 k-s x-white ul'
+                      action={
+                        () => refetch()
+                      }
+                      keys={[
+                        'r'
+                      ]}
+                    />}
+                </Button>}
+            </>
           </Actions>}
       </>
     </div>

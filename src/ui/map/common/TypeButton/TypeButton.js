@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 
 import {
   Button,
+  Shortener,
   Label
 } from 'ds-core'
 
@@ -45,6 +46,8 @@ const TypeButton = ({
   item,
   itemId,
   typename,
+  wrapGroup,
+  itemKey,
   ...otherProps
 }) => {
 
@@ -56,41 +59,139 @@ const TypeButton = ({
 
   const typeUrl = useMemo(() => (getType(typename)||{}).baseUrl, [typename])
 
-  const name = useMemo(() => item ? item._string || item.name || item.id.split('-')[0] : itemId.split('-')[0],
+  const name = useMemo(() => item ? item._string || item.name || item.id ? item.id.split('-')[0] :'' : itemId ? itemId.split('-')[0] : '',
     [item, itemId]
   )
 
-  const link = useMemo(() => generateLocalPath(
-    'single',
-    {
-      type:typeUrl,
-      guid:item ? item.id : itemId
+  const guid = useMemo(() => item ? item.id : itemId, [typename, item, itemId])
+
+  const {
+    linkToObject ,
+    linkToType
+  }= useMemo(() => {
+    const typeLink = typeUrl ? generateLocalPath(
+      'list',
+      {
+        type:typeUrl
+      }
+    ) : ''
+
+    if (guid) {
+      return {
+        linkToObject:generateLocalPath(
+          'single',
+          {
+            type:typeUrl,
+            guid
+          }
+        ),
+        linkToType:typeLink
+      }
     }
-  ),
-    [typename, item, itemId]
+    return {
+      linkToType:typeLink
+    }
+
+  }
+  ,
+  [typename, item, itemId]
   )
 
-  return (
-    <Link to={ link }>
-      <Button
-        className={
-          [
-            //styles[baseClassName],
+  const {
+    Wrapper,
+    wrapperProps
+  }= useMemo(() => {
+    if (wrapGroup) {
+      return {
+        Wrapper     :Button.Group,
+        wrapperProps:{
+          id,
+          style,
+          className:[
             baseClassName,
-            'yif',
+            'yf',
             className
           ].filter(e => e).join(' ')
         }
-        id={ id }
-        style={ style }
+      }
+    }
+    return {
+      Wrapper     :React.Fragment,
+      wrapperProps:{}
+    }
+
+  }, [wrapGroup])
+
+  return (
+    <Wrapper { ...wrapperProps }>
+      <Link
+        to={ linkToType }
+        key='link-type'
       >
-        <Label className='x-secondary s-2 k-s'>{ typename }</Label>
-        <span>
-        &nbsp;
-          { children || name }
-        </span>
-      </Button>
-    </Link>
+        <Button
+          className={
+            [
+            //styles[baseClassName],
+              'x-secondary',
+            ].filter(e => e).join(' ')
+          }
+          /* id={ id }
+             style={ style } */
+        >
+          { typename }
+        </Button>
+      </Link>
+      { guid &&
+        <Link
+          to={ linkToObject }
+          key='link-object'
+          style={ wrapGroup && { flexGrow: 99 }}
+        >
+          <Button
+            className={
+              [
+                'x-grey',
+                'yif',
+                //styles[baseClassName],
+              ].filter(e => e).join(' ')
+            }
+            /* id={ id }
+             style={ style } */
+            style={{
+              whiteSpace:'nowrap',
+              width     :!itemKey ? '100%': undefined
+            }}
+          >
+            <Shortener
+              className='s-1 k-s'
+              countLetters
+              readMore={false}
+              limit='20'
+            >
+              { children || name }
+            </Shortener>
+          </Button>
+        </Link>}
+
+      { itemKey && 
+          <Button
+            className={
+              [
+                'x-grey',
+                'yif',
+                //styles[baseClassName],
+              ].filter(e => e).join(' ')
+            }
+            /* id={ id }
+             style={ style } */
+            disabled
+          >
+            <span className="f-mono">
+              .{ itemKey }
+            </span>
+          </Button>
+      }
+    </Wrapper>
   )}
 
 TypeButton.propTypes = {
@@ -124,6 +225,11 @@ TypeButton.propTypes = {
   //as: PropTypes.string,
 
   /**
+   * Whether to wrap the buttons in a button group
+   */
+  wrapGroup:PropTypes.bool,
+
+  /**
    * The height of the element
    */
   height:PropTypes.string,
@@ -144,11 +250,9 @@ TypeButton.propTypes = {
   */
 }
 
-/*
 TypeButton.defaultProps = {
-  status: 'neutral',
-  //height:'2.2em',
-  //as:'p',
+  wrapGroup:true,
+  /* height:'2.2em',
+     as:'p', */
 }
-*/
 export default TypeButton

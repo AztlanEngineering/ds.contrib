@@ -17,6 +17,10 @@ import {
 } from '../ActionGrid'
 
 import {
+  GraphQLErrorView
+} from '../GraphQLErrorView'
+
+import {
   useModelMap,
 } from '../Context'
 
@@ -47,6 +51,12 @@ import { useQuery, useMutation } from '@apollo/client'
 /* Relative imports
    import styles from './single_view.scss' */
 
+import { isBackend } from 'ui/isBackend'
+
+if(!isBackend) {
+  import('./associations_view.scss')
+}
+
 const baseClassName = 'associations_view'
 
 
@@ -73,6 +83,7 @@ const AssociationsView = ({
 
   const {
     currentType,
+    getType,
     generateLocalPath
   } = useModelMap()
 
@@ -105,8 +116,18 @@ const AssociationsView = ({
 
   const name = currentId ? (finalData._string || finalData.name || (finalData.id && finalData.id.substring(0, 8)) || 'Loading') : `New ${currentType.name}`
 
+  if(!finalData.__typename) return(
+    <GraphQLErrorView
+      item={ finalData }
+      loadingSingle={ loading }
+      currentSingleView='Associations'
+      title='Local Associations'
+      error={ error }
+      refetch={refetch}
+    />
+  )
 
-  if(!currentId || finalData.__typename) return (
+  return (
     <div
       className={
         [
@@ -122,59 +143,32 @@ const AssociationsView = ({
         item={ finalData }
         loadingSingle={ loading  }
         currentSingleView='Associations'
-        title='Object Associations'
+        title='Local Associations'
+        refetch={ refetch }
       >
-        <Button onClick={ refetch } className='pointer x-green'>
-          Refetch
-        </Button>
-              </ActionGrid>
+      </ActionGrid>
+
       { currentType.associations.belongsTo.length &&
         <div className='pv-v'>
-          <Heading
-            headingAs='h1'
-            heading='Local associations'
-          />
-          <ul>
-            { currentType.associations.belongsTo.map((e, i) =>
-              <li>
-                <p>
-                  <DotInfo
-                    subtitleUpper={ false }
-                    className={ (finalData[e.foreignKey]) ? 'y-success' : 'y-warning'}
-                  >
-                    <code>
-                      { JSON.stringify(
-                        {
-                          [e.foreignKey]:finalData[e.foreignKey] || null
-                        }
-                      ) }
-                    </code>
 
-                  </DotInfo>
-                </p>
-                <p className='s-1 k-s'>
-                  <span>
-                    <code className='x-primary c-x'>
-                      { finalData.__typename }
-                      .
-                      { e.as }
-                    </code>
-                    {' is a foreign key to '}
-                    <code className='x-accent1 c-x'>
-                      { e.to }
-                    </code>
-                    {' stored as '}
-                    <code className='x-primary c-x'>
-                      { finalData.__typename }
-                      .
-                      { e.foreignKey }
-                    </code>
-                  </span>
-                </p>
-              </li>
-            ) }
-          </ul>
+          <div className='belongs-to'>
+            { currentType.associations.belongsTo.map((e, i) =>{
+              const localType = getType(e.to)
+              const ObjectCard = localType.defaultViews.card.Component
+              return (
+                  <ObjectCard
+                    className='y-background b-y'
+                    enableUnlink
+                    item={ finalData[e.as] || {} }
+                    foreignKey={ e.foreignKey }
+                    typeInfo={ localType.name }
+                  >
+                  </ObjectCard>
+
+              ) } )}
+          </div>
         </div>}
+      {/*
       <div className='pv-v'>
         <Heading
           headingAs='h1'
@@ -212,44 +206,7 @@ const AssociationsView = ({
             </>}
 
         </ul>
-      </div>
-    </div>
-  )
-  else return(
-    <div
-      className={
-        [
-          //styles[baseClassName],
-          baseClassName,
-          'x-paragraph',
-          's-2 k-s',
-          className
-        ].filter(e => e).join(' ')
-      }
-      id={ id }
-      style={ style }
-    >
-      <ActionGrid
-        item={ finalData }
-        loadingSingle={ loading  }
-        currentSingleView='Associations'
-        title={ name }
-      >
-        <Button onClick={ refetch } className='pointer x-green'>Refetch</Button>
-              </ActionGrid>
-
-      <pre className='c-x'>
-        { error && JSON.stringify(error, null, 2) }
-      </pre>
-      {!(loading || error) &&
-        <p className='c-x'>
-          If nothing else appears, the object was not found or there was no data returned
-          <pre>
-            { JSON.stringify(finalData) }
-            { JSON.stringify(data) }
-          </pre>
-        </p>}
-
+      </div>*/}
     </div>
   )
 }

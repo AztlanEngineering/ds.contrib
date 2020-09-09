@@ -61,7 +61,7 @@ const MapContextProvider = ({
           view     :'',
           name     :'Table',
           shortcut :'t',
-          className:'x-blue',
+          className:'x-azure',
           Component:TableView
         })
 
@@ -121,7 +121,7 @@ const MapContextProvider = ({
         view     :'full',
         name     :'Full',
         shortcut :'f',
-        className:'x-background',
+        className:'x-yellow',
         Component:FullView
 
       }
@@ -135,7 +135,7 @@ const MapContextProvider = ({
             view     :`multi-${e.type.toLowerCase()}`,
             name     :`Multi ${e.type}`,
             shortcut :e.shortcut,
-            className:'x-yellow',
+            className:'x-violet',
             Component:MultiFormView
 
           }

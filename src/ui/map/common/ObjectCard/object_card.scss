@@ -13,7 +13,7 @@ Classes :
     flex-direction: column;
     justify-content: space-between;
 
-    main {
+    .main, main {
       flex-grow: 99;
     }
   }
