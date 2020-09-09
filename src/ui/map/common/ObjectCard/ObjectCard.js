@@ -51,12 +51,14 @@ const ObjectCard = ({
   enableDelete,
   enableEdit,
   extraActions,
+  reverse,
   redirectAfterDelete,
 }) => {
 
   const actionProps = {
     item,
     refetch,
+    reverse,
     enableDelete,
     enableEdit,
     extraActions,
@@ -82,7 +84,10 @@ const ObjectCard = ({
         </Card.Section>
       }
       <Card.Section>
-        <Button.Group className='s-2 k-s' style={{ justifyContent:'flex-end' }}>
+        <Button.Group
+          className='s-2 k-s'
+          style={{ justifyContent: 'flex-end' }}
+        >
           <SingleActions
             { ...actionProps }
           />
@@ -113,6 +118,41 @@ ObjectCard.propTypes = {
   children:PropTypes.node,
 
   /**
+   * A dict of values representing the current item. Must have key id
+   */
+  item:PropTypes.object.isRequired,
+
+  /**
+   * refetch data
+   */
+  refetch:PropTypes.func,
+
+  /**
+   *  Whether to display the delete action
+   */
+  enableDelete:PropTypes.bool,
+
+  /**
+   *  Whether to display the edit action
+   */
+  enableEdit:PropTypes.bool,
+
+  /**
+   * Extra actions to be added
+   */
+  extraActions:PropTypes.arrayOf(
+    PropTypes.shape({
+      condition:PropTypes.func,
+      Component:PropTypes.node.isRequired,
+    })
+  ),
+
+  /**
+   *  Whether to redirect to the list after deletion. This is only needed in singleviews
+   */
+  redirectAfterDelete:PropTypes.bool,
+
+  /**
    * Which html tag to use
    */
   as:PropTypes.oneOfType([
@@ -126,10 +166,6 @@ ObjectCard.propTypes = {
    */
   height:PropTypes.string,
 
-  /**
-   * The width of the element
-   */
-  width:PropTypes.string,
   /*
   : PropTypes.shape({
     id: PropTypes.string.isRequired,

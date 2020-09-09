@@ -35,7 +35,9 @@ const ObjectState = ({
   id,
   className,
   style,
+
   item,
+
   itemState,
   simple
 }) => {
@@ -223,9 +225,19 @@ ObjectState.propTypes = {
   style:PropTypes.object,
 
   /**
-   *  The children JSX
+   * A dict of values representing the current item. Must have key id
    */
-  children:PropTypes.node,
+  item:PropTypes.object.isRequired,
+
+  /**
+   * state of each element warning/error etc
+   */
+  itemState:PropTypes.string,
+
+  /**
+   * weather a class is true
+   */
+  simple:PropTypes.bool,
 
   /**
    * Which html tag to use
@@ -241,10 +253,6 @@ ObjectState.propTypes = {
    */
   height:PropTypes.string,
 
-  /**
-   * The width of the element
-   */
-  width:PropTypes.string,
   /*
   : PropTypes.shape({
     id: PropTypes.string.isRequired,

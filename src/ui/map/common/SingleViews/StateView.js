@@ -22,23 +22,23 @@ import { useQuery, useMutation } from '@apollo/client'
 
 //Intl
 
-//import { FormattedMessage} from "react-intl";
-//import messages from "./messages";
-// <FormattedMessage {...messages.title} />
+/* import { FormattedMessage} from "react-intl";
+   import messages from "./messages";
+    <FormattedMessage {...messages.title} /> */
 
 //Config
 
 //import C from 'ui/cssClasses'
 
-//Relative imports
-//import styles from './state_view.scss'
+/* Relative imports
+   import styles from './state_view.scss' */
 
 const baseClassName = 'state_view'
 
 
 /**
  * Use `StateView` to
- * Has color `x` 
+ * Has color `x`
  */
 const StateView = ({
   id,
@@ -47,7 +47,7 @@ const StateView = ({
   itemId,
   setCurrentTab
 }) => {
-  
+
   const location = useLocation()
 
 
@@ -99,75 +99,81 @@ const StateView = ({
   },
   [finalData.id]
   )
-  
+
   return (
-  <div 
-    className={
-      [
+    <div
+      className={
+        [
         //styles[baseClassName],
-        baseClassName,
-        className
-      ].filter(e => e).join(' ')
-  }
-    id={ id }
-    style={ style }
-  >
+          baseClassName,
+          className
+        ].filter(e => e).join(' ')
+      }
+      id={ id }
+      style={ style }
+    >
       <ActionGrid
         item={ finalData }
         loadingSingle={ loading }
         currentSingleView='State'
         title='State'
       >
-              </ActionGrid>
-    <ObjectState 
-      simple
-      item={ finalData }
-    />
-    <ObjectState 
-      item={ finalData }
-    />
-  </div>
-)}
+      </ActionGrid>
+      <ObjectState
+        simple
+        item={ finalData }
+      />
+      <ObjectState
+        item={ finalData }
+      />
+    </div>
+  )}
 
 StateView.propTypes = {
   /**
    * Provide an HTML id to this element
    */
-  id: PropTypes.string,
+  id:PropTypes.string,
 
   /**
    * The html class names to be provided to this element
    */
-  className: PropTypes.string,
+  className:PropTypes.string,
 
   /**
    * The JSX-Written, css styles to apply to the element.
    */
-  style: PropTypes.object,
+  style:PropTypes.object,
+
+  /**
+   * Overloads the automatic detection of the id in the url
+   */
+  itemId:PropTypes.string,
+
+  /**
+   * Overloads the automatic detection of the id in the url
+   */
+  setCurrentTab:PropTypes.object,
 
   /**
    *  The children JSX
    */
-  children: PropTypes.node,
+  children:PropTypes.node,
 
   /**
    * Which html tag to use
    */
-  as: PropTypes.oneOfType([
+  as:PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object
-  ]), 
+  ]),
   //as: PropTypes.string,
 
   /**
    * The height of the element
    */
-  height: PropTypes.string,
+  height:PropTypes.string,
 
-  /**
-   * The width of the element
-   */
-  width: PropTypes.string,
   /*
   : PropTypes.shape({
     id: PropTypes.string.isRequired,
