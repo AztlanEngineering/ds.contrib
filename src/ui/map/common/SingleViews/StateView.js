@@ -162,6 +162,16 @@ StateView.propTypes = {
   style:PropTypes.object,
 
   /**
+   * Overloads the automatic detection of the id in the url
+   */
+  itemId:PropTypes.string,
+
+  /**
+   * Overloads the automatic detection of the id in the url
+   */
+  setCurrentTab:PropTypes.object,
+
+  /**
    *  The children JSX
    */
   children:PropTypes.node,
@@ -174,26 +184,6 @@ StateView.propTypes = {
     PropTypes.object
   ]),
   //as: PropTypes.string,
-
-  /**
-   * The height of the element
-   */
-  height:PropTypes.string,
-
-  /**
-   * The width of the element
-   */
-  width:PropTypes.string,
-  /*
-  : PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    state: PropTypes.string.isRequired,
-  }),
-  : PropTypes.func,
-  : PropTypes.func,
-  : PropTypes.oneOf(['', ''])
-  */
 }
 
 /*

@@ -17,16 +17,16 @@ import { useHistory, useParams } from 'react-router-dom'
 
 //Intl
 
-//import { FormattedMessage} from "react-intl";
-//import messages from "./messages";
-// <FormattedMessage {...messages.title} />
+/* import { FormattedMessage} from "react-intl";
+   import messages from "./messages";
+    <FormattedMessage {...messages.title} /> */
 
 //Config
 
 //import C from 'ui/cssClasses'
 
-//Relative imports
-//import styles from './unlink.scss'
+/* Relative imports
+   import styles from './unlink.scss' */
 import { isBackend } from 'ui/isBackend'
 
 if(!isBackend) {
@@ -38,7 +38,7 @@ const baseClassName = 'unlink'
 
 /**
  * Use `Unlink` to
- * Has color `x` 
+ * Has color `x`
  */
 const Unlink = ({
   id,
@@ -68,10 +68,10 @@ const Unlink = ({
   const currentType = useMemo(() => objectType ? getType(objectType) : localType, [routeParams])
 
   const { UPDATE } = currentType.graphql.mutations
-  
+
   const itemName = item ? item._string || item.name || item.id : userItemId
   const itemId = item ? item.id : userItemId
-  
+
   const [unlinkItem, {
     data={},
     loading,
@@ -85,7 +85,7 @@ const Unlink = ({
 
   const onClick = (e) => {
     const variables = {
-      id:itemId,
+      id          :itemId,
       [foreignKey]:null
     }
     if (confirm(`Please confirm you know what youre doing. You will now unlink ${itemName} from ${objectType}:${currentId}`) == true) {
@@ -99,14 +99,14 @@ const Unlink = ({
   }
   , [finalData] )
 
-      { error && JSON.stringify(error) }
+  { error && JSON.stringify(error) }
 
   useEffect(() => {
     if (error && !(typeof window === 'undefined')){
       alert(JSON.stringify(error, null, 2) )
-    } 
+    }
   }, [error])
-  
+
   return (
 
     <Button
@@ -132,57 +132,63 @@ const Unlink = ({
       </Label>
     </Button>
 
-)}
+  )}
 
 Unlink.propTypes = {
   /**
    * Provide an HTML id to this element
    */
-  id: PropTypes.string,
+  id:PropTypes.string,
 
   /**
    * The html class names to be provided to this element
    */
-  className: PropTypes.string,
+  className:PropTypes.string,
 
   /**
    * The JSX-Written, css styles to apply to the element.
    */
-  style: PropTypes.object,
+  style:PropTypes.object,
 
   /**
    *  The children JSX
    */
-  children: PropTypes.node,
+  children:PropTypes.node,
 
   /**
    * Which html tag to use
    */
-  as: PropTypes.oneOfType([
+  as:PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object
-  ]), 
+  ]),
   //as: PropTypes.string,
 
   /**
-   * The height of the element
+   * A dict of values representing the current item. Must have key id
    */
-  height: PropTypes.string,
+  item:PropTypes.object.isRequired,
 
   /**
-   * The width of the element
+   * Overloads the automatic detection of the id in the url
    */
-  width: PropTypes.string,
-  /*
-  : PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    state: PropTypes.string.isRequired,
-  }),
-  : PropTypes.func,
-  : PropTypes.func,
-  : PropTypes.oneOf(['', ''])
-  */
+  itemId:PropTypes.string,
+
+  /**
+   * the name of each type that is represented to the component
+   */
+  objectType:PropTypes.string,
+
+  /**
+   * If this is displayed in the context of a fk, please enter here the foreign key from the current type
+   */
+  foreignKey:PropTypes.string,
+
+  /**
+   * refetch data
+   */
+  refetch:PropTypes.func,
+
 }
 
 /*

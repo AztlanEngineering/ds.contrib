@@ -61,6 +61,7 @@ const ObjectCard = ({
   enableEdit,
   enableUnlink,
   extraActions,
+  reverse,
   redirectAfterDelete,
 
   typeInfo,
@@ -75,6 +76,7 @@ const ObjectCard = ({
   const actionProps = {
     item,
     refetch,
+    reverse,
     enableDelete,
     enableEdit,
     enableUnlink,
@@ -98,12 +100,12 @@ const ObjectCard = ({
       style={ style }
       backFaceClassName='y-paragraph b-y'
       backFace={
-         item.id && 
-        <Card.Section>
-          <div>
-            <pre className='s-2 k-s c-x x-background'>{ JSON.stringify(item, null, 2) }</pre>
-          </div>
-        </Card.Section>
+        item.id &&
+          <Card.Section>
+            <div>
+              <pre className='s-2 k-s c-x x-background'>{ JSON.stringify(item, null, 2) }</pre>
+            </div>
+          </Card.Section>
       }
     >
       { (typeInfo || (foreignKey && currentType)) &&
@@ -147,16 +149,28 @@ const ObjectCard = ({
 
         </Card.Section>
       }
-      { item.id && 
+      { item.id &&
         <>
           { children }
-      { item.tests &&
-        <Card.Section>
-        </Card.Section>
+          { item.tests &&
+            <Card.Section>
+            </Card.Section>
+          }
+          <Card.Section>
+            <Button.Group
+              independent
+              className='s-2 k-s'
+              style={{ justifyContent: 'flex-end' }}
+            >
+              <SingleActions
+                { ...actionProps }
+              />
+            </Button.Group>
+          </Card.Section>
+        </>
       }
       <Card.Section>
         <Button.Group
-          independent
           className='s-2 k-s'
           style={{ justifyContent: 'flex-end' }}
         >
@@ -165,8 +179,6 @@ const ObjectCard = ({
           />
         </Button.Group>
       </Card.Section>
-        </>
-      }
     </Card>
   )}
 
@@ -192,6 +204,51 @@ ObjectCard.propTypes = {
   children:PropTypes.node,
 
   /**
+   * A dict of values representing the current item. Must have key id
+   */
+  item:PropTypes.object.isRequired,
+
+  /**
+   * refetch data
+   */
+  refetch:PropTypes.func,
+
+  /**
+   *  Whether to display the delete action
+   */
+  enableDelete:PropTypes.bool,
+
+  /**
+   *  Whether to display the edit action
+   */
+  enableEdit:PropTypes.bool,
+
+  /**
+   *  Whether to display the unlink action
+   */
+  enableUnlick:PropTypes.bool,
+
+  /**
+   * Extra actions to be added
+   */
+  extraActions:PropTypes.arrayOf(
+    PropTypes.shape({
+      condition:PropTypes.func,
+      Component:PropTypes.node.isRequired,
+    })
+  ),
+
+  /**
+   *  Whether to reverse the order of the actions
+   */
+  reverse:PropTypes.bool,
+
+  /**
+   *  Whether to redirect to the list after deletion. This is only needed in singleviews
+   */
+  redirectAfterDelete:PropTypes.bool,
+
+  /**
    * Which html tag to use
    */
   as:PropTypes.oneOfType([
@@ -199,17 +256,6 @@ ObjectCard.propTypes = {
     PropTypes.object
   ]),
   //as: PropTypes.string,
-
-  /**
-   * The height of the element
-   */
-  height:PropTypes.string,
-
-  /**
-   * The width of the element
-   */
-  width:PropTypes.string,
-
 
   /**
    * Whether to display type info
@@ -221,22 +267,11 @@ ObjectCard.propTypes = {
    */
   foreignKey:PropTypes.string,
 
-
-  /*
-  : PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    state: PropTypes.string.isRequired,
-  }),
-  : PropTypes.func,
-  : PropTypes.func,
-  : PropTypes.oneOf(['', ''])
-  */
 }
 
 ObjectCard.defaultProps = {
   typeInfo:false,
-  item:{},
+  item    :{},
 }
 
 ObjectCard.Section = Card.Section
