@@ -60,6 +60,7 @@ const Tab = ({
     closeTab(tabId)
   }, [tabId])
 
+
   return (
     <Wrapper
       className={

@@ -79,7 +79,7 @@ const Tabline = ({
           closable={ e.closable }
           className={ e.className }
         >
-            { e.title || e.label }
+            { e.Display || e.title || e.label }
         </Tab>
       ) }
       <li className='add-tab'>

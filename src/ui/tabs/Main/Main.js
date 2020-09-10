@@ -242,10 +242,23 @@ const Main = ({
 
   // Updating the store on each state change
   useEffect(() => {
-    if(isClient) {
+    if(isClient && state.ready) {
+      const stateToSave = Object.keys(state).reduce((a, e) => {
+        if ((e === 'tabs')) {
+          a[e] = [
+            ...state[e].map(({ Display, ...rest }) => rest)
+          ]
+        } else {
+          a[e] = state[e]
+        }
+        return a
+      }, {})
+
+      //console.log(stateToSave)
+
       localStorage.setItem(
         LOCAL_STORAGE_KEY,
-        JSON.stringify(state)
+        JSON.stringify(stateToSave)
       )
     }
   }
@@ -287,7 +300,7 @@ const Main = ({
       >
         <Tabline FooterComponent={FooterComponent}></Tabline>
         { test &&
-          <h3>
+        <h3>
             Focus is :
             { state.focus }
           </h3>}
