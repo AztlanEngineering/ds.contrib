@@ -110,7 +110,7 @@ const Delete = ({
   useEffect(() => {
     if (error && !(typeof window === 'undefined')){
       alert(JSON.stringify(error, null, 2) )
-    } 
+    }
   }, [error])
 
   return (
@@ -147,18 +147,20 @@ Delete.propTypes = {
    */
   style:PropTypes.object,
 
-
-
-  /**
-   *  The children JSX
-   */
-  children:PropTypes.node,
-
   /**
    * A dict of values representing the current item. Must have key id
    */
   item:PropTypes.object.isRequired,
 
+  /**
+   * The item it. This is less optimal than providing the full object but ok still. Please note that either item or itemId must be provided.
+   */
+  itemId:PropTypes.string,
+
+  /**
+   * defines the type of object that the component has to have
+   */
+  objectType:PropTypes.string,
 
   /**
    *  function that will be executed after the end of the mutation
@@ -166,7 +168,7 @@ Delete.propTypes = {
   refetch:PropTypes.func,
 
   /**
-   *  Whether to redirect to the main list page after deletion 
+   *  Whether to redirect to the main list page after deletion
    */
   redirect:PropTypes.bool
 }
