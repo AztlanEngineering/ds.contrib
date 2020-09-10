@@ -163,9 +163,14 @@ Actions.propTypes = {
   itemId:PropTypes.string,
 
   /**
-   *  The children JSX
+   * defines the type of object that the component has to have
    */
-  children:PropTypes.node,
+  objectType:PropTypes.string,
+
+  /**
+   * the function that fetches the data for the component after every change
+   */
+  refetch:PropTypes.func,
 
   /**
    *  Whether to display the edit action
@@ -178,14 +183,14 @@ Actions.propTypes = {
   enableDelete:PropTypes.bool,
 
   /**
-   *  Whether to reverse the order of the actions
+   *  Whether to display the unlink action
    */
-  reverse:PropTypes.bool,
+  enableUnlick:PropTypes.bool,
 
   /**
-   *  Whether to redirect to the list after deletion. This is only needed in singleviews
+   * the key that opens the connections between to types
    */
-  redirectAfterDelete:PropTypes.bool,
+  foreignKey:PropTypes.string,
 
   /**
    * Extra actions to be added
@@ -195,14 +200,25 @@ Actions.propTypes = {
       condition:PropTypes.func,
       Component:PropTypes.node.isRequired,
     })
-  )
+  ),
+
+  /**
+   *  Whether to reverse the order of the actions
+   */
+  reverse:PropTypes.bool,
+
+  /**
+   *  Whether to redirect to the list after deletion. This is only needed in singleviews
+   */
+  redirectAfterDelete:PropTypes.bool,
+
 
 }
 
 Actions.defaultProps = {
   enableEdit         :true,
   enableDelete       :true,
-  enableUnlink:false,
+  enableUnlink       :false,
   redirectAfterDelete:false,
   extraActions       :[],
   reverse            :true
