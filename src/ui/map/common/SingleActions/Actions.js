@@ -9,7 +9,8 @@ import { useModelMap } from '../Context'
 
 import {
   Delete,
-  Edit
+  Edit,
+  Unlink
 } from './common'
 
 //Intl
@@ -42,9 +43,13 @@ const Actions = ({
   className,
   style,
   item,
+  itemId,
+  objectType,
   refetch,
   enableEdit,
   enableDelete,
+  enableUnlink,
+  foreignKey,
   extraActions,
   reverse,
   redirectAfterDelete,
@@ -52,8 +57,12 @@ const Actions = ({
 }) => {
 
   const {
-    currentType
+    currentType:localType,
+    generateLocalPath,
+    getType
   } = useModelMap()
+
+  const currentType = useMemo(() => objectType ? getType(objectType) : localType, [objectType, localType])
 
   const {
     actions:typeActions
@@ -72,8 +81,14 @@ const Actions = ({
         condition:(user) => true,
         Component:Delete,
         className:'x-error',
-      }
+      })
 
+    enableUnlink && acts.push(
+      {
+        condition:(user) => true,
+        Component:Unlink,
+        className:'x-grey',
+      }
     )
     const res = [
       ...acts,
@@ -90,16 +105,20 @@ const Actions = ({
 
 
   return (
-      actions.map(({ Component, ...e }, i) =>
-        <Component
-          {...e}
-          key={ i }
-          item={ item }
-          refetch={ refetch }
-          redirect={ redirectAfterDelete }
-        />
+    actions.map(({ Component, extraProps, ...e }, i) =>
+      <Component
+        {...e}
+        key={ i }
+        item={ item }
+        itemId={ itemId }
+        objectType={ objectType }
+        foreignKey={ foreignKey }
+        refetch={ refetch }
+        redirect={ redirectAfterDelete }
+        { ...extraProps }
+      />
 
-      ) 
+    )
     /*
     <Button.Group
       className={
@@ -136,12 +155,22 @@ Actions.propTypes = {
   /**
    * A dict of values representing the current item. Must have key id
    */
-  item:PropTypes.object.isRequired,
+  item:PropTypes.object,
 
   /**
-   *  The children JSX
+   * The item it. This is less optimal than providing the full object but ok still. Please note that either item or itemId must be provided.
    */
-  children:PropTypes.node,
+  itemId:PropTypes.string,
+
+  /**
+   * defines the type of object that the component has to have
+   */
+  objectType:PropTypes.string,
+
+  /**
+   * the function that fetches the data for the component after every change
+   */
+  refetch:PropTypes.func,
 
   /**
    *  Whether to display the edit action
@@ -154,14 +183,14 @@ Actions.propTypes = {
   enableDelete:PropTypes.bool,
 
   /**
-   *  Whether to reverse the order of the actions
+   *  Whether to display the unlink action
    */
-  reverse:PropTypes.bool,
+  enableUnlick:PropTypes.bool,
 
   /**
-   *  Whether to redirect to the list after deletion. This is only needed in singleviews
+   * the key that opens the connections between to types
    */
-  redirectAfterDelete:PropTypes.bool,
+  foreignKey:PropTypes.string,
 
   /**
    * Extra actions to be added
@@ -171,13 +200,25 @@ Actions.propTypes = {
       condition:PropTypes.func,
       Component:PropTypes.node.isRequired,
     })
-  )
+  ),
+
+  /**
+   *  Whether to reverse the order of the actions
+   */
+  reverse:PropTypes.bool,
+
+  /**
+   *  Whether to redirect to the list after deletion. This is only needed in singleviews
+   */
+  redirectAfterDelete:PropTypes.bool,
+
 
 }
 
 Actions.defaultProps = {
   enableEdit         :true,
   enableDelete       :true,
+  enableUnlink       :false,
   redirectAfterDelete:false,
   extraActions       :[],
   reverse            :true

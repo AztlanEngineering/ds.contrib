@@ -8,21 +8,21 @@ import faker from 'faker'
 import { BlogContextProvider, BlogList } from 'ui'
 //import QUERY from './graphql/query.graphql'
 import { AplProvider } from 'stories/utils'
-//import { Router } from 'stories/utils'
-//import {ALL_COLORS, SIZES } from 'stories/config.js'
-//import { LIST, LIST_XS, TEXT_XXS_ESC, TEXT_XXS, TEXT_XS, TEXT } from 'stories/utils/Dummy'
+/* import { Router } from 'stories/utils'
+   import {ALL_COLORS, SIZES } from 'stories/config.js'
+   import { LIST, LIST_XS, TEXT_XXS_ESC, TEXT_XXS, TEXT_XS, TEXT } from 'stories/utils/Dummy' */
 
 const endpoint = 'https://s.meccamico.com/graphql'
 
 export default {
-  title: 'collections/blog/BlogList',
-  component:BlogList,
+  title        :'blog/BlogList',
+  component    :BlogList,
   //componentSubtitle:'Component subtitle',
-  subcomponents: {
+  subcomponents:{
     //Item:BlogList.Item
   },
-  parameters: {
-    decorators: [ 
+  parameters:{
+    decorators:[
       //storyfn => <div className="">{ storyfn() }</div>,
       storyfn => <BlogContextProvider>{ storyfn() }</BlogContextProvider>,
       storyfn => <AplProvider endpoint={ endpoint }>{ storyfn() }</AplProvider>,
@@ -44,13 +44,13 @@ const storyParameters = {
  */
 
 export const Default = () => (
-  <BlogList></BlogList> 
+  <BlogList></BlogList>
 )
 
 //Default.parameters = storyParameters
 
 export const Variant = () => (
-    <BlogList></BlogList> 
+  <BlogList></BlogList>
 )
 
 //Variant.parameters = storyParameters

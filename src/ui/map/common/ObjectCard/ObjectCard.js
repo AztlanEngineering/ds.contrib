@@ -5,7 +5,8 @@ import PropTypes from 'prop-types'
 
 import {
   Card,
-  Button
+  Button,
+  Heading
 } from 'ds-core'
 
 
@@ -13,7 +14,15 @@ import {
   SingleActions
 } from '../SingleActions'
 
+import {
+  TypeButton
+} from '../TypeButton'
 
+import {
+  useModelMap,
+} from '../Context'
+
+import { Link, useLocation, useParams, useHistory } from 'react-router-dom'
 //Intl
 
 /* import { FormattedMessage} from "react-intl";
@@ -50,16 +59,28 @@ const ObjectCard = ({
   refetch,
   enableDelete,
   enableEdit,
+  enableUnlink,
   extraActions,
   redirectAfterDelete,
+
+  typeInfo,
+  foreignKey,
 }) => {
+
+  const {
+    currentType,
+    generateLocalPath
+  } = useModelMap()
 
   const actionProps = {
     item,
     refetch,
     enableDelete,
     enableEdit,
+    enableUnlink,
+    foreignKey,
     extraActions,
+    objectType:currentType.name,
     redirectAfterDelete
   }
 
@@ -69,25 +90,83 @@ const ObjectCard = ({
         [
         //styles[baseClassName],
           baseClassName,
-          'y-red b-y',
+          //'y-red b-y',
           className
         ].filter(e => e).join(' ')
       }
       id={ id }
       style={ style }
+      backFaceClassName='y-paragraph b-y'
+      backFace={
+         item.id && 
+        <Card.Section>
+          <div>
+            <pre className='s-2 k-s c-x x-background'>{ JSON.stringify(item, null, 2) }</pre>
+          </div>
+        </Card.Section>
+      }
     >
-      { children }
-      { item && item.tests &&
+      { (typeInfo || (foreignKey && currentType)) &&
+        <Card.Section className='y-background b-dark-y s-1 k-s'>
+          <div>
+            { foreignKey ?
+              <span className='x-metadata c-x'>
+                { 'Type ' }
+                <TypeButton
+                  typename={ item.__typename || typeInfo }
+                  className='yib s-2 k-s'
+                />
+                {' linked from '}
+                <TypeButton
+                  typename={ currentType.name }
+                  itemKey={ foreignKey }
+                  //item={ item }
+                  className='yib s-2 k-s'
+                />
+              </span>
+              : <TypeButton
+                typename={ item.__typename || typeInfo }
+                className='s-1 k-s'
+                /> }
+          </div>
+        </Card.Section>
+      }
+      { !item.id &&
+        <Card.Section className='main'>
+          <Heading
+            heading='Empty'
+            subtitle={foreignKey ? `This ${currentType.name} does not have a ${typeInfo} yet. You can create one below.`: `There is no ${typeInfo} yet. You can create one below.`}
+            subtitleClassName='s-1 k-s'
+          >
+            <Link to={ generateLocalPath('new', { type: typeInfo }) }>
+              <Button className='x-orange s-2 k-s'>
+                {`New ${typeInfo}`}
+              </Button>
+            </Link>
+          </Heading>
+
+        </Card.Section>
+      }
+      { item.id && 
+        <>
+          { children }
+      { item.tests &&
         <Card.Section>
         </Card.Section>
       }
       <Card.Section>
-        <Button.Group className='s-2 k-s' style={{ justifyContent:'flex-end' }}>
+        <Button.Group
+          independent
+          className='s-2 k-s'
+          style={{ justifyContent: 'flex-end' }}
+        >
           <SingleActions
             { ...actionProps }
           />
         </Button.Group>
       </Card.Section>
+        </>
+      }
     </Card>
   )}
 
@@ -130,6 +209,19 @@ ObjectCard.propTypes = {
    * The width of the element
    */
   width:PropTypes.string,
+
+
+  /**
+   * Whether to display type info
+   */
+  typeInfo:PropTypes.bool,
+
+  /**
+   * If this is displayed in the context of a fk, please enter here the foreign key from the current type
+   */
+  foreignKey:PropTypes.string,
+
+
   /*
   : PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -142,13 +234,10 @@ ObjectCard.propTypes = {
   */
 }
 
-/*
 ObjectCard.defaultProps = {
-  status: 'neutral',
-  //height:'2.2em',
-  //as:'p',
+  typeInfo:false,
+  item:{},
 }
-*/
 
 ObjectCard.Section = Card.Section
 ObjectCard.Divider = Card.Divider

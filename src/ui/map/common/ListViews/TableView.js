@@ -9,6 +9,10 @@ import {
 
 import { ActionGrid } from '../ActionGrid'
 
+import {
+  GraphQLErrorView
+} from '../GraphQLErrorView'
+
 import { useTable, useSortBy } from 'react-table'
 
 import gql from 'graphql-tag'
@@ -96,7 +100,19 @@ const TableView = ({
 
   const firstPageRows = rows
 
-  if(!(loading || error)) return (
+  if (error) return (
+    <GraphQLErrorView
+      item={ finalData }
+      loadingList={ loading }
+      currentListView='Table'
+      title='Table'
+      error={ error }
+      refetch={refetch}
+    />
+  )
+
+
+  return (
     <div
       className={
         [
@@ -109,7 +125,12 @@ const TableView = ({
       id={ id }
       style={ style }
     >
-      <ActionGrid currentListView='Table' title='Table'>
+      <ActionGrid
+        currentListView='Table'
+        title='Table'
+        loadingList={ loading }
+        refetch={ refetch }
+      >
         <Button
           className='x-grey b-dark-x ui-dark'
           disabled
@@ -189,26 +210,9 @@ const TableView = ({
             </div>
           </Popup>
         </Button>
-        <Button
-          onClick={ !loading ? () => refetch() : undefined }
-          className='x-green'
-          loading={ loading }
-        >
-          Refetch
-          {' '}
-          <Shortcut
-            className='s-2 k-s x-white ul'
-            action={
-              () => refetch()
-            }
-            keys={[
-              'r'
-            ]}
-          />
-        </Button>
       </ActionGrid>
 
-      { error && JSON.stringify(error) }
+      { error && JSON.stringify(error, null, 2) }
 
       <br />
 
@@ -271,7 +275,7 @@ const TableView = ({
                         <SingleActions
                           className='s-2 k-s'
                           style={{ justifyContent: 'flex-end' }}
-                          item={ e.values }
+                          item={ e.original }
                           refetch={ refetch }
                           extraActions={
                             currentType.actions ? currentType.actions.extraActions: undefined
@@ -286,32 +290,6 @@ const TableView = ({
           </tbody>
         </table>
       }
-    </div>
-  )
-  else return(
-    <div
-      className={
-        [
-          //styles[baseClassName],
-          baseClassName,
-          'x-paragraph',
-          's-2 k-s',
-          className
-        ].filter(e => e).join(' ')
-      }
-      id={ id }
-      style={ style }
-    >
-
-      { loading && <InlineLoader/> }
-      <pre className='c-x'>
-        { error && JSON.stringify(error, null, 2) }
-      </pre>
-      {!(loading || error) &&
-        <p className='c-x'>
-          If nothing else appears, the object was not found or there was no data returned
-        </p>}
-
     </div>
   )
 }

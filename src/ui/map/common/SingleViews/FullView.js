@@ -1,9 +1,15 @@
 /* @fwrlines/generator-react-component 2.4.1 */
 import * as React from 'react'
-import { useCallback, useEffect, useMemo } from 'react'
-//import {} from 'react'
+import { useMemo} from 'react'
 import PropTypes from 'prop-types'
 
+
+import gql from 'graphql-tag'
+import { useQuery, useMutation } from '@apollo/client'
+
+import {
+  Button,
+} from 'ds-core'
 
 import {
   ActionGrid
@@ -13,18 +19,11 @@ import {
   GraphQLErrorView
 } from '../GraphQLErrorView'
 
-import { ObjectState } from '../ObjectState'
-
-import { Link, useLocation, useParams, useHistory } from 'react-router-dom'
-
 import {
   useModelMap,
 } from '../Context'
-
-import gql from 'graphql-tag'
-import { useQuery, useMutation } from '@apollo/client'
-
 //Intl
+import { Link, useLocation, useParams, useHistory } from 'react-router-dom'
 
 /* import { FormattedMessage} from "react-intl";
    import messages from "./messages";
@@ -35,25 +34,26 @@ import { useQuery, useMutation } from '@apollo/client'
 //import C from 'ui/cssClasses'
 
 /* Relative imports
-   import styles from './state_view.scss' */
+   import styles from './full_view.scss' */
+import { isBackend } from 'ui/isBackend'
 
-const baseClassName = 'state_view'
+if(!isBackend) {
+  import('./full_view.scss')
+}
+
+const baseClassName = 'full_view'
 
 
 /**
- * Use `StateView` to
+ * Use `FullView` to
  * Has color `x`
  */
-const StateView = ({
+const FullView = ({
   id,
   className,
   style,
-  itemId,
-  setCurrentTab
+  itemId
 }) => {
-
-  const location = useLocation()
-
 
   const {
     guid:currentId,
@@ -70,7 +70,7 @@ const StateView = ({
     error,
     data,
     refetch
-  } = useQuery(gql(currentType.graphql.queries.ONE),
+  } = useQuery(gql(currentType.graphql.queries.FULL),
     {
       variables:{
         id:itemId || currentId
@@ -94,22 +94,13 @@ const StateView = ({
 
   const name = currentId ? (finalData._string || finalData.name || (finalData.id && finalData.id.substring(0, 8)) || 'Loading') : `New ${currentType.name}`
 
-  useEffect(() =>
-  {
-    setCurrentTab && setCurrentTab({
-      path :`${location.pathname}`,
-      title:`${name}`
-    })
-  },
-  [finalData.id]
-  )
 
   if(!finalData.__typename) return(
     <GraphQLErrorView
       item={ finalData }
       loadingSingle={ loading }
-      currentSingleView='State'
-      title='State'
+      currentSingleView='Full'
+      title='Full Graph'
       error={ error }
       refetch={refetch}
     />
@@ -129,23 +120,22 @@ const StateView = ({
     >
       <ActionGrid
         item={ finalData }
-        loadingSingle={ loading }
-        currentSingleView='State'
-        title='State'
+        loadingSingle={ loading  }
+        currentSingleView='Full'
+        title='Full Graph'
         refetch={ refetch }
       >
-      </ActionGrid>
-      <ObjectState
-        simple
-        item={ finalData }
-      />
-      <ObjectState
-        item={ finalData }
-      />
-    </div>
-  )}
 
-StateView.propTypes = {
+      </ActionGrid>
+      <pre className='s-1 k-s x-paragraph c-x'>
+        { JSON.stringify(finalData, null, 2) }
+      </pre>
+    </div>
+  )
+
+}
+
+FullView.propTypes = {
   /**
    * Provide an HTML id to this element
    */
@@ -197,10 +187,10 @@ StateView.propTypes = {
 }
 
 /*
-StateView.defaultProps = {
+FullView.defaultProps = {
   status: 'neutral',
   //height:'2.2em',
   //as:'p',
 }
 */
-export default StateView
+export default FullView

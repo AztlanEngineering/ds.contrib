@@ -14,7 +14,7 @@ import { Router } from 'stories/utils'
 //const endpoint = 'https://api.fwrlines.com/graphql'
 
 export default {
-  title        :'collections/tabs/TabManager',
+  title        :'tabs/TabManager',
   component    :TabManager,
   //componentSubtitle:'Component subtitle',
   subcomponents:{
@@ -39,11 +39,11 @@ export const Default = () => (
 
 export const Footer = () => {
   const FooterComponent = (props) => (
-  <li>List element</li>
+    <li>List element</li>
   )
-return(
-  <TabManager FooterComponent={FooterComponent}></TabManager>
-)
+  return(
+    <TabManager FooterComponent={FooterComponent}></TabManager>
+  )
 
 }
 

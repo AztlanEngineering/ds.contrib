@@ -14,7 +14,7 @@ import { DashboardAdminPage as AdminPage } from 'ui'
 //const endpoint = 'https://api.fwrlines.com/graphql'
 
 export default {
-  title        :'collections/dashboard/zAdminPage',
+  title        :'dashboard/zAdminPage',
   component    :AdminPage,
   //componentSubtitle:'Component subtitle',
   subcomponents:{

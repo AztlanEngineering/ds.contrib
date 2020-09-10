@@ -17,12 +17,15 @@ import {
   MapContextProvider,
   MapListView as ListView,
   MapSingleView as SingleView,
-  MapObjectCard as Card
+  MapObjectCard as Card,
+  MapTypeButton,
+  MapReverseAssociationButton
 } from 'ui'
 
 import QUERY_ONE from './graphql/getFruit.gql'
 import QUERY_ONE_ASSOCIATIONS from './graphql/getFruit.gql'
 import QUERY_ALL from './graphql/allFruits.gql'
+
 import MUTATION_ADD from './graphql/addFruit.gql'
 import MUTATION_DELETE from './graphql/deleteFruit.gql'
 import MUTATION_UPDATE from './graphql/updateFruit.gql'
@@ -37,7 +40,7 @@ import {
   urljoin as _u
 } from '@fwrlines/utils'
 
-
+const QUERY_FULL = QUERY_ONE
 //const endpoint = 'https://api.fwrlines.com/graphql'
 
 const typeList = [{
@@ -122,7 +125,10 @@ const typeList = [{
     },
     card:{
       Component:({item, ...props}) => (
-        <Card item={item} { ...props }>
+        <Card
+          item={item}
+          { ...props }
+        >
           <Card.Section>
             <p className='h2'>{ item.name }</p>
           </Card.Section>
@@ -178,7 +184,16 @@ const typeList = [{
     },
     state:{
       enabled:true,
-    }
+    },
+    multi:[
+      {
+        type      :'Fruit',
+        foreignKey:'eatWithId',
+        accessor  :'relatedFruits',
+        //query     :QUERY_ALL, //If query is used then accessor is not needed
+        shortcut  :'o'
+      }
+    ],
   },
   actions:{
     defaultActions:{
@@ -213,9 +228,10 @@ const typeList = [{
 
   graphql:{
     queries:{
-      ALL:QUERY_ALL,
-      ONE:QUERY_ONE,
-      ONE_ASSOCIATIONS:QUERY_ONE_ASSOCIATIONS
+      ALL             :QUERY_ALL,
+      ONE             :QUERY_ONE,
+      ONE_ASSOCIATIONS:QUERY_ONE_ASSOCIATIONS,
+      FULL            :QUERY_FULL
     },
     mutations:{
       ADD   :MUTATION_ADD,
@@ -230,7 +246,7 @@ const typeList = [{
 }]
 
 export default {
-  title        :'collections/map/All',
+  title        :'map/All',
   component    :ListView,
   //componentSubtitle:'Component subtitle',
   subcomponents:{
@@ -272,7 +288,7 @@ export const List = () => {
 
   const basePath = '/'
   const typeUrlParam = ':type([0-9a-z-]{3,80})'
-  const viewUrlParam = ':view([0-9a-z]{3,80})'
+  const viewUrlParam = ':view([-0-9a-z]{3,80})'
   const idUrlParam = ':guid([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'
   //const redeemParam = ':slug([0-9a-f]{24})'
 
@@ -308,20 +324,10 @@ export const List = () => {
 }
 
 export const Single = () => {
-  const Redirector = () => {
-    const history=useHistory()
-
-    useEffect(() =>
-    {
-      history.push('/fruits')
-    }, [])
-    return 'Redirected'
-
-  }
 
   const basePath = '/'
   const typeUrlParam = ':type([0-9a-z-]{3,80})'
-  const viewUrlParam = ':view([0-9a-z]{3,80})'
+  const viewUrlParam = ':view([-0-9a-z]{3,80})'
   const idUrlParam = ':guid([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'
   //const redeemParam = ':slug([0-9a-f]{24})'
 
@@ -374,22 +380,98 @@ export const Single = () => {
         </div>
         <Link to={ `/${itemId}`} >{ itemId }</Link>
 
+        <Route
+          path={[
+            urls.single,
+            urls.singleAlt,
+            urls.new,
+
+          ]}
+          exact={ true }
+        >
+          <SingleView>
+          </SingleView>
+        </Route>
+      </MapContextProvider>
+    </Route>
+  )
+
+}
+
+export const Buttons = () => {
+
+  const basePath = '/'
+  const typeUrlParam = ':type([0-9a-z-]{3,80})'
+  const viewUrlParam = ':view([-0-9a-z]{3,80})'
+  const idUrlParam = ':guid([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'
+  //const redeemParam = ':slug([0-9a-f]{24})'
+
+  const urls = {
+  //LOGIN  :'login',
+    list     :_u(basePath,),
+    listAlt  :_u(basePath,viewUrlParam),
+    single   :_u(basePath,idUrlParam),
+    singleAlt:_u(basePath,idUrlParam, viewUrlParam),
+    new      :_u(basePath,'new')
+  }
+
+  const [itemId, setItemId] = useState()
+
+  const onInputChange = (e) => setItemId(e.target.value)
+
+  return (
     <Route
       path={[
         urls.single,
         urls.singleAlt,
         urls.new,
+        '/'
 
       ]}
       exact={ true }
     >
-        <SingleView>
-        </SingleView>
-    </Route>
+      <MapContextProvider
+        typeList={ typeList }
+        testParam='fruits'
+        routes={ urls }
+      >
+        <MapTypeButton
+          typename='Fruit'
+          item={{_string: 'Grapefruit', 'id': '46a7be79-b013-431d-b2d3-1c1e99dc97f2'}}
+        >
+        </MapTypeButton>
+        <MapTypeButton
+          typename='Fruit'
+          itemId='46a7be79-b013-431d-b2d3-1c1e99dc97f2'
+        >
+        </MapTypeButton>
+        <MapReverseAssociationButton
+          itemId='46a7be79-b013-431d-b2d3-1c1e99dc97f2'
+          item={{
+            _string: 'Grapefruit', 
+            'id': '46a7be79-b013-431d-b2d3-1c1e99dc97f2',
+            'contents':[
+              { 'id': '46a7be79-b013-431d-b2d3-1c1e99dc97f2', },
+              { 'id': '46a7be79-b013-431d-b2d3-1c1e99dc97f2', }
+            ]
+          }}
+          accessor='contents'
+          typename='Fruit'
+        />
+        <MapReverseAssociationButton
+          itemId='46a7be79-b013-431d-b2d3-1c1e99dc97f2'
+          item={{
+            _string: 'Grapefruit', 
+            'id': '46a7be79-b013-431d-b2d3-1c1e99dc97f2',
+            'contents':[
+            ]
+          }}
+          accessor='contents'
+          typename='Fruit'
+        />
       </MapContextProvider>
     </Route>
   )
-
 }
 
 

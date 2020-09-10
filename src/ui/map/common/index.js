@@ -28,3 +28,6 @@ export {
   ObjectCard
 } from './ObjectCard'
 export { ObjectState } from './ObjectState'
+export { TypeButton } from './TypeButton'
+export { ReverseAssociationButton } from './ReverseAssociationButton'
+export { GraphQLErrorView } from './GraphQLErrorView'

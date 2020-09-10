@@ -257,11 +257,11 @@ ObjectState.propTypes = {
   */
 }
 
-/*
 ObjectState.defaultProps = {
+  item:{},
   status: 'neutral',
   //height:'2.2em',
   //as:'p',
 }
-*/
+
 export default ObjectState

@@ -13,7 +13,7 @@ import { DashboardPageInput as PageInput } from 'ui'
 //const endpoint = 'https://api.fwrlines.com/graphql'
 
 export default {
-  title        :'collections/dashboard/zPageInput',
+  title        :'dashboard/zPageInput',
   component    :PageInput,
   //componentSubtitle:'Component subtitle',
   subcomponents:{

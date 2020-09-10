@@ -3,14 +3,22 @@ import * as React from 'react'
 import { useMemo } from 'react'
 import PropTypes from 'prop-types'
 
+import {
+  Button,
+  Shortcut,
+} from 'ds-core'
 
-import { 
+import {
   useModelMap,
 } from '../Context'
 
 import {
   ActionGrid
 } from '../ActionGrid'
+
+import {
+  GraphQLErrorView
+} from '../GraphQLErrorView'
 
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/client'
@@ -52,16 +60,29 @@ const CardView = ({
   const {
     loading,
     error,
+    refetch,
     data={}
   } = useQuery(gql(currentType.graphql.queries.ALL),
     {
-      skip:!currentType.name
+      skip                       :!currentType.name,
+      notifyOnNetworkStatusChange:true
     })
 
   const finalData = useMemo(() => (data && data[Object.keys(data).reduce((a, e) => {
     return e
   }, '')]) || [],
   [currentType.name, loading])
+
+  if (error) return (
+    <GraphQLErrorView
+      item={ finalData }
+      loadingList={ loading }
+      currentListView='Cards'
+      title={ 'Cards' }
+      error={ error }
+      refetch={refetch}
+    />
+  )
 
   return (
     <div
@@ -75,17 +96,21 @@ const CardView = ({
       id={ id }
       style={ style }
     >
-      <ActionGrid currentListView='Cards' title='Cards'>
+      <ActionGrid
+        currentListView='Cards'
+        loadingList={ loading }
+        title='Cards'
+        refetch={ refetch }
+      >
       </ActionGrid>
-      { loading && 'LOADING' }
       { error && JSON.stringify(error, null, 2) }
 
       { data &&
         <Card.Group
           style={{
-            '--card-width':currentType.defaultViews.card.minWidth || '200px'
+            '--card-width':currentType.defaultViews.card.minWidth || '16.5em'
           }}
-          className='u0'
+          className='u0 s-1 k-s'
         >
           { finalData.map((e, i) =>
             <CardComponent
