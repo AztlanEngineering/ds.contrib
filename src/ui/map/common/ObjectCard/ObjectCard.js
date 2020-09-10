@@ -110,7 +110,7 @@ const ObjectCard = ({
         <Card.Section className='y-background b-dark-y s-1 k-s'>
           <div>
             { foreignKey ?
-              <span className=''>
+              <span className='x-metadata c-x'>
                 { 'Type ' }
                 <TypeButton
                   typename={ item.__typename || typeInfo }

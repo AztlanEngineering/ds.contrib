@@ -1,4 +1,5 @@
 /* @fwrlines/generator-react-component 2.4.1 */
+
 /*
 
 Classes :
@@ -6,6 +7,20 @@ Classes :
 
 */
 
-.type_button{
+.type_button {
+  .popup {
+    border-radius: var(--r);
+    max-height: 200px;
+    overflow: hidden;
+    -ms-overflow-style: none;
+    overflow-y: scroll;
+    //scroll-padding: 0 0 0 $scrollPadding;
+    scrollbar-width: none;
+    width: 200px;
+    z-index: 1;
 
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }

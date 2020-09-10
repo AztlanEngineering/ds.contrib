@@ -1,14 +1,14 @@
 /* @fwrlines/generator-react-component 2.4.1 */
 import * as React from 'react'
-import { useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import PropTypes from 'prop-types'
 
 import {
   Button,
   Shortener,
+  Popup,
   Label
 } from 'ds-core'
-
 
 import { useModelMap } from '../Context'
 //Intl
@@ -47,6 +47,7 @@ const TypeButton = ({
   itemId,
   typename,
   wrapGroup,
+  reverseAssociation,
   itemKey,
   ...otherProps
 }) => {
@@ -57,10 +58,14 @@ const TypeButton = ({
     getType
   } = useModelMap()
 
-  const typeUrl = useMemo(() => (getType(typename)||{}).baseUrl, [typename])
+  const typeUrl = useMemo(() => (getType((item && item.__typename) ? item.__typename : typename)||{}).baseUrl, [typename])
 
-  const name = useMemo(() => item ? item._string || item.name || item.id ? item.id.split('-')[0] :'' : itemId ? itemId.split('-')[0] : '',
-    [item, itemId]
+  const name = useMemo(() => item ?
+    (item._string || item.name ||
+      (item.id ? item.id.split('-')[0] :'')
+    ) :
+    itemId ? itemId.split('-')[0] : '',
+  [item, itemId]
   )
 
   const guid = useMemo(() => item ? item.id : itemId, [typename, item, itemId])
@@ -122,8 +127,18 @@ const TypeButton = ({
 
   }, [wrapGroup])
 
+  const [previewDisplay, setPreviewDisplay] = useState(false)
+
   return (
     <Wrapper { ...wrapperProps }>
+      { reverseAssociation &&
+        <Button
+          className='x-red'
+          disabled
+        >
+          R
+        </Button>
+      }
       <Link
         to={ linkToType }
         key='link-type'
@@ -157,39 +172,61 @@ const TypeButton = ({
             }
             /* id={ id }
              style={ style } */
+            onMouseEnter={() => setPreviewDisplay(true)}
+            onMouseLeave={() => setPreviewDisplay(false)}
             style={{
               whiteSpace:'nowrap',
+              overflow  :'initial',
               width     :!itemKey ? '100%': undefined
             }}
           >
             <Shortener
-              className='s-1 k-s'
+              className=''
               countLetters
               readMore={false}
               limit='20'
             >
               { children || name }
             </Shortener>
+            { item &&
+              <Popup
+                isVisible={previewDisplay}
+                style={{ maxHeight: '200px', width: '200px', borderRadius: 'var(--r)', overflow: 'hidden', zIndex: '1', overflowY: 'scroll'}}
+                preferredOrder={['right', 'bottom', 'left', 'top']}
+                className='y-background b-y p-u u1'
+              >
+                <pre className='s-2 k-s ul x-paragraph c-x'>
+                  { JSON.stringify(item, null, 2) }
+                </pre>
+                {/*
+                  <Image
+                    src={item.fullPath}
+                    alt={item.alt}
+                    style={{ height: '100%', width: '100%' }}
+                  />*/}
+              </Popup>
+            }
           </Button>
         </Link>}
 
-      { itemKey && 
-          <Button
-            className={
-              [
-                'x-grey',
-                'yif',
-                //styles[baseClassName],
-              ].filter(e => e).join(' ')
-            }
-            /* id={ id }
+      { itemKey &&
+        <Button
+          className={
+            [
+              'x-grey',
+              'yif',
+              //styles[baseClassName],
+            ].filter(e => e).join(' ')
+          }
+          /* id={ id }
              style={ style } */
-            disabled
-          >
-            <span className="f-mono">
-              .{ itemKey }
-            </span>
-          </Button>
+          disabled
+        >
+          <span className='f-mono'>
+            .
+            { itemKey }
+          </span>
+        </Button>
       }
     </Wrapper>
   )}
@@ -251,7 +288,8 @@ TypeButton.propTypes = {
 }
 
 TypeButton.defaultProps = {
-  wrapGroup:true,
+  wrapGroup         :true,
+  reverseAssociation:false,
   /* height:'2.2em',
      as:'p', */
 }
