@@ -141,7 +141,11 @@ const ActionGrid = ({
   {
     if(!lean && setCurrentTab) return setCurrentTab({
       path :`${location.pathname}`,
-      title:(currentSingleView) ?
+      title:(currentSingleView) ? (location.pathname === newViewUrl) ?
+        `${currentType.name}/new`:
+        `${currentType.name}/${currentSingleView}/${name}`:
+        `${currentType.name}/${currentListView}`,
+      Display:(currentSingleView) ?
         (
           <>
             <Label

@@ -15,11 +15,12 @@ import { SessionContext } from '../../common'
    import C from 'ui/cssClasses' */
 
 /**
- * Use `PrivateRoute` to
+ * Use `PrivateRoute` to privatize a route based on the existence of a user in the context or a condition. Please note that even if all props are passed to the rendered component, we use a render prop pattern to display the children, and that `component` is needed and the original render functions passed will not work.
  * Has color `x`
  */
 const PrivateRoute = ({
   component:Component,
+  render,
   test,
   ...rest
 }) => {
@@ -34,7 +35,7 @@ const PrivateRoute = ({
     <Route
       {...rest}
       render={props =>
-        (currentUser && test(currentUser)) ? (
+        (currentUser && test(currentUser)) ? render ? render(props) : (
           <Component {...props} />
         ) : (
           <Redirect
