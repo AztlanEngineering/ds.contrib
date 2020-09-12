@@ -110,6 +110,7 @@ const Unlink = ({
   return (
 
     <Button
+      compact
       className={
         [
         //styles[baseClassName],
@@ -124,10 +125,11 @@ const Unlink = ({
       onClick={ !loading ? onClick : undefined }
     >
       <span>
-        { `Unlink ${objectType}` }
+        { `Unlink` }
         &nbsp;
       </span>
       <Label className='f-mono s-1 k-s x-white'>
+        { objectType }{'.'}
         { foreignKey }
       </Label>
     </Button>

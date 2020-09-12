@@ -1,6 +1,6 @@
 /* @fwrlines/generator-react-component 2.4.1 */
 import * as React from 'react'
-import { useState, useMemo } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 
 import {
@@ -11,6 +11,9 @@ import {
 } from 'ds-core'
 
 import { useModelMap } from '../Context'
+
+import { useTabline } from 'ui/tabs'
+
 //Intl
 
 /* import { FormattedMessage} from "react-intl";
@@ -58,7 +61,13 @@ const TypeButton = ({
     getType
   } = useModelMap()
 
-  const typeUrl = useMemo(() => (getType((item && item.__typename) ? item.__typename : typename)||{}).baseUrl, [typename])
+  const {
+    openNewTab
+  } = useTabline()
+
+  const objectType = useMemo(() => (getType((item && item.__typename) ? item.__typename : typename)||{}), [typename])
+
+  const typeUrl = objectType.baseUrl
 
   const name = useMemo(() => item ?
     (item._string || item.name ||
@@ -129,88 +138,102 @@ const TypeButton = ({
 
   const [previewDisplay, setPreviewDisplay] = useState(false)
 
+  const openObjectTab = useCallback(() => guid && openNewTab({
+    path :linkToObject,
+    title:`${objectType.name}/Edit/${name}`
+  }), [guid])
+
+  const openTypeTab = useCallback(() => openNewTab({
+    path :linkToType,
+    title:`${objectType.name}/Table`
+  }), [guid])
+
   return (
     <Wrapper { ...wrapperProps }>
       { reverseAssociation &&
         <Button
+          compact
           className='x-red'
           disabled
         >
           R
         </Button>
       }
-      <Link
-        to={ linkToType }
+      <Button
+        compact
         key='link-type'
+        style={{ minWidth:'min-content' }}
+        onClick={ openObjectTab }
+        className={
+          [
+            //styles[baseClassName],
+            'x-secondary',
+          ].filter(e => e).join(' ')
+        }
+        /* id={ id }
+             style={ style } */
       >
+        { typename }
+      </Button>
+      { guid &&
         <Button
+          key='link-object'
+          compact
+          onClick={ openObjectTab }
           className={
             [
-            //styles[baseClassName],
-              'x-secondary',
+              'x-grey',
+              'pointer',
+              'yif',
+              //styles[baseClassName],
             ].filter(e => e).join(' ')
           }
           /* id={ id }
              style={ style } */
+          onMouseEnter={() => setPreviewDisplay(true)}
+          onMouseLeave={() => setPreviewDisplay(false)}
+          style={{
+            whiteSpace:'nowrap',
+            overflow  :'initial',
+            width     :!itemKey ? '100%': undefined,
+            ...(wrapGroup ? { flexGrow: 99 } : {})
+          }}
         >
-          { typename }
-        </Button>
-      </Link>
-      { guid &&
-        <Link
-          to={ linkToObject }
-          key='link-object'
-          style={ wrapGroup && { flexGrow: 99 }}
-        >
-          <Button
-            className={
-              [
-                'x-grey',
-                'yif',
-                //styles[baseClassName],
-              ].filter(e => e).join(' ')
-            }
-            /* id={ id }
-             style={ style } */
-            onMouseEnter={() => setPreviewDisplay(true)}
-            onMouseLeave={() => setPreviewDisplay(false)}
-            style={{
-              whiteSpace:'nowrap',
-              overflow  :'initial',
-              width     :!itemKey ? '100%': undefined
-            }}
+          <Shortener
+            className=''
+            countLetters
+            readMore={false}
+            limit='20'
           >
-            <Shortener
-              className=''
-              countLetters
-              readMore={false}
-              limit='20'
+            { children || name }
+          </Shortener>
+          { item &&
+            <Popup
+              isVisible={previewDisplay}
+              style={{ maxHeight: '200px', width: '200px', borderRadius: 'var(--r)', overflow: 'hidden', zIndex: '1', overflowY: 'scroll'}}
+              preferredOrder={['right', 'bottom', 'left', 'top']}
+              className='y-background b-y p-u u25'
             >
-              { children || name }
-            </Shortener>
-            { item &&
-              <Popup
-                isVisible={previewDisplay}
-                style={{ maxHeight: '200px', width: '200px', borderRadius: 'var(--r)', overflow: 'hidden', zIndex: '1', overflowY: 'scroll'}}
-                preferredOrder={['right', 'bottom', 'left', 'top']}
-                className='y-background b-y p-u u1'
+              <pre
+                className='s-1 k-s ul x-paragraph c-x v0 m-v'
+                style={{ lineHeight: '1.3em' }}
               >
-                <pre className='s-2 k-s ul x-paragraph c-x'>
-                  { JSON.stringify(item, null, 2) }
-                </pre>
-                {/*
+                { JSON.stringify(item, null, 2) }
+              </pre>
+              {/*
                   <Image
                     src={item.fullPath}
                     alt={item.alt}
                     style={{ height: '100%', width: '100%' }}
                   />*/}
-              </Popup>
-            }
-          </Button>
-        </Link>}
+            </Popup>
+          }
+        </Button>
+      }
 
       { itemKey &&
         <Button
+          compact
           className={
             [
               'x-grey',

@@ -47,6 +47,8 @@ const Delete = ({
 
   objectType,
 
+  compact,
+
   refetch,
   redirect,
   ...otherProps
@@ -124,10 +126,11 @@ const Delete = ({
       }
       id={ id }
       style={ style }
+      icon='p'
+      compact={ compact }
       loading={ loading }
       onClick={ !loading ? onClick : undefined }
     >
-      Delete
     </Button>
   )}
 

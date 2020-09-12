@@ -359,6 +359,7 @@ const ActionGrid = ({
               { children }
               { refetch &&
                 <Button
+                  compact
                   onClick={ !loading ? () => refetch() : undefined }
                   className={ 'x-green'}
                   loading={ loading }

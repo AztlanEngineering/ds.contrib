@@ -10,8 +10,14 @@ import { useModelMap } from '../Context'
 import {
   Delete,
   Edit,
-  Unlink
+  Unlink,
+  FullViewButton,
+  AssociationsViewButton,
 } from './common'
+
+import { 
+  ObjectState
+} from '../ObjectState'
 
 //Intl
 
@@ -42,6 +48,7 @@ const Actions = ({
   id,
   className,
   style,
+  lean,
   item,
   itemId,
   objectType,
@@ -49,6 +56,7 @@ const Actions = ({
   enableEdit,
   enableDelete,
   enableUnlink,
+  enableState,
   foreignKey,
   extraActions,
   reverse,
@@ -70,12 +78,13 @@ const Actions = ({
 
   const actions = useMemo(() => {
     var acts = []
-    enableEdit && acts.push(
+    !lean && enableEdit && acts.push(
       {
         condition:(user) => true,
         Component:Edit,
         className:'x-blue',
       })
+
     enableDelete && acts.push(
       {
         condition:(user) => true,
@@ -90,6 +99,32 @@ const Actions = ({
         className:'x-grey',
       }
     )
+
+    !lean && currentType.defaultViews.state && enableState && acts.push(
+      {
+        condition:(user) => true,
+        Component:ObjectState,
+        //className:'x-warning',
+        simple:true
+      }
+    )
+
+    !lean && currentType.graphql.queries.FULL && acts.push(
+      {
+        condition:(user) => true,
+        Component:FullViewButton,
+        className:'x-yellow',
+      }
+    )
+
+    !lean && currentType.associations && currentType.associations.belongsTo && acts.push(
+      {
+        condition:(user) => true,
+        Component:AssociationsViewButton,
+        className:'x-secondary',
+      }
+    )
+
     const res = [
       ...acts,
       ...extraActions
@@ -108,6 +143,7 @@ const Actions = ({
     actions.map(({ Component, extraProps, ...e }, i) =>
       <Component
         {...e}
+        compact
         key={ i }
         item={ item }
         itemId={ itemId }
@@ -188,6 +224,11 @@ Actions.propTypes = {
   enableUnlick:PropTypes.bool,
 
   /**
+   *  Whether to display the state view button. Please not that this only applies to types that have a `state` key in their `defaultViews`
+   */
+  enableState:PropTypes.bool,
+
+  /**
    * the key that opens the connections between to types
    */
   foreignKey:PropTypes.string,
@@ -212,6 +253,11 @@ Actions.propTypes = {
    */
   redirectAfterDelete:PropTypes.bool,
 
+  /**
+   * Whether to display the minimum number of actions  
+   */
+  lean:PropTypes.bool,
+
 
 }
 
@@ -219,6 +265,7 @@ Actions.defaultProps = {
   enableEdit         :true,
   enableDelete       :true,
   enableUnlink       :false,
+  enableState:true,
   redirectAfterDelete:false,
   extraActions       :[],
   reverse            :true

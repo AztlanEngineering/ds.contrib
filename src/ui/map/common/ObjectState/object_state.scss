@@ -1,4 +1,5 @@
 /* @fwrlines/generator-react-component 2.4.1 */
+
 /*
 
 Classes :
@@ -6,34 +7,33 @@ Classes :
 
 */
 
-.object_state{
-  &:not(.simple){
-  display:grid;
-  grid-template-columns: [field] max-content [message] auto;
-
+.object_state {
+  &:not(.simple) {
+    .content {
+      display: grid;
+      grid-template-columns: [field] max-content [message] auto;
+      grid-gap:.5em;
+    }
   }
 
   & > div {
-    padding:.3em .3em;
+    //padding: .3em .3em;
   }
 
   & > .summary {
-      grid-column: field / span 2;
+    grid-column: field / span 2;
   }
 
   & > .field {
-      grid-column: field / span 1;
-      font-weight:bold;
+    font-weight: bold;
+    grid-column: field / span 1;
   }
 
   & > .message {
-      grid-column: message / span 1;
-
+    grid-column: message / span 1;
   }
 
   &.simple {
-    white-space:nowrap;
+    white-space: nowrap;
   }
-
-
 }
