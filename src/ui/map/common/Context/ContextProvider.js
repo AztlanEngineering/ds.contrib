@@ -2,6 +2,8 @@ import * as React from 'react'
 import { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 
+import qs from 'query-string'
+
 import { TableView, CardView } from '../ListViews'
 import {
   AssociationsView,
@@ -44,13 +46,12 @@ const MapContextProvider = ({
 
   //console.log('INIT CTX PRO', typeList, currentType)
 
-  const generateLocalPath = (to, params) => {
+  const generateLocalPath = (to, params, qsDict) => {
     const path = generatePath(
       routes[to],
       params
     )
-    return path
-
+    return qsDict ? `${path}?${qs.stringify(qsDict)}` : path
   }
 
   const availableListViews = useMemo(() => {
