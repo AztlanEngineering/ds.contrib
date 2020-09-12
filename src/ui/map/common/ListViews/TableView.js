@@ -82,6 +82,8 @@ const TableView = ({
   }, '')]) || [],
   [currentType.name, loading])
 
+  const defaultSortBy = useMemo(() => [{ id:'updatedAt', desc:true }], [currentType.name])
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -93,7 +95,10 @@ const TableView = ({
     {
       columns,
       data        :finalData,
-      initialState:currentType.defaultViews.table.initialState,
+      initialState:{
+        sortBy:defaultSortBy,
+        ...currentType.defaultViews.table.initialState
+      },
     },
     useSortBy
   )

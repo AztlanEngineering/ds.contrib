@@ -191,9 +191,10 @@ const MultiFormView = ({
                 itemId={ objectId }
               />
             }
-            ObjectInfo={({item}) =>
-              <div className='ph-u'>
+            ObjectInfo={({item, ...props}) =>
+              <div className=''>
                 <ObjectCard
+                  { ...props }
                   className='y-background b-y'
                   enableUnlink
                   item={ item || {}}
@@ -203,7 +204,20 @@ const MultiFormView = ({
                 </ObjectCard>
               </div>
             }
-          />
+          >
+          </MultiFormComponent>
+          <br />
+          
+          <ActionGrid
+            lean
+            item={ finalData }
+            loadingSingle={ loading  }
+            currentSingleView={ `Multi ${currentMultiFormInfo.type}` }
+            title={ `Multi ${currentMultiFormInfo.type}` }
+            refetch={ refetch }
+            editMode
+          >
+          </ActionGrid>
 
           <FormContextDebugger/>
         </FormContextProvider>

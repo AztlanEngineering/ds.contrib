@@ -1,6 +1,6 @@
 /* @fwrlines/generator-react-component 2.4.1 */
 import * as React from 'react'
-//import {} from 'react'
+import { useMemo } from 'react'
 import PropTypes from 'prop-types'
 
 import {
@@ -17,6 +17,10 @@ import {
 import {
   TypeButton
 } from '../TypeButton'
+
+import {
+  ObjectState
+} from '../ObjectState'
 
 import {
   useModelMap,
@@ -61,6 +65,7 @@ const ObjectCard = ({
   enableEdit,
   enableUnlink,
   extraActions,
+  newActions,
   redirectAfterDelete,
 
   typeInfo,
@@ -69,8 +74,13 @@ const ObjectCard = ({
 
   const {
     currentType,
-    generateLocalPath
+    generateLocalPath,
+    getType,
   } = useModelMap()
+
+  const relatedTypeInfo = useMemo(() => typeInfo ? getType(typeInfo) : ({})
+    ,[typeInfo]
+  )
 
   const actionProps = {
     item,
@@ -78,9 +88,10 @@ const ObjectCard = ({
     enableDelete,
     enableEdit,
     enableUnlink,
+    enableState:false,
     foreignKey,
     extraActions,
-    objectType:currentType.name,
+    objectType :currentType.name,
     redirectAfterDelete
   }
 
@@ -94,23 +105,24 @@ const ObjectCard = ({
           className
         ].filter(e => e).join(' ')
       }
+      compact
       id={ id }
       style={ style }
       backFaceClassName='y-paragraph b-y'
       backFace={
-         item.id && 
-        <Card.Section>
-          <div>
-            <pre className='s-2 k-s c-x x-background'>{ JSON.stringify(item, null, 2) }</pre>
-          </div>
-        </Card.Section>
+        item.id &&
+          <Card.Section>
+            <div>
+              <pre className='s-2 k-s c-x x-background'>{ JSON.stringify(item, null, 2) }</pre>
+            </div>
+          </Card.Section>
       }
     >
       { (typeInfo || (foreignKey && currentType)) &&
         <Card.Section className='y-background b-dark-y s-1 k-s'>
           <div>
             { foreignKey ?
-              <span className='x-metadata c-x'>
+              <span className='x-subtitle c-x'>
                 { 'Type ' }
                 <TypeButton
                   typename={ item.__typename || typeInfo }
@@ -132,39 +144,60 @@ const ObjectCard = ({
         </Card.Section>
       }
       { !item.id &&
-        <Card.Section className='main'>
-          <Heading
-            heading='Empty'
-            subtitle={foreignKey ? `This ${currentType.name} does not have a ${typeInfo} yet. You can create one below.`: `There is no ${typeInfo} yet. You can create one below.`}
-            subtitleClassName='s-1 k-s'
-          >
-            <Link to={ generateLocalPath('new', { type: typeInfo }) }>
-              <Button className='x-orange s-2 k-s'>
-                {`New ${typeInfo}`}
-              </Button>
-            </Link>
-          </Heading>
+        <>
+          <Card.Section className='main'>
+            <Heading
+              heading='Empty'
+              subtitle={foreignKey ? `This ${currentType.name} does not have a ${typeInfo} yet. You can create one here.`: `There is no ${typeInfo} yet. You can create one below.`}
+              subtitleClassName='s-1 k-s'
+            >
+            </Heading>
 
-        </Card.Section>
+          </Card.Section>
+          <Card.Section>
+            <Button.Group
+              independent
+              className='s-2 k-s'
+              style={{ justifyContent: 'flex-end' }}
+            >
+              { newActions ? newActions :
+              <Link to={ generateLocalPath('new', { type: relatedTypeInfo.baseUrl }) }>
+                  <Button className='x-orange'>
+                  {`New ${typeInfo}`}
+                </Button>
+                </Link>
+              }
+            </Button.Group>
+          </Card.Section>
+        </>
       }
-      { item.id && 
+      { item.id &&
         <>
           { children }
-      { item.tests &&
-        <Card.Section>
-        </Card.Section>
-      }
-      <Card.Section>
-        <Button.Group
-          independent
-          className='s-2 k-s'
-          style={{ justifyContent: 'flex-end' }}
-        >
-          <SingleActions
-            { ...actionProps }
-          />
-        </Button.Group>
-      </Card.Section>
+          { item._state &&
+            <>
+              <Card.Divider/>
+              <Card.Section className='b-dark-y'>
+                <ObjectState
+                  className='s-1 k-s'
+                  item={ item }
+                  accordionDefaultIsOpen={ false }
+                >
+                </ObjectState>
+              </Card.Section>
+            </>
+          }
+          <Card.Section>
+            <Button.Group
+              independent
+              className='s-2 k-s'
+              style={{ justifyContent: 'flex-end' }}
+            >
+              <SingleActions
+                { ...actionProps }
+              />
+            </Button.Group>
+          </Card.Section>
         </>
       }
     </Card>
@@ -236,7 +269,7 @@ ObjectCard.propTypes = {
 
 ObjectCard.defaultProps = {
   typeInfo:false,
-  item:{},
+  item    :{},
 }
 
 ObjectCard.Section = Card.Section

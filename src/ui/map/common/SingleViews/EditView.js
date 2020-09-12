@@ -246,8 +246,8 @@ const EditView = ({
       >
         <SingleActions
           item={ finalData }
-          enableEdit={false}
           enableDelete={ currentId ? true : false }
+          lean
           independent
           reverse={ false }
           redirectAfterDelete={ true }
@@ -304,8 +304,8 @@ const EditView = ({
           >
             <SingleActions
               item={ finalData }
-              enableEdit={false}
               enableDelete={ currentId ? true : false }
+              lean
               independent
               reverse={ false }
               redirectAfterDelete={ true }

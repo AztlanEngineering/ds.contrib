@@ -96,7 +96,7 @@ const MapContextProvider = ({
 
     currentType.associations && views.push(
       {
-        view     :'assocations',
+        view     :'associations',
         name     :'Associations',
         shortcut :'a',
         className:'x-secondary',
