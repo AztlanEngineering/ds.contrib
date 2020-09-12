@@ -166,24 +166,10 @@ FullView.propTypes = {
   //as: PropTypes.string,
 
   /**
-   * The height of the element
+   * Overloads the automatic detection of the id in the url
    */
-  height:PropTypes.string,
+  itemId:PropTypes.string,
 
-  /**
-   * The width of the element
-   */
-  width:PropTypes.string,
-  /*
-  : PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    state: PropTypes.string.isRequired,
-  }),
-  : PropTypes.func,
-  : PropTypes.func,
-  : PropTypes.oneOf(['', ''])
-  */
 }
 
 /*
