@@ -257,19 +257,15 @@ MultiFormView.propTypes = {
   //as: PropTypes.string,
 
   /**
-   * The width of the element
+   * Overloads the automatic detection of the id in the url
    */
-  width:PropTypes.string,
-  /*
-  : PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    state: PropTypes.string.isRequired,
-  }),
-  : PropTypes.func,
-  : PropTypes.func,
-  : PropTypes.oneOf(['', ''])
-  */
+  itemId:PropTypes.string,
+
+  /**
+   * If this is displayed in the context of a fk, please enter here the foreign key from the current type
+   */
+  foreignKey:PropTypes.string,
+
 }
 
 /*
