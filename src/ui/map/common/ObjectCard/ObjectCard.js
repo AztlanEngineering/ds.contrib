@@ -225,24 +225,49 @@ ObjectCard.propTypes = {
   children:PropTypes.node,
 
   /**
-   * Which html tag to use
+   * A dict of values representing the current item. Must have key id
    */
-  as:PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object
-  ]),
-  //as: PropTypes.string,
+  item:PropTypes.object,
 
   /**
-   * The height of the element
+   * the function that fetches the data for the component after every change
    */
-  height:PropTypes.string,
+  refetch:PropTypes.func,
 
   /**
-   * The width of the element
+   *  Whether to display the delete action
    */
-  width:PropTypes.string,
+  enableDelete:PropTypes.bool,
 
+  /**
+   *  Whether to display the edit action
+   */
+  enableEdit:PropTypes.bool,
+
+  /**
+   *  Whether to display the unlink action
+   */
+  enableUnlick:PropTypes.bool,
+
+  /**
+   * Extra actions to be added
+   */
+  extraActions:PropTypes.arrayOf(
+    PropTypes.shape({
+      condition:PropTypes.func,
+      Component:PropTypes.node.isRequired,
+    })
+  ),
+
+  /**
+   *  replace the object actions with new form when the object is new (when the Card is empty)
+   */
+  newActions:PropTypes.node,
+
+  /**
+   *  Whether to redirect to the list after deletion. This is only needed in singleviews
+   */
+  redirectAfterDelete:PropTypes.bool,
 
   /**
    * Whether to display type info
