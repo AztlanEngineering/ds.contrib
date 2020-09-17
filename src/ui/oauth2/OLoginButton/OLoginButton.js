@@ -1,5 +1,6 @@
 /* @fwrlines/generator-react-component 1.0.1 */
 import * as React from 'react'
+import { useMemo } from 'react'
 import PropTypes from 'prop-types'
 
 /* Config
@@ -28,7 +29,7 @@ const OLoginButton = ({
   style,
 
   query,
-  dataKey,
+  //dataKey,
   simple,
   buttonClassName,
 
@@ -38,9 +39,20 @@ const OLoginButton = ({
   const {
     loading,
     error,
-    data={}
+    data
   } = useQuery(gql(query))
   //console.log(loading, error, data)
+  //
+  const finalData = useMemo(() => {
+    var result = {}
+    console.log(99, data)
+    if(data) {
+      const dataKey = Object.keys(data).reduce((a, e) => e)
+      result = data[dataKey]
+    }
+    return result
+  },
+  [loading, data])
 
   return(
     <>
@@ -53,7 +65,7 @@ const OLoginButton = ({
         }
         id={ id }
         style={ style }
-        href={ data && data[dataKey] }
+        href={ finalData }
       >
         <Button
           simple={ simple }
@@ -112,7 +124,7 @@ OLoginButton.propTypes = {
   /**
    * The key to the query data object
    */
-  dataKey:PropTypes.string.isRequired,
+  //dataKey:PropTypes.string.isRequired,
 
   /**
    * The button label

@@ -81,7 +81,7 @@ const GraphQLErrorView = ({
         //title={ name }
       >
         <Button
-          onClick={ refetch }
+          onClick={ refetch ? () => refetch() : undefined }
           className='pointer x-green'
         >
           Refetch
@@ -93,7 +93,7 @@ const GraphQLErrorView = ({
         </Heading> :
 
         <Heading heading='There was an error executing the GraphQL query or mutation.'>
-          <pre className='c-x'>
+          <pre className='c-x x-paragraph'>
             { error && JSON.stringify(error, null, 2) }
           </pre>
         </Heading>

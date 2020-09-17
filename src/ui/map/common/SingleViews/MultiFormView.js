@@ -200,6 +200,7 @@ const MultiFormView = ({
                   item={ item || {}}
                   foreignKey={ currentMultiFormInfo.foreignKey }
                   typeInfo={ currentRelatedType.name }
+                  objectType={ currentRelatedType.name }
                 >
                 </ObjectCard>
               </div>
