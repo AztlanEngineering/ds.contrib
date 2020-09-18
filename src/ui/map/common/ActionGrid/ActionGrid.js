@@ -259,7 +259,7 @@ const ActionGrid = ({
                       { e.name }
                     </strong>
                     {' '}
-                    { !editMode &&
+                    { !editMode && e.shortcut &&
                       <Shortcut
                         className='s-2 k-s ul'
                         style={{
@@ -329,7 +329,7 @@ const ActionGrid = ({
                           { e.name }
                         </strong>
                         {' '}
-                        { !editMode &&
+                        { !editMode && e.shortcut &&
                           <Shortcut
                             className='s-2 k-s ul'
                             style={{

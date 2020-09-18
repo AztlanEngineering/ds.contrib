@@ -12,6 +12,7 @@ export {
   StateView as MapStateView,
   TableView as MapTableView,
   TypeButton as MapTypeButton,
+  GraphQLErrorView as MapGraphQLErrorView,
   useModelMap,
 } from './common'
 
