@@ -144,6 +144,13 @@ const MapContextProvider = ({
 
       })
     }
+
+    if (currentType.extraViews) {
+      currentType.extraViews.forEach(e => {
+        views.push(e)
+      })
+    }
+
     return views
   }
   , [currentType.name])
