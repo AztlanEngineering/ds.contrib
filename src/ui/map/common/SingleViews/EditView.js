@@ -290,7 +290,7 @@ const EditView = ({
         <div className='pv-v v2 s-1 k-s' style={{ zIndex:6 }}>
           { fields.map((e, i) =>
             <FormInput
-              key={i}
+              key={e.inputId}
               compact
               { ...e }
             />

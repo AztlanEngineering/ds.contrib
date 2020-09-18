@@ -162,6 +162,7 @@ const AssociationsView = ({
                     item={ finalData[e.as] || {} }
                     foreignKey={ e.foreignKey }
                     typeInfo={ localType.name }
+                    objectType={ localType.name }
                   >
                   </ObjectCard>
 

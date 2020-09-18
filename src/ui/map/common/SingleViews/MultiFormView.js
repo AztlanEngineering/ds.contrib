@@ -1,6 +1,6 @@
 /* @fwrlines/generator-react-component 2.4.1 */
 import * as React from 'react'
-import { useMemo} from 'react'
+import { useCallback, useMemo} from 'react'
 import PropTypes from 'prop-types'
 
 import {
@@ -11,14 +11,17 @@ import gql from 'graphql-tag'
 import { useQuery, useMutation } from '@apollo/client'
 
 import {
-  Button,
+  Accordion,
+  Heading,
+  Button
 } from 'ds-core'
 
 import {
   FormContextProvider,
   FormContextDebugger,
   FormQueryMultiObject,
-  FormMultiObject
+  FormMultiObject,
+  useForm
 } from 'ds-form'
 
 import {
@@ -102,7 +105,7 @@ const MultiFormView = ({
     error,
     data,
     refetch
-  } = useQuery(gql(currentType.graphql.queries.ONE),
+  } = useQuery(gql(currentType.graphql.queries.FULL),
     {
       variables:{
         id:itemId || currentId
@@ -141,6 +144,53 @@ const MultiFormView = ({
     refetch,
   }), [currentMultiFormInfo, refetch])
 
+  const [upsertObjects, {
+    data:mutationData,
+    error:mutationError,
+    loading:mutationLoading
+  }] = useMutation(gql(currentMultiFormInfo.MUTATION_UPSERT))
+
+  const finalMutationData = useMemo(() => {
+    var result = []
+    if(mutationData) {
+      const dataKey = Object.keys(mutationData).reduce((a, e) => e)
+      result = mutationData[dataKey]
+    }
+    return result
+  },
+  [mutationLoading])
+
+  const SubmitButton = React.memo((props) => {
+
+    const {
+      objects,
+      getObjectsArray
+    /* touched,
+         errors,
+         isValid */
+    } = useForm()
+
+    const mutate = useCallback(() => {
+      const variables = {
+        inputs:getObjectsArray().map((e) => ({...e, [currentMultiFormInfo.foreignKey]: finalData.id}))
+      }
+      confirm(`Please take a second to review the updated data and confirm afterwards. \n\n Mutation payload : \n ${JSON.stringify(variables, null, 2)}`) && upsertObjects({variables})
+    }, [objects])
+
+    return(
+      <Button
+        className='x-success'
+        compact
+        {...props}
+        onClick={ !mutationLoading ? mutate : undefined }
+        loading={ mutationLoading }
+      >
+        Submit
+      </Button>
+    )
+
+  })
+
   if(!finalData.__typename) return(
     <GraphQLErrorView
       item={ finalData }
@@ -173,12 +223,16 @@ const MultiFormView = ({
         refetch={ refetch }
         editMode
       >
+        <SubmitButton/>
       </ActionGrid>
       <div className='s-1 k-s'>
         <FormContextProvider
           useObjects
         >
+          { JSON.stringify(finalMutationData) }
           <MultiFormComponent
+            key={ mutationData ? finalMutationData[0].updatedAt :'fresh' }
+            className='s-1 k-s'
             orderField={ currentMultiFormInfo.orderField }
             inputMap={ currentRelatedType.defaultViews.single.fields.filter(e => e.name !== currentMultiFormInfo.foreignKey) }
             maxExtra={ currentMultiFormInfo.maxExtra || 4 }
@@ -200,6 +254,7 @@ const MultiFormView = ({
                   item={ item || {}}
                   foreignKey={ currentMultiFormInfo.foreignKey }
                   typeInfo={ currentRelatedType.name }
+                  objectType={ currentRelatedType.name }
                 >
                 </ObjectCard>
               </div>
@@ -207,7 +262,7 @@ const MultiFormView = ({
           >
           </MultiFormComponent>
           <br />
-          
+
           <ActionGrid
             lean
             item={ finalData }
@@ -217,9 +272,94 @@ const MultiFormView = ({
             refetch={ refetch }
             editMode
           >
+            <SubmitButton/>
           </ActionGrid>
 
-          <FormContextDebugger/>
+          <Accordion
+            className='s0 k-s y-white x-subtitle'
+            toggleStyle='plus'
+          >
+            <Accordion.Item
+              className='y-blue b-y ui-dark'
+              title={
+                <Heading
+                  headingAs='h2'
+                  heading='Local Graph'
+                />
+              }
+              id={ 'local_graph' }
+            >
+              <pre className='c-x x-paragraph'>
+
+                { data && JSON.stringify(finalData, null, 2) }
+              </pre>
+            </Accordion.Item>
+            <Accordion.Item
+              className='y-background b-y'
+              title={
+                <Heading
+                  headingAs='h2'
+                  heading='Form Debug'
+                />
+              }
+              id={ 'form_debugger' }
+            >
+              <FormContextDebugger/>
+            </Accordion.Item>
+
+            { error &&
+              <Accordion.Item
+                className='y-error b-dark-y ui-dark'
+                title={
+                  <Heading
+                    headingAs='h2'
+                    heading='Loading Error (query)'
+                    subtitle='This only appears if the object didnt load properly.'
+                  />
+                }
+                id={ 'loading_error' }
+              >
+                <pre className='c-x x-paragraph'>
+
+                  { data && JSON.stringify(error, null, 2) }
+                </pre>
+              </Accordion.Item>}
+
+            {mutationError &&
+              <Accordion.Item
+                className='y-error b-dark-y ui-dark'
+                title={
+                  <Heading
+                    headingAs='h2'
+                    heading='Upsert Error (mutation)'
+                    subtitle='This only appears if the object didnt save properly.'
+                  />
+                }
+                id={ 'mutation_error' }
+              >
+                <pre className='c-x x-paragraph'>
+
+                  { data && JSON.stringify(mutationError, null, 2) }
+                </pre>
+              </Accordion.Item>}
+            { mutationData &&
+              <Accordion.Item
+                className='y-success b-dark-y ui-dark'
+                title={
+                  <Heading
+                    headingAs='h2'
+                    heading='Upsert Success (mutation)'
+                    subtitle='This only appears if the object did save properly.'
+                  />
+                }
+                id={ 'mutation_data' }
+              >
+                <pre className='c-x x-paragraph'>
+
+                  { data && JSON.stringify(mutationData, null, 2) }
+                </pre>
+              </Accordion.Item>}
+          </Accordion>
         </FormContextProvider>
       </div>
     </div>

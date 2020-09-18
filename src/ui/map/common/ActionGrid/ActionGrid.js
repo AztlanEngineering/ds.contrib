@@ -252,6 +252,7 @@ const ActionGrid = ({
                 >
                   <Button
                     className={ isActive ? e.className : 'x-background' }
+                    compact
                     key={i}
                   >
                     <strong>
@@ -279,7 +280,10 @@ const ActionGrid = ({
             }
             ) }
             <Link to={ newViewUrl } >
-              <Button className='x-orange'>
+              <Button
+                className='x-orange'
+                compact
+              >
                 New
                 {' '}
                 { !editMode &&
@@ -318,6 +322,7 @@ const ActionGrid = ({
                     >
                       <Button
                         className={ isActive ? e.className : 'x-background' }
+                        compact
                         key={i}
                       >
                         <strong>

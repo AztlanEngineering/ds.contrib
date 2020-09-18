@@ -137,6 +137,7 @@ const TableView = ({
         refetch={ refetch }
       >
         <Button
+          compact
           className='x-grey b-dark-x ui-dark'
           disabled
         >
@@ -149,6 +150,7 @@ const TableView = ({
         </Button>
         <Button
           id='toggle_button'
+          compact
           className='x-yellow'
           style={{ overflow: 'initial' }}
           onMouseEnter={() => setColumnSelectorDisplay(true)}

@@ -69,11 +69,14 @@ const ObjectCard = ({
   redirectAfterDelete,
 
   typeInfo,
+  objectType,
   foreignKey,
 }) => {
 
+  const routeParams = useParams()
+
   const {
-    currentType,
+    currentType:localType,
     generateLocalPath,
     getType,
   } = useModelMap()
@@ -81,6 +84,8 @@ const ObjectCard = ({
   const relatedTypeInfo = useMemo(() => typeInfo ? getType(typeInfo) : ({})
     ,[typeInfo]
   )
+
+  const currentType = useMemo(() => objectType ? getType(objectType) : localType, [routeParams])
 
   const actionProps = {
     item,
@@ -278,6 +283,11 @@ ObjectCard.propTypes = {
    * If this is displayed in the context of a fk, please enter here the foreign key from the current type
    */
   foreignKey:PropTypes.string,
+
+  /**
+   * This overloads the automatic detection of the type. Use this only if the card is display outside of its `/map/Type` 
+   */
+  objectType:PropTypes.string,
 
 
   /*
