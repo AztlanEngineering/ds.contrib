@@ -176,6 +176,8 @@ const EditView = ({
          isValid */
     } = useForm()
 
+    console.log('rdr submitbtn', values)
+
 
     const mutate = useCallback(() => {
       const variables = values ? Object.keys(values).reduce((a, e) => {
@@ -210,7 +212,8 @@ const EditView = ({
       >
         Submit
       </Button>
-    )})
+    )
+  })
 
   if(currentId && !finalData.__typename) return (
     <GraphQLErrorView
@@ -236,58 +239,62 @@ const EditView = ({
       id={ id }
       style={ style }
     >
-      <ActionGrid
-        item={ finalData }
-        loadingSingle={ loading || mutationLoading }
-        currentSingleView='Edit'
-        title={ finalData.id ? 'Edit' : 'New' }
-        refetch={ refetch }
-        editMode
-      >
-        <SingleActions
-          item={ finalData }
-          enableDelete={ currentId ? true : false }
-          lean
-          independent
-          reverse={ false }
-          redirectAfterDelete={ true }
-          style={{
-            justifyContent:'end'
-          }}
-          extraActions={[
-            {
-              condition:(user) => true,
-              Component:SubmitButton
-            }
-          ]}
-        />
-      </ActionGrid>
-      <div className='pv-v v2'>
-
-        { finalData.createdAt &&
-          <Timestamp
-            time={ finalData.createdAt }
-            className={ 'x-subtitle c-x' }
-            prefix={
-              <strong>Created</strong>
-            }
-          />
-        }
-        { finalData.updatedAt &&
-          <Timestamp
-            time={ finalData.updatedAt }
-            className={ 'x-primary c-x' }
-            prefix={
-              <strong>Updated</strong>
-            }
-          />
-        }
-      </div>
       <FormContextProvider
         initialValues={ finalData }
         parsers={ currentType.graphql.types }
       >
-        <div className='pv-v v2 s-1 k-s' style={{ zIndex:6 }}>
+
+        <ActionGrid
+          item={ finalData }
+          loadingSingle={ loading || mutationLoading }
+          currentSingleView='Edit'
+          title={ finalData.id ? 'Edit' : 'New' }
+          refetch={ refetch }
+          editMode
+        >
+          <SingleActions
+            item={ finalData }
+            enableDelete={ currentId ? true : false }
+            lean
+            independent
+            reverse={ false }
+            redirectAfterDelete={ true }
+            style={{
+              justifyContent:'end'
+            }}
+            extraActions={[
+              {
+                condition:(user) => true,
+                Component:SubmitButton
+              }
+            ]}
+          />
+        </ActionGrid>
+        <div className='pv-v v2'>
+
+          { finalData.createdAt &&
+            <Timestamp
+              time={ finalData.createdAt }
+              className={ 'x-subtitle c-x' }
+              prefix={
+                <strong>Created</strong>
+              }
+            />
+          }
+          { finalData.updatedAt &&
+            <Timestamp
+              time={ finalData.updatedAt }
+              className={ 'x-primary c-x' }
+              prefix={
+                <strong>Updated</strong>
+              }
+            />
+          }
+        </div>
+        <div
+          className='pv-v v2 s-1 k-s'
+          style={{ zIndex: 6 }}
+        >
           { fields.map((e, i) =>
             <FormInput
               key={e.inputId}
@@ -385,6 +392,23 @@ const EditView = ({
                 <pre className='c-x x-paragraph'>
 
                   { data && JSON.stringify(mutationError, null, 2) }
+                </pre>
+              </Accordion.Item>}
+            { mutationData && (Object.keys(mutationData).length > 0) && 
+              <Accordion.Item
+                className='y-success b-dark-y ui-dark'
+                title={
+                  <Heading
+                    headingAs='h2'
+                    heading='Save Success (mutation)'
+                    subtitle='This only appears if the object did save properly.'
+                  />
+                }
+                id={ 'mutation_data' }
+              >
+                <pre className='c-x x-paragraph'>
+
+                  { data && JSON.stringify(mutationData, null, 2) }
                 </pre>
               </Accordion.Item>}
           </Accordion>

@@ -87,7 +87,8 @@ const MultiFormView = ({
 
   const currentMultiFormInfo = useMemo(() => {
     const typeLower = routeParams.view && routeParams.view.split('-')[1]
-    return currentType.defaultViews.multi.find(e => e.type.toLowerCase() === typeLower) || {}
+    const multiInfo = currentType.defaultViews.multi
+    return multiInfo ? multiInfo.find(e => e.type.toLowerCase() === typeLower) || {} : {}
   },
   [
     routeParams.type,
@@ -105,7 +106,7 @@ const MultiFormView = ({
     error,
     data,
     refetch
-  } = useQuery(gql(currentType.graphql.queries.FULL),
+  } = useQuery(gql(currentType.graphql.queries.FULL || currentType.grqphql.queries.ONE),
     {
       variables:{
         id:itemId || currentId
@@ -215,153 +216,150 @@ const MultiFormView = ({
       style={ style }
     >
 
-      <ActionGrid
-        item={ finalData }
-        loadingSingle={ loading  }
-        currentSingleView={ `Multi ${currentMultiFormInfo.type}` }
-        title={ `Multi ${currentMultiFormInfo.type}` }
-        refetch={ refetch }
-        editMode
+      <FormContextProvider
+        useObjects
       >
-        <SubmitButton/>
-      </ActionGrid>
-      <div className='s-1 k-s'>
-        <FormContextProvider
-          useObjects
+        <ActionGrid
+          item={ finalData }
+          loadingSingle={ loading  }
+          currentSingleView={ `Multi ${currentMultiFormInfo.type}` }
+          title={ `Multi ${currentMultiFormInfo.type}` }
+          refetch={ refetch }
+          editMode
         >
-          { JSON.stringify(finalMutationData) }
-          <MultiFormComponent
-            key={ mutationData ? finalMutationData[0].updatedAt :'fresh' }
-            className='s-1 k-s'
-            orderField={ currentMultiFormInfo.orderField }
-            inputMap={ currentRelatedType.defaultViews.single.fields.filter(e => e.name !== currentMultiFormInfo.foreignKey) }
-            maxExtra={ currentMultiFormInfo.maxExtra || 4 }
-            extra={ currentMultiFormInfo.extra }
-            //query={ currentMultiFormInfo.query }
-            existing={ existingItems }
-            ObjectActions={({objectId}) =>
-              <SingleActions
-                { ...actionsProps }
-                itemId={ objectId }
+          <SubmitButton/>
+        </ActionGrid>
+        <MultiFormComponent
+          key={ mutationData ? finalMutationData[0].updatedAt :'fresh' }
+          formClassName='s-1 k-s'
+          orderField={ currentMultiFormInfo.orderField }
+          inputMap={ currentRelatedType.defaultViews.single.fields.filter(e => e.name !== currentMultiFormInfo.foreignKey) }
+          maxExtra={ currentMultiFormInfo.maxExtra || 4 }
+          extra={ currentMultiFormInfo.extra }
+          //query={ currentMultiFormInfo.query }
+          existing={ existingItems }
+          ObjectActions={({objectId}) =>
+            <SingleActions
+              { ...actionsProps }
+              itemId={ objectId }
+            />
+          }
+          ObjectInfo={({item, ...props}) =>
+            <div className=''>
+              <ObjectCard
+                { ...props }
+                className='y-background b-y'
+                enableUnlink
+                item={ item || {}}
+                foreignKey={ currentMultiFormInfo.foreignKey }
+                typeInfo={ currentType.name }
+                objectType={ currentRelatedType.name }
+              >
+              </ObjectCard>
+            </div>
+          }
+        >
+        </MultiFormComponent>
+        <br />
+
+        <ActionGrid
+          lean
+          item={ finalData }
+          loadingSingle={ loading  }
+          currentSingleView={ `Multi ${currentMultiFormInfo.type}` }
+          title={ `Multi ${currentMultiFormInfo.type}` }
+          refetch={ refetch }
+          editMode
+        >
+          <SubmitButton/>
+        </ActionGrid>
+
+        <Accordion
+          className='s0 k-s y-white x-subtitle'
+          toggleStyle='plus'
+        >
+          <Accordion.Item
+            className='y-blue b-y ui-dark'
+            title={
+              <Heading
+                headingAs='h2'
+                heading='Local Graph'
               />
             }
-            ObjectInfo={({item, ...props}) =>
-              <div className=''>
-                <ObjectCard
-                  { ...props }
-                  className='y-background b-y'
-                  enableUnlink
-                  item={ item || {}}
-                  foreignKey={ currentMultiFormInfo.foreignKey }
-                  typeInfo={ currentRelatedType.name }
-                  objectType={ currentRelatedType.name }
-                >
-                </ObjectCard>
-              </div>
+            id={ 'local_graph' }
+          >
+            <pre className='c-x x-paragraph'>
+
+              { data && JSON.stringify(finalData, null, 2) }
+            </pre>
+          </Accordion.Item>
+          <Accordion.Item
+            className='y-background b-y'
+            title={
+              <Heading
+                headingAs='h2'
+                heading='Form Debug'
+              />
             }
+            id={ 'form_debugger' }
           >
-          </MultiFormComponent>
-          <br />
+            <FormContextDebugger/>
+          </Accordion.Item>
 
-          <ActionGrid
-            lean
-            item={ finalData }
-            loadingSingle={ loading  }
-            currentSingleView={ `Multi ${currentMultiFormInfo.type}` }
-            title={ `Multi ${currentMultiFormInfo.type}` }
-            refetch={ refetch }
-            editMode
-          >
-            <SubmitButton/>
-          </ActionGrid>
-
-          <Accordion
-            className='s0 k-s y-white x-subtitle'
-            toggleStyle='plus'
-          >
+          { error &&
             <Accordion.Item
-              className='y-blue b-y ui-dark'
+              className='y-error b-dark-y ui-dark'
               title={
                 <Heading
                   headingAs='h2'
-                  heading='Local Graph'
+                  heading='Loading Error (query)'
+                  subtitle='This only appears if the object didnt load properly.'
                 />
               }
-              id={ 'local_graph' }
+              id={ 'loading_error' }
             >
               <pre className='c-x x-paragraph'>
 
-                { data && JSON.stringify(finalData, null, 2) }
+                { data && JSON.stringify(error, null, 2) }
               </pre>
-            </Accordion.Item>
+            </Accordion.Item>}
+
+          {mutationError &&
             <Accordion.Item
-              className='y-background b-y'
+              className='y-error b-dark-y ui-dark'
               title={
                 <Heading
                   headingAs='h2'
-                  heading='Form Debug'
+                  heading='Upsert Error (mutation)'
+                  subtitle='This only appears if the object didnt save properly.'
                 />
               }
-              id={ 'form_debugger' }
+              id={ 'mutation_error' }
             >
-              <FormContextDebugger/>
-            </Accordion.Item>
+              <pre className='c-x x-paragraph'>
 
-            { error &&
-              <Accordion.Item
-                className='y-error b-dark-y ui-dark'
-                title={
-                  <Heading
-                    headingAs='h2'
-                    heading='Loading Error (query)'
-                    subtitle='This only appears if the object didnt load properly.'
-                  />
-                }
-                id={ 'loading_error' }
-              >
-                <pre className='c-x x-paragraph'>
+                { data && JSON.stringify(mutationError, null, 2) }
+              </pre>
+            </Accordion.Item>}
+          { mutationData &&
+            <Accordion.Item
+              className='y-success b-dark-y ui-dark'
+              title={
+                <Heading
+                  headingAs='h2'
+                  heading='Upsert Success (mutation)'
+                  subtitle='This only appears if the object did save properly.'
+                />
+              }
+              id={ 'mutation_data' }
+            >
+              <pre className='c-x x-paragraph'>
 
-                  { data && JSON.stringify(error, null, 2) }
-                </pre>
-              </Accordion.Item>}
-
-            {mutationError &&
-              <Accordion.Item
-                className='y-error b-dark-y ui-dark'
-                title={
-                  <Heading
-                    headingAs='h2'
-                    heading='Upsert Error (mutation)'
-                    subtitle='This only appears if the object didnt save properly.'
-                  />
-                }
-                id={ 'mutation_error' }
-              >
-                <pre className='c-x x-paragraph'>
-
-                  { data && JSON.stringify(mutationError, null, 2) }
-                </pre>
-              </Accordion.Item>}
-            { mutationData &&
-              <Accordion.Item
-                className='y-success b-dark-y ui-dark'
-                title={
-                  <Heading
-                    headingAs='h2'
-                    heading='Upsert Success (mutation)'
-                    subtitle='This only appears if the object did save properly.'
-                  />
-                }
-                id={ 'mutation_data' }
-              >
-                <pre className='c-x x-paragraph'>
-
-                  { data && JSON.stringify(mutationData, null, 2) }
-                </pre>
-              </Accordion.Item>}
-          </Accordion>
-        </FormContextProvider>
-      </div>
+                { data && JSON.stringify(mutationData, null, 2) }
+              </pre>
+            </Accordion.Item>}
+        </Accordion>
+      </FormContextProvider>
     </div>
   )
 }

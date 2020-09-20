@@ -8,11 +8,13 @@ Classes :
 */
 
 .object_state {
+  max-width:600px;
+  
   &:not(.simple) {
-    .content {
+    .message-item .content {
       display: grid;
+      grid-gap: .5em;
       grid-template-columns: [field] max-content [message] auto;
-      grid-gap:.5em;
     }
   }
 
@@ -20,18 +22,21 @@ Classes :
     //padding: .3em .3em;
   }
 
-  & > .summary {
-    grid-column: field / span 2;
+  .message-item .content {
+    & .summary {
+      grid-column: field / span 2;
+    }
+
+    & > .field {
+      font-weight: bold;
+      grid-column: field / span 1;
+    }
+
+    & > .message {
+      grid-column: message / span 1;
+    }
   }
 
-  & > .field {
-    font-weight: bold;
-    grid-column: field / span 1;
-  }
-
-  & > .message {
-    grid-column: message / span 1;
-  }
 
   &.simple {
     white-space: nowrap;
