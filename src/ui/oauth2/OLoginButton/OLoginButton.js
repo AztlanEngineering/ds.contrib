@@ -44,8 +44,8 @@ const OLoginButton = ({
   //console.log(loading, error, data)
   //
   const finalData = useMemo(() => {
-    var result = {}
-    console.log(99, data)
+    var result
+    //console.log(99, data)
     if(data) {
       const dataKey = Object.keys(data).reduce((a, e) => e)
       result = data[dataKey]
@@ -69,6 +69,7 @@ const OLoginButton = ({
       >
         <Button
           simple={ simple }
+          loading={ loading }
           className={
             [
               buttonClassName,

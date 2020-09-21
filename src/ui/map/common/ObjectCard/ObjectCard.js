@@ -127,15 +127,25 @@ const ObjectCard = ({
         <Card.Section className='y-background b-dark-y s-1 k-s'>
           <div>
             { foreignKey ?
-              <span className='x-subtitle c-x'>
-                { 'Type ' }
+              <span
+                className='x-subtitle c-x'
+                style={{ display: 'flex', alignItems: 'center' }}
+              >
+                <span>
+                  { 'Type' }
+                  &nbsp;
+                </span>
                 <TypeButton
                   typename={ item.__typename || typeInfo }
                   className='yib s-2 k-s'
                 />
-                {' linked from '}
+                <span>
+                  &nbsp;
+                  {'linked from'}
+                  &nbsp;
+                </span>
                 <TypeButton
-                  typename={ currentType.name }
+                  typename={ relatedTypeInfo.name }
                   itemKey={ foreignKey }
                   //item={ item }
                   className='yib s-2 k-s'
@@ -153,7 +163,7 @@ const ObjectCard = ({
           <Card.Section className='main'>
             <Heading
               heading='Empty'
-              subtitle={foreignKey ? `This ${currentType.name} does not have a ${typeInfo} yet. You can create one here.`: `There is no ${typeInfo} yet. You can create one below.`}
+              subtitle={`Empty ${currentType.name}. You can create one here.` }
               subtitleClassName='s-1 k-s'
             >
             </Heading>
@@ -187,6 +197,7 @@ const ObjectCard = ({
                   className='s-1 k-s'
                   item={ item }
                   accordionDefaultIsOpen={ false }
+                  min
                 >
                 </ObjectState>
               </Card.Section>
@@ -285,7 +296,7 @@ ObjectCard.propTypes = {
   foreignKey:PropTypes.string,
 
   /**
-   * This overloads the automatic detection of the type. Use this only if the card is display outside of its `/map/Type` 
+   * This overloads the automatic detection of the type. Use this only if the card is display outside of its `/map/Type`
    */
   objectType:PropTypes.string,
 

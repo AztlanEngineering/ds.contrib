@@ -45,6 +45,7 @@ const ObjectState = ({
   simple,
   accordionMin,
   accordionDefaultIsOpen,
+  min,
 }) => {
   const itemId = item ? item.id : userItemId
 
@@ -153,7 +154,7 @@ const ObjectState = ({
                     'j' : 'k'
                   }
                 </span>
-                { errorCount && `${Math.floor(100  * (validCount) / (validCount + errorCount ))}%` }
+                { (errorCount > 0) && `${Math.floor(100  * (validCount) / (validCount + errorCount ))}%` }
               </span>
             }
             {/* errorCount &&
@@ -166,7 +167,7 @@ const ObjectState = ({
                 { errorCount }
               </span>
               */}
-            {warningCount &&
+            {(warningCount > 0) &&
               <>
                 <span className='x-metadata c-x'>
                   ●
@@ -193,6 +194,7 @@ const ObjectState = ({
         [
         //styles[baseClassName],
           baseClassName,
+          'ul',
           className
         ].filter(e => e).join(' ')
       }
@@ -202,25 +204,34 @@ const ObjectState = ({
       min
     >
       { contentMap.map((item, i) =>
-        <Accordion.Item
+        (item.count > 0) && <Accordion.Item
+          className='message-item'
           defaultIsOpen={ accordionDefaultIsOpen }
           id={`state-${itemId.split('-')[0]}-${item.color}`}
           title={
-            <p className={` x-${item.color} c-x`}>
-              <Label circle className='s-1 k-s'>
+            <p
+              className={` x-${item.count ? item.color : 'grey'} c-x`}
+              style={{ display: 'flex' }}
+            >
+              <Label
+                circle
+                className='s-1 k-s'
+              >
                 { item.count }
               </Label>
-                {' '}
+              <span>
+                &nbsp;
                 { (item.count > 1) ? item.plural : item.singular }
+              </span>
             </p>
 
 
           }
         >
-          { Object.keys(item.content).map((fieldName, i) => (
+          { item.content && Object.keys(item.content).map((fieldName, i) => (
             <>
               <div
-                className='field'
+                className='field ul'
                 key={ fieldName }
               >
                 <span className='x-heading c-x'>
@@ -229,7 +240,7 @@ const ObjectState = ({
               </div>
               { item.content[fieldName].map((message, j) =>
                 <div
-                  className='message error'
+                  className='message error ul'
                   key={`${item.color}-${fieldName}-${j}`}
                 >
                   <span className='x-subtitle c-x'>{ message }</span>
@@ -241,6 +252,35 @@ const ObjectState = ({
         </Accordion.Item>
 
       ) }
+      { !min &&
+        <>
+          <Accordion.Item
+            id='State'
+            title={
+              <p className='tb'>State. (Empty means broken.)</p>
+            }
+          >
+              <pre className='s-2 k-s x-paragraph c-x' style={{ wordBreak:'break-all', overflowX:'auto', whiteSpace:'pre-wrap' }}>
+              { JSON.stringify(itemState || item._state, null, 2) }
+            </pre>
+
+
+          </Accordion.Item>
+          { item &&
+            <Accordion.Item
+              id='Item'
+              title={
+                <p className='tb'>Item. Can be empty</p>
+              }
+            >
+              <pre className='s-2 k-s x-paragraph c-x' style={{ wordBreak:'break-all', overflowX:'auto', whiteSpace:'pre-wrap' }}>
+
+                { JSON.stringify(item, null, 2) }
+              </pre>
+
+            </Accordion.Item>
+          }
+        </>}
 
     </Accordion>
 
@@ -273,7 +313,7 @@ ObjectState.propTypes = {
   itemState:PropTypes.string,
 
   /**
-   * weather a class is true
+   * whether a class is true
    */
   simple:PropTypes.bool,
 
@@ -285,9 +325,15 @@ ObjectState.propTypes = {
     PropTypes.object
   ]),
   //as: PropTypes.string,
+
+  /**
+   * whether to display addition info at the end
+   */
+  min:PropTypes.bool,
 }
 
 ObjectState.defaultProps = {
+  min:false,
   item                  :{},
   accordionMin          :false,
   accordionDefaultIsOpen:true,

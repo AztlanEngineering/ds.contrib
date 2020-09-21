@@ -70,7 +70,7 @@ const StateView = ({
     error,
     data,
     refetch
-  } = useQuery(gql(currentType.graphql.queries.ONE),
+  } = useQuery(gql(currentType.graphql.queries.FULL),
     {
       variables:{
         id:itemId || currentId
@@ -135,13 +135,19 @@ const StateView = ({
         refetch={ refetch }
       >
       </ActionGrid>
-      <ObjectState
-        simple
-        item={ finalData }
-      />
-      <ObjectState
-        item={ finalData }
-      />
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', 'alignItems': 'center' }}>
+        <div className='uc pv-u'>
+          <ObjectState
+            simple
+            item={ finalData }
+          />
+        </div>
+        <div className='uc'>
+          <ObjectState
+            item={ finalData }
+          />
+        </div>
+      </div>
     </div>
   )}
 

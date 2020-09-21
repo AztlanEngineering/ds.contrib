@@ -23,8 +23,13 @@ import {
 /* Relative imports
    import styles from './single_view.scss' */
 
-const baseClassName = 'single_view'
+import { isBackend } from 'ui/isBackend'
 
+if(!isBackend) {
+  import('./single_view.scss')
+}
+
+const baseClassName = 'single_view'
 
 import {
   useHistory,
