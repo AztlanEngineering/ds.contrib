@@ -50,7 +50,7 @@ const SessionContextProvider = ({
   const [loadCurrentUser, {
     error:currentUserError,
     loading:currentUserLoading,
-    data={}
+    data={},
   }] = useLazyQuery(gql(GQL_QUERY_ME))
 
   //console.log('got the result of data', data)
@@ -109,6 +109,7 @@ const SessionContextProvider = ({
       currentUserError,
       currentUserLoading,
       currentUserData,
+      loadCurrentUser,
 
       isConnected
     }}

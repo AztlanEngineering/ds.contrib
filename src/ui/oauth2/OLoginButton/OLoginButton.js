@@ -65,11 +65,12 @@ const OLoginButton = ({
         }
         id={ id }
         style={ style }
-        href={ finalData }
+        href={ !loading ? finalData : ''}
       >
         <Button
           simple={ simple }
           loading={ loading }
+          disabled={ loading }
           className={
             [
               buttonClassName,

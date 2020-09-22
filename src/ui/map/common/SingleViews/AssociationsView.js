@@ -149,27 +149,109 @@ const AssociationsView = ({
       </ActionGrid>
 
       { currentType.associations.belongsTo.length &&
-        <div className='pv-v'>
+        <div className='pv-u module uc'>
+          <Heading
+            headingAs='h2'
+            heading='Foreign Keys'
+            subtitle='If an object appears here, it means it is referenced by one of the foreign keys of the current object'
+          >
+          </Heading>
 
-          <div className='belongs-to'>
+          <div className='belongs-to ul'>
             { currentType.associations.belongsTo.map((e, i) =>{
               const localType = getType(e.to)
               const ObjectCard = localType.defaultViews.card.Component
               return (
-                  <ObjectCard
-                    className='y-background b-y'
-                    enableUnlink
-                    item={ finalData[e.as] || {} }
-                    foreignKey={ e.foreignKey }
-                    refetch={ refetch }
-                    
-                    typeInfo={ currentType.name }
-                    objectType={ localType.name }
-                  >
-                  </ObjectCard>
+                <ObjectCard
+                  className='y-background b-y'
+                  enableUnlink
+                  item={ finalData[e.as] || {} }
+                  foreignKey={ e.foreignKey }
+                  refetch={ refetch }
+
+                  typeInfo={ currentType.name }
+                  objectType={ localType.name }
+                >
+                </ObjectCard>
 
               ) } )}
           </div>
+        </div>}
+      { currentType.associations.hasOne && currentType.associations.hasOne.length &&
+        <div className='pv-u module uc'>
+          <Heading
+            headingAs='h2'
+            heading='Reverse 1-to-1'
+            subtitle={` If an object appears here, it means its foreign key is set to the current object and no more than one foreign object can have the current object selected. (For instance a site can only receive the foreign key of one location at once)`}
+          >
+          </Heading>
+
+          <div className='has-one ul'>
+            {currentType.associations.hasOne.map((e, i) =>{
+              const localType = getType(e.to)
+              const ObjectCard = localType.defaultViews.card.Component
+              return (
+                <ObjectCard
+                  className='y-background b-y'
+                  enableUnlink
+                  item={ finalData[e.as] || {} }
+                  foreignKey={ e.foreignKey }
+                  refetch={ refetch }
+
+                  typeInfo={ currentType.name }
+                  objectType={ localType.name }
+                  reverseRelation
+                >
+                </ObjectCard>
+
+              ) } )}
+          </div>
+        </div>}
+      { currentType.associations.hasMany && currentType.associations.hasMany.length &&
+        <div className='pv-u module uc'>
+          <Heading
+            headingAs='h2'
+            heading='Reverse many-to-1'
+            subtitle={` If an object appears here, it means its foreign key is set to the current object`}
+          >
+          </Heading>
+
+          { currentType.associations.hasMany.map(type => {
+            const localType = getType(type.to)
+            const ObjectCard = localType.defaultViews.card.Component
+            const relatedData = finalData[type.as]
+            return (
+              <div key={type.as} className='pv-u'>
+                <Heading
+                  headingAs='h4'
+                  heading={ localType.plural }
+                  subtitle={ relatedData ?
+                    relatedData.length ? `There are ${relatedData.length} ${localType.plural} associated with this ${currentType.name}.`
+                      : `Key '${type.as}' exists but has length 0.`
+                    : `Key '${type.as}' is null on the current ${currentType.name}`}
+                >
+                </Heading>
+                <div className='has-many ul'>
+                  { relatedData && relatedData.length &&
+                  relatedData.map(item =>
+                    <ObjectCard
+                      className='y-background b-y'
+                      enableUnlink
+                      item={ item }
+                      foreignKey={ type.foreignKey }
+                      refetch={ refetch }
+
+                      typeInfo={ currentType.name }
+                      objectType={ localType.name }
+                    >
+                    </ObjectCard>
+                  )
+                  }
+                </div>
+              </div>
+            )
+          }) }
+
         </div>}
       {/*
       <div className='pv-v'>
