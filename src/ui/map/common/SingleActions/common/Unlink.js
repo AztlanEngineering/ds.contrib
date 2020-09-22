@@ -49,9 +49,11 @@ const Unlink = ({
   itemId:userItemId,
 
   objectType,
+  relatedType,
   foreignKey,
 
   refetch,
+  reverseRelation,
 }) => {
 
   const {
@@ -67,10 +69,18 @@ const Unlink = ({
 
   const currentType = useMemo(() => objectType ? getType(objectType) : localType, [routeParams])
 
-  const { UPDATE } = currentType.graphql.mutations
+  const relatedTypeInfo = useMemo(() => getType(relatedType), [routeParams])
+
+
 
   const itemName = item ? item._string || item.name || item.id : userItemId
   const itemId = item ? item.id : userItemId
+
+  const finalType = reverseRelation ? currentType : relatedTypeInfo
+  const finalId = reverseRelation ? itemId : currentId
+  const finalRelatedType = reverseRelation ? relatedTypeInfo : currentType
+
+  const { UPDATE } = finalType.graphql.mutations
 
   const [unlinkItem, {
     data={},
@@ -81,21 +91,31 @@ const Unlink = ({
   const finalData = useMemo(() => (data && data[Object.keys(data).reduce((a, e) => {
     return e
   }, '')]) || '',
-  [currentType.name, loading])
+  [relatedType.name, loading])
 
   const onClick = (e) => {
     const variables = {
-      id          :itemId,
+      id          :finalId,
       [foreignKey]:null
     }
-    if (confirm(`Please confirm you know what youre doing. You will now unlink ${itemName} from ${objectType}:${currentId}`) == true) {
-      unlinkItem({ variables })
+    console.log(variables)
+    if(!reverseRelation) {
+      if (confirm(`Please confirm you know what youre doing. You will now unlink \n\n${currentType.name}:${itemName}\n\nfrom\n\n${relatedType}:${currentId}\n\nVariables :\n\n${JSON.stringify(variables, null, 2)}`) == true) {
+        unlinkItem({ variables })
+
+      }
+    } else {
+      if (confirm(`Please confirm you know what youre doing. You will now unlink \n\n${finalRelatedType.name}:${currentId}\n\nfrom\n\n${finalType.name}:${finalId}\n\nVariables :\n\n${JSON.stringify(variables, null, 2)}`) == true) {
+        unlinkItem({ variables })
+      }
     }
   }
 
   useEffect(() => {
-    //console.log('WILL NOW REFETCH', finalData)
-    finalData.id && refetch && refetch()
+    if (finalData.id) {
+      //console.log('WILL NOW REFETCH', finalData, refetch)
+      refetch()
+    }
   }
   , [finalData] )
 
@@ -129,7 +149,8 @@ const Unlink = ({
         &nbsp;
       </span>
       <Label className='f-mono s-1 k-s x-white'>
-        { objectType }{'.'}
+        { finalType.name }
+        {'.'}
         { foreignKey }
       </Label>
     </Button>
@@ -190,6 +211,11 @@ Unlink.propTypes = {
    * refetch data
    */
   refetch:PropTypes.func,
+
+  /**
+   * defines the related type (for unlink)
+   */
+  relatedType:PropTypes.string.isRequired,
 
 }
 

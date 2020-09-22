@@ -77,6 +77,7 @@ const SingleView = ({
 
   useEffect(() => {
     if(view !== currentView.view) {
+      console.log('View changes', findCurrentView(view), view)
       setCurrentView(findCurrentView(view))
     }
     /*
@@ -106,6 +107,7 @@ const SingleView = ({
       }
       id={ id }
       style={ style }
+      key={ currentId }
 
     >
       { currentType.name ?

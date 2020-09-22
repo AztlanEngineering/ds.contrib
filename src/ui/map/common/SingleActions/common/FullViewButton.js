@@ -48,6 +48,8 @@ const FullViewButton = ({
   refetch,
   condition,
 
+  short,
+
   ...otherProps
 }) => {
   const itemId = item ? item.id : userItemId
@@ -62,6 +64,7 @@ const FullViewButton = ({
 
   const currentType = useMemo(() => objectType ? getType(objectType) : localType, [routeParams])
 
+  const content = short ? 'F' : 'Full Graph'
 
   return (
     <Link to={ itemId && generateLocalPath(
@@ -89,7 +92,7 @@ const FullViewButton = ({
         }}
         { ...otherProps }
       >
-        Full Graph
+        { content }
       </Button>
     </Link>
   )}
@@ -135,6 +138,10 @@ FullViewButton.propTypes = {
    */
   condition:PropTypes.func,
 
+  /**
+   * Whether to display a short name instead of the full name
+   */
+  short:PropTypes.bool,
 }
 
 /*

@@ -163,7 +163,7 @@ const TypeButton = ({
         compact
         key='link-type'
         style={{ minWidth:'min-content' }}
-        onClick={ openObjectTab }
+        onClick={ openTypeTab }
         className={
           [
             //styles[baseClassName],

@@ -161,7 +161,9 @@ const AssociationsView = ({
                     enableUnlink
                     item={ finalData[e.as] || {} }
                     foreignKey={ e.foreignKey }
-                    typeInfo={ localType.name }
+                    refetch={ refetch }
+                    
+                    typeInfo={ currentType.name }
                     objectType={ localType.name }
                   >
                   </ObjectCard>

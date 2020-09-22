@@ -280,6 +280,7 @@ const TableView = ({
                     <td className='actionsi s-2 k-s'>
                       <Button.Group stretch='horizontal'>
                         <SingleActions
+                          short
                           className='s-2 k-s'
                           style={{ justifyContent: 'flex-end' }}
                           item={ e.original }
