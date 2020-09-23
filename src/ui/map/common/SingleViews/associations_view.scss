@@ -1,7 +1,11 @@
 .associations_view {
-  .belongs-to {
+  .belongs-to,
+  .has-one,
+  .has-many {
     display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(300px, 400px));
+    justify-content:center;
+    //width:max-content;
+    grid-template-columns:repeat(auto-fit, minmax(300px, 400px));
     grid-gap:calc(var(--u, 1) * .5em);
   }
 }

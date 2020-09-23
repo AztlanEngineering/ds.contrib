@@ -86,7 +86,7 @@ const ActionGrid = ({
   const {
     currentType,
     availableListViews,
-    availableSingleViews,
+    availableSingleViews=[],
     generateLocalPath,
   } = useModelMap()
 

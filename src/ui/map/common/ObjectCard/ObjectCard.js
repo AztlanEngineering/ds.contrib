@@ -71,6 +71,8 @@ const ObjectCard = ({
   typeInfo,
   objectType,
   foreignKey,
+  
+  reverseRelation,
 }) => {
 
   const routeParams = useParams()
@@ -94,10 +96,13 @@ const ObjectCard = ({
     enableEdit,
     enableUnlink,
     enableState:false,
+    short:true,
     foreignKey,
     extraActions,
     objectType :currentType.name,
-    redirectAfterDelete
+    relatedType:relatedTypeInfo.name,
+    redirectAfterDelete,
+    reverseRelation
   }
 
   return (
@@ -136,7 +141,7 @@ const ObjectCard = ({
                   &nbsp;
                 </span>
                 <TypeButton
-                  typename={ item.__typename || typeInfo }
+                  typename={ reverseRelation ? relatedTypeInfo.name : currentType.name }
                   className='yib s-2 k-s'
                 />
                 <span>
@@ -145,7 +150,7 @@ const ObjectCard = ({
                   &nbsp;
                 </span>
                 <TypeButton
-                  typename={ relatedTypeInfo.name }
+                  typename={ reverseRelation ? currentType.name : relatedTypeInfo.name }
                   itemKey={ foreignKey }
                   //item={ item }
                   className='yib s-2 k-s'
@@ -294,6 +299,11 @@ ObjectCard.propTypes = {
    * If this is displayed in the context of a fk, please enter here the foreign key from the current type
    */
   foreignKey:PropTypes.string,
+
+  /**
+   * Whether we are wish to unlink from inside this type instead of the opposite
+   */
+  reverseRelation:PropTypes.bool,
 
   /**
    * This overloads the automatic detection of the type. Use this only if the card is display outside of its `/map/Type`

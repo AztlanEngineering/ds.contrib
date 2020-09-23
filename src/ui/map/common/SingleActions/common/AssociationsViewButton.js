@@ -47,6 +47,8 @@ const AssociationsViewButton = ({
   //These are extracted not to be passed to the children button
   refetch,
   condition,
+  
+  short,
 
   ...otherProps
 }) => {
@@ -62,6 +64,7 @@ const AssociationsViewButton = ({
 
   const currentType = useMemo(() => objectType ? getType(objectType) : localType, [routeParams])
 
+  const content = short ? 'A' : 'Associations'
 
   return (
     <Link to={ itemId && generateLocalPath(
@@ -86,7 +89,7 @@ const AssociationsViewButton = ({
         style={ style }
         { ...otherProps }
       >
-        Associations
+        { content }
       </Button>
     </Link>
   )}
@@ -132,6 +135,10 @@ AssociationsViewButton.propTypes = {
    */
   condition:PropTypes.func,
 
+  /**
+   * Whether to display a short name instead of the full name
+   */
+  short:PropTypes.bool,
 }
 
 /*

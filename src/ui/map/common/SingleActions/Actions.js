@@ -49,9 +49,12 @@ const Actions = ({
   className,
   style,
   lean,
+  short,
   item,
   itemId,
   objectType,
+  relatedType,
+  reverseRelation,
   refetch,
   enableEdit,
   enableDelete,
@@ -150,7 +153,10 @@ const Actions = ({
         objectType={ objectType }
         foreignKey={ foreignKey }
         refetch={ refetch }
+        short={ short }
+        reverseRelation={ reverseRelation }
         redirect={ redirectAfterDelete }
+        relatedType={relatedType}
         { ...extraProps }
       />
 
@@ -204,6 +210,11 @@ Actions.propTypes = {
   objectType:PropTypes.string,
 
   /**
+   * defines the related type (for unlink)
+   */
+  relatedType:PropTypes.string,
+
+  /**
    * the function that fetches the data for the component after every change
    */
   refetch:PropTypes.func,
@@ -234,6 +245,11 @@ Actions.propTypes = {
   foreignKey:PropTypes.string,
 
   /**
+   * Whether we are wish to unlink from inside this type instead of the opposite
+   */
+  reverseRelation:PropTypes.bool,
+
+  /**
    * Extra actions to be added
    */
   extraActions:PropTypes.arrayOf(
@@ -259,6 +275,10 @@ Actions.propTypes = {
   lean:PropTypes.bool,
 
 
+  /**
+   * Whether to display a short name instead of the full name
+   */
+  short:PropTypes.bool,
 }
 
 Actions.defaultProps = {
@@ -266,6 +286,7 @@ Actions.defaultProps = {
   enableDelete       :true,
   enableUnlink       :false,
   enableState:true,
+  short:false,
   redirectAfterDelete:false,
   extraActions       :[],
   reverse            :true

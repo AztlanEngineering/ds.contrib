@@ -149,7 +149,7 @@ const MultiFormView = ({
     data:mutationData,
     error:mutationError,
     loading:mutationLoading
-  }] = useMutation(gql(currentMultiFormInfo.MUTATION_UPSERT))
+  }] = useMutation(gql(currentMultiFormInfo.MUTATION_UPSERT || currentRelatedType.graphql.mutations.UPDATE))
 
   const finalMutationData = useMemo(() => {
     var result = []
@@ -254,6 +254,8 @@ const MultiFormView = ({
                 foreignKey={ currentMultiFormInfo.foreignKey }
                 typeInfo={ currentType.name }
                 objectType={ currentRelatedType.name }
+                refetch={ refetch }
+                reverseRelation={ true }
               >
               </ObjectCard>
             </div>
