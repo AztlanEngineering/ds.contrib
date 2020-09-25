@@ -98,7 +98,7 @@ const Unlink = ({
       id          :finalId,
       [foreignKey]:null
     }
-    console.log(variables)
+    //console.log(variables)
     if(!reverseRelation) {
       if (confirm(`Please confirm you know what youre doing. You will now unlink \n\n${currentType.name}:${itemName}\n\nfrom\n\n${relatedType}:${currentId}\n\nVariables :\n\n${JSON.stringify(variables, null, 2)}`) == true) {
         unlinkItem({ variables })

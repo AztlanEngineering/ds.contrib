@@ -64,11 +64,11 @@ const SingleView = ({
     ...routeParams
   } = useParams()
 
-  
+
   const findCurrentView = useCallback(viewParam =>
     currentId ? availableViews.find(e => e.view === viewParam) || availableViews[0] : availableViews[0]
-    ,
-    [availableViews, currentId]
+  ,
+  [availableViews, currentId]
   )
 
   const [currentView, setCurrentView] = useState(
@@ -77,7 +77,7 @@ const SingleView = ({
 
   useEffect(() => {
     if(view !== currentView.view) {
-      console.log('View changes', findCurrentView(view), view)
+      //console.log('View changes', findCurrentView(view), view)
       setCurrentView(findCurrentView(view))
     }
     /*
@@ -117,7 +117,7 @@ const SingleView = ({
       }
     </div>
   )
-  }
+}
 
 SingleView.propTypes = {
   /**
