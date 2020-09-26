@@ -105,7 +105,7 @@ const Delete = ({
 
   useEffect(() => {
     if (finalData && refetch) {
-      console.log('WILL NOW REFETCH', finalData, refetch)
+      //console.log('WILL NOW REFETCH', finalData, refetch)
       refetch()
     }
   }

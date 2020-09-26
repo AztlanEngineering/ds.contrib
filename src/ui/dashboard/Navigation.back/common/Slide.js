@@ -131,7 +131,7 @@ const Slide = ({
                   e.children ? 'sidebar ': 'main'
                 ) }
               >
-                { console.log(e.children, e.location) }
+                //console.log(e.children, e.location)
                 { e.title }
               </NavItem>
 

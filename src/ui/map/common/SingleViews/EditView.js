@@ -176,7 +176,7 @@ const EditView = ({
          isValid */
     } = useForm()
 
-    console.log('rdr submitbtn', values)
+    //console.log('rdr submitbtn', values)
 
 
     const mutate = useCallback(() => {
@@ -192,7 +192,7 @@ const EditView = ({
         variables['id'] = values.id
 
       }
-      console.log('Will now mutate', variables)
+      //console.log('Will now mutate', variables)
       saveItem({variables})
     }, [values])
 
@@ -394,7 +394,7 @@ const EditView = ({
                   { data && JSON.stringify(mutationError, null, 2) }
                 </pre>
               </Accordion.Item>}
-            { mutationData && (Object.keys(mutationData).length > 0) && 
+            { mutationData && (Object.keys(mutationData).length > 0) &&
               <Accordion.Item
                 className='y-success b-dark-y ui-dark'
                 title={

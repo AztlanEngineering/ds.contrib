@@ -53,11 +53,11 @@ const useNavTree = ({
        - The current url is the 'location',
        - Or is one of the childrens url, filtered by zhether they have children themselves of not */
     const children = rest.children
-    console.log(children, rest)
+    //console.log(children, rest)
     const urlsToMatch = children ?
       children.filter((e) => !e.children).reduce((a,e) =>
       {
-        console.log(990099, children)
+        //console.log(990099, children)
         a.push(e.location)
         return a
 
@@ -65,7 +65,7 @@ const useNavTree = ({
       , []) :
       []
     urlsToMatch.push(location)
-    console.log(778899, location, urlsToMatch)
+    //console.log(778899, location, urlsToMatch)
     return {
       location,
       baseMatch,
@@ -147,7 +147,7 @@ const Navigation = ({
     location:rootLocation,
   } = useNavTree(tree)
 
-  console.log(true, true, rootMatch, rootChildren)
+  //console.log(true, true, rootMatch, rootChildren)
 
   const {
     focus,
