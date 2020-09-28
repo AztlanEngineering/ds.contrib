@@ -1,6 +1,7 @@
 export * from './analytics'
 export * from './blog'
 export * from './cp'
+export * from './clientSite'
 export * from './dashboard'
 export * from './experimental'
 export * from './map'
