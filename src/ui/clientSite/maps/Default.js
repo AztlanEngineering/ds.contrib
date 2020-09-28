@@ -3,21 +3,24 @@ import * as React from 'react'
 //import {} from 'react'
 import PropTypes from 'prop-types'
 
-
-
+import {
+  Heading,
+  Figure,
+  Page
+} from 'ds-core'
 
 //Intl
 
-//import { FormattedMessage} from "react-intl";
-//import messages from "./messages";
-// <FormattedMessage {...messages.title} />
+/* import { FormattedMessage} from "react-intl";
+   import messages from "./messages";
+    <FormattedMessage {...messages.title} /> */
 
 //Config
 
 //import C from 'ui/cssClasses'
 
-//Relative imports
-//import styles from './default.scss'
+/* Relative imports
+   import styles from './default.scss' */
 import { isBackend } from 'ui/isBackend'
 
 if(!isBackend) {
@@ -29,30 +32,59 @@ const baseClassName = 'default'
 
 /**
  * Use `Default` to
- * Has color `x` 
+ * Has color `x`
  */
 const Default = ({
   id,
   className,
-  style
+  style,
+
+  content
 }) => {
-  
-  
+  const order = content.order ? Number(content.order) : null
+  console.log(order, order % 2)
+
   return (
-  <div 
-    className={
-      [
+    <Page.Section
+      className={
+        [
         //styles[baseClassName],
-        baseClassName,
-        className
-      ].filter(e => e).join(' ')
-  }
-    id={ id }
-    style={ style }
-  >
-    <h2>Welcome to the Default component</h2>
-  </div>
-)}
+          baseClassName,
+          className,
+          content.image ? 'l-illustrated' : 'l-center',
+          (order > -1) && ((order % 2) == 0) && 'right',
+          'pv-v'
+        ].filter(e => e).join(' ')
+      }
+      id={ id }
+      style={ style }
+    >
+      <div className='i-content ph-u'>
+        <Heading
+          headingClassName=''
+          headingAs='h2'
+          heading={ content.heading }
+          subtitle={ content.subtitle }
+          subtitleClassName='s2 k-s'
+          labelClassName='dash'
+          label={ content.alt }
+        >
+          <p>
+          { content.content }
+          </p>
+        </Heading>
+      </div>
+      { content.image &&
+        <div className='i-illustration'>
+          <Figure
+            src={ content.image.fullPath }
+            style={{ maxHeight: '25em', width: '100%' }}
+            alt={ content.image.alt }
+          />
+        </div>
+      }
+    </Page.Section>
+  )}
 
 Default.propTypes = {
   /**
@@ -81,8 +113,18 @@ Default.propTypes = {
   as:PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object
-  ]), 
-  //as: PropTypes.string,
+  ]),
+
+  /**
+   * The PageContent, this can be passed raw from the DB
+   */
+  content:PropTypes.shape({
+    heading :PropTypes.string.isRequired,
+    subtitle:PropTypes.string,
+    content :PropTypes.string.isRequired,
+    alt     :PropTypes.string,
+    image   :PropTypes.object,
+  }).isRequired,
 
   /*
   : PropTypes.shape({

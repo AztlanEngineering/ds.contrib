@@ -116,7 +116,9 @@ const LocationMap = ({
       id={ id }
       style={ style }
     >
+      {/*}
       <h1>{ JSON.stringify(location, null, 2) }</h1>
+      */}
       <Map
         center={position}
         zoom={position.zoom}

@@ -1,11 +1,30 @@
 /* @fwrlines/generator-react-component 2.5.1 */
+
 /*
 
 Classes :
 .header : default
 
 */
+$overlay-opacity:.55;
 
-.header{
+.section.header {
+  background:var(--background-image, yellow);
+  background-size:cover;
+  position: relative;
 
+  .overlay {
+    background-color: rgba(0, 0, 0, $overlay-opacity);
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    top:0;
+    left:0;
+    z-index: 1;
+  }
+
+  .i-content {
+    z-index:2;
+    position:relative;
+  }
 }
