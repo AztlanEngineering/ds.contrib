@@ -103,6 +103,7 @@ const LocationMap = ({
   // setup
 
   // search
+  if(isBackend) return null
 
   return (
     <div

@@ -148,7 +148,7 @@ const AssociationsView = ({
       >
       </ActionGrid>
 
-      { currentType.associations.belongsTo.length &&
+      { currentType.associations.belongsTo && currentType.associations.belongsTo.length &&
         <div className='pv-u module uc'>
           <Heading
             headingAs='h2'
