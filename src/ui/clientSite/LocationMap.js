@@ -3,11 +3,31 @@ import * as React from 'react'
 import { useContext, useEffect, useState, useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
-
-import { AlgoliaProvider } from 'leaflet-geosearch'
+//import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 
 import { SiteContext } from 'ds-core'
+
+import { isBackend } from 'ui/isBackend'
+
+let RL = false
+let Map = false
+let TileLayer = false
+let Marker = false
+let Popup = false
+
+let LG = false
+let SearchProvider = false
+
+if (!isBackend) {
+  RL = require('react-leaflet')
+  Map = RL.Map
+  TileLayer = RL.TileLayer
+  Marker = RL.Marker
+  Popup = RL.Popup
+
+  LG = require('leaflet-geosearch')
+  SearchProvider = LG.AlgoliaProvider
+}
 
 //Intl
 
@@ -21,7 +41,6 @@ import { SiteContext } from 'ds-core'
 
 /* Relative imports
    import styles from './location_map.scss' */
-import { isBackend } from 'ui/isBackend'
 
 if(!isBackend) {
   import('leaflet/dist/leaflet.css')
@@ -32,7 +51,7 @@ const baseClassName = 'location_map'
 
 const mapThemes = {
   'default':'https://api.mapbox.com/styles/v1/meccamico/ckflb4mmw031a19ntj0fmbv1d/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibWVjY2FtaWNvIiwiYSI6ImNrZmxhemd5ODB6OWczMXFoOTd4bDRuZDUifQ.V37g_kCX_acd0eQHKqhcKQ',
-  'dark':'https://api.mapbox.com/styles/v1/meccamico/ckflb54q934r819mly8n1r8gk/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibWVjY2FtaWNvIiwiYSI6ImNrZmxhemd5ODB6OWczMXFoOTd4bDRuZDUifQ.V37g_kCX_acd0eQHKqhcKQ'
+  'dark'   :'https://api.mapbox.com/styles/v1/meccamico/ckflb54q934r819mly8n1r8gk/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibWVjY2FtaWNvIiwiYSI6ImNrZmxhemd5ODB6OWczMXFoOTd4bDRuZDUifQ.V37g_kCX_acd0eQHKqhcKQ'
 }
 
 
@@ -53,18 +72,18 @@ const LocationMap = ({
 
   theme
 }) => {
-  
+
   const location = userLocation || {}
 
   const {
     preferredTheme
   } = useContext(SiteContext)
 
-  const themeUrl = theme ? 
-    mapThemes[theme] : 
+  const themeUrl = theme ?
+    mapThemes[theme] :
     mapThemes[preferredTheme] || mapThemes['default']
 
-  const provider = useMemo(() => new AlgoliaProvider(), [])
+  const provider = useMemo(() => new SearchProvider(), [])
 
   const [
     position,
@@ -102,9 +121,6 @@ const LocationMap = ({
   }, [location])
   // setup
 
-  // search
-  if(isBackend) return null
-
   return (
     <div
       className={
@@ -117,29 +133,28 @@ const LocationMap = ({
       id={ id }
       style={ style }
     >
-      {/*}
-      <h1>{ JSON.stringify(location, null, 2) }</h1>
-      */}
-      <Map
-        center={position}
-        zoom={position.zoom}
-      >
-        <TileLayer
-          tileSize={ 512 }
-          zoomOffset={-1}
-          attribution={'© <a href="https://apps.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
-          url={ themeUrl }
-        />
-        <Marker position={position}>
-          <Popup>
-            A pretty CSS3 popup.
-            {' '}
-            <br />
-            {' '}
-            Easily customizable.
-          </Popup>
-        </Marker>
-      </Map>
+      { !isBackend &&
+        <Map
+          center={position}
+          zoom={position.zoom}
+        >
+          <TileLayer
+            tileSize={ 512 }
+            zoomOffset={-1}
+            attribution={'© <a href="https://apps.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
+            url={ themeUrl }
+          />
+          <Marker position={position}>
+            <Popup>
+              A pretty CSS3 popup.
+              {' '}
+              <br />
+              {' '}
+              Easily customizable.
+            </Popup>
+          </Marker>
+        </Map>
+      }
     </div>
   )}
 
@@ -236,4 +251,28 @@ LocationMap.defaultProps = {
   finalZoom  :13
 }
 
-export default LocationMap
+const BackendLocationMap = ({
+  id,
+  className,
+  style,
+  location:userLocation,
+  defaultCountry,
+  //initialLat,
+  //initialLng,
+  //initialZoom,
+  //finalZoom,
+
+  //theme
+}) => {
+  const location = userLocation || {}
+
+  const queryString = `${location.address} ${location.address2}, ${location.postcode} ${location.city}, ${location.country || defaultCountry}`
+
+  return (
+    <p>{ queryString }</p>
+  )
+
+
+}
+
+export default isBackend ? BackendLocationMap : LocationMap
