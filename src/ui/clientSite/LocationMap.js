@@ -107,7 +107,7 @@ const LocationMap = ({
     const queryString = `${location.address} ${location.address2}, ${location.postcode} ${location.city}, ${location.country || defaultCountry}`
     const fetchAndUpdatePosition = async () => {
       const results = await provider.search({ query: queryString })
-      console.log(7777, queryString, results)
+      //console.log(7777, queryString, results)
       const place = results[0]
       updatePosition({
         lat :place.y,

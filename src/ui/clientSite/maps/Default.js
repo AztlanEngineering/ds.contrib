@@ -42,7 +42,7 @@ const Default = ({
   content
 }) => {
   const order = content.order ? Number(content.order) : null
-  console.log(order, order % 2)
+  //console.log(order, order % 2)
 
   return (
     <Page.Section
@@ -70,7 +70,7 @@ const Default = ({
           label={ content.alt }
         >
           <p>
-          { content.content }
+            { content.content }
           </p>
         </Heading>
       </div>
