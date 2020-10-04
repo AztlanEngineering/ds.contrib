@@ -56,6 +56,7 @@ const Slide = ({
   iconHover,
   iconSelected,
 
+  header,
   footer,
 }) => {
 
@@ -132,7 +133,12 @@ const Slide = ({
             dummy={ treeDepth == 0 }
           />
       }
-      <div className={ C.content + ' u2 ph-u v1 pv-v' }>
+        { header &&
+        <header className='s-1 k-s u2 ph-u v25 pv-v'>
+          { header }
+            </header>
+        }
+      <div className={ C.content + ' u2 ph-u v50 pv-v' }>
 
         { logo &&
           <Image
@@ -143,7 +149,7 @@ const Slide = ({
           />
         }
         <Heading
-          className='h3 v1 mv-v'
+          className='h3 v50 mv-v'
           heading={ title }
         />
 
@@ -251,6 +257,11 @@ Slide.propTypes = {
     PropTypes.string,
     PropTypes.object
   ]),
+
+  /**
+   * The footer of the slide
+   */
+  header:PropTypes.node,
 
   /**
    * The footer of the slide

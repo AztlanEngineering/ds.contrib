@@ -177,6 +177,11 @@ Item.propTypes = {
   /**
    * The footer of the slide
    */
+  header:PropTypes.node,
+
+  /**
+   * The footer of the slide
+   */
   footer:PropTypes.node,
 
   /**
