@@ -42,6 +42,7 @@ const Navigation = ({
   iconSelected,
 
   footer,
+  header,
 }) => {
 
   const {
@@ -49,6 +50,7 @@ const Navigation = ({
     subItems:rootSubItems,
     pathname:rootPathname,
     footer:rootFooter,
+    header:rootHeader,
     logo:rootLogo,
   } = tree
 
@@ -78,6 +80,7 @@ const Navigation = ({
         parentLocation={ rootPathname }
         currentLocation={ currentLocation }
         footer={ rootFooter || footer }
+        header={ rootHeader || header }
       />
 
     </Wrapper>
@@ -145,6 +148,10 @@ Navigation.propTypes = {
    */
   footer:PropTypes.node,
 
+  /**
+   * The footer of the slide
+   */
+  header:PropTypes.node,
 }
 
 Navigation.defaultProps = {

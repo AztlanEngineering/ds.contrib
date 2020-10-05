@@ -39,8 +39,11 @@ export default {
 export const Default = () => {
 
   const tree = {
+    header:(
+      <div>USER PROVIDED HEADER</div>
+    ),
     title   :'WebOffice',
-    logo    :'/illustrations/iso-car.png',
+    logo    :'https://www.clipartmax.com/png/middle/188-1887904_school-logo-van-horn-high-school-independence-mo.png',
     pathname:'/',
     //redirectFromPathname:'/',
     subItems:[

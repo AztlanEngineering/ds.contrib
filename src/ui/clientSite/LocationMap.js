@@ -69,6 +69,7 @@ const LocationMap = ({
   initialLng,
   initialZoom,
   finalZoom,
+  scrollWheelZoom,
 
   theme
 }) => {
@@ -76,12 +77,12 @@ const LocationMap = ({
   const location = userLocation || {}
 
   const {
-    preferredTheme
+    userTheme
   } = useContext(SiteContext)
 
   const themeUrl = theme ?
     mapThemes[theme] :
-    mapThemes[preferredTheme] || mapThemes['default']
+    mapThemes[userTheme] || mapThemes['default']
 
   const provider = useMemo(() => new SearchProvider(), [])
 
@@ -104,7 +105,7 @@ const LocationMap = ({
 
 
   useEffect(() => {
-    const queryString = `${location.address} ${location.address2}, ${location.postcode} ${location.city}, ${location.country || defaultCountry}`
+    const queryString = `${location.address} ${location.address2 || ''}, ${location.postcode} ${location.city}, ${location.country || defaultCountry}`
     const fetchAndUpdatePosition = async () => {
       const results = await provider.search({ query: queryString })
       //console.log(7777, queryString, results)
@@ -137,6 +138,7 @@ const LocationMap = ({
         <Map
           center={position}
           zoom={position.zoom}
+          scrollWheelZoom={ scrollWheelZoom }
         >
           <TileLayer
             tileSize={ 512 }
@@ -232,6 +234,11 @@ LocationMap.propTypes = {
   theme:PropTypes.string,
 
 
+  /**
+   * Whether to allow the scroll wheel woom. THis is a leaflet prop https://leafletjs.com/reference-1.4.0.html#map-closepopuponclick
+   */
+  scrollWheelZoom:PropTypes.bool,
+
   /*
   : PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -248,7 +255,8 @@ LocationMap.defaultProps = {
   initialLat :0,
   initialLng :0,
   initialZoom:5,
-  finalZoom  :13
+  finalZoom  :13,
+  scrollWheelZoom:true,
 }
 
 const BackendLocationMap = ({
