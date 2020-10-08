@@ -65,13 +65,16 @@ const LocationMap = ({
   style,
   location:userLocation,
   defaultCountry,
+  
   initialLat,
   initialLng,
   initialZoom,
   finalZoom,
   scrollWheelZoom,
 
-  theme
+  theme,
+
+  children,
 }) => {
 
   const location = userLocation || {}
@@ -128,6 +131,7 @@ const LocationMap = ({
         [
         //styles[baseClassName],
           baseClassName,
+          children && 'has-description',
           className
         ].filter(e => e).join(' ')
       }
@@ -157,6 +161,11 @@ const LocationMap = ({
           </Marker>
         </Map>
       }
+      { children &&
+          <div className='map-description y-background b-light-y'>
+            { children }
+          </div>
+      }
     </div>
   )}
 
@@ -175,11 +184,6 @@ LocationMap.propTypes = {
    * The JSX-Written, css styles to apply to the element.
    */
   style:PropTypes.object,
-
-  /**
-   *  The children JSX
-   */
-  children:PropTypes.node,
 
   /**
    * Which html tag to use
@@ -238,6 +242,12 @@ LocationMap.propTypes = {
    * Whether to allow the scroll wheel woom. THis is a leaflet prop https://leafletjs.com/reference-1.4.0.html#map-closepopuponclick
    */
   scrollWheelZoom:PropTypes.bool,
+
+  /**
+   * A comp where we'll display some info related to the map. Please note that this will be inside `.map-description` wrapper already to ensure grid consistency
+   */
+  children:PropTypes.node,
+
 
   /*
   : PropTypes.shape({

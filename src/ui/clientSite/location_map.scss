@@ -1,4 +1,5 @@
 /* @fwrlines/generator-react-component 2.5.1 */
+
 /*
 
 Classes :
@@ -6,11 +7,37 @@ Classes :
 
 */
 
-.location_map{
+.location_map {
+  &.has-description {
+    display: grid;
 
-  .leaflet-container {
-    width:100%;
-    height:500px;
+    @media (min-width: 900px) {
+      grid-template-areas: "map description";
+      grid-template-columns: 1fr minmax(250px, 400px);
+    }
+
+    @media (max-width: 899px) {
+      grid-template-areas: "map" "description";
+    }
+
+    .leaflet-container {
+      grid-area:"map";
+    }
+
+    .map-description {
+      grid-area:"description";
+    }
+
   }
 
+
+  .leaflet-container {
+    //border: 2px solid red;
+    height: 500px;
+    width: 100%;
+  }
+
+  .map-description {
+
+  }
 }
