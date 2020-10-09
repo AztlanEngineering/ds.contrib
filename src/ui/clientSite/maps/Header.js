@@ -52,6 +52,7 @@ const Header = ({
           baseClassName,
           className,
           'ui-dark',
+          'l-center',
           'v4 sm-v2 pv-v'
         ].filter(e => e).join(' ')
       }
@@ -76,11 +77,13 @@ const Header = ({
             { content.content }
           </p>
         </Heading>
+        { content.cta && 
         <div className='mv-v v2'>
           <Button className='x-green s2 k-s'>
             { content.cta }
           </Button>
         </div>
+        }
       </div>
     </Page.Section>
   )}

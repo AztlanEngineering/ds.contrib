@@ -275,6 +275,7 @@ const BackendLocationMap = ({
   style,
   location:userLocation,
   defaultCountry,
+  children,
   //initialLat,
   //initialLng,
   //initialZoom,
@@ -282,14 +283,11 @@ const BackendLocationMap = ({
 
   //theme
 }) => {
-  const location = userLocation || {}
+  //const location = userLocation || {}
 
-  const queryString = `${location.address} ${location.address2}, ${location.postcode} ${location.city}, ${location.country || defaultCountry}`
+  //const queryString = `${location.address} ${location.address2}, ${location.postcode} ${location.city}, ${location.country || defaultCountry}`
 
-  return (
-    <p>{ queryString }</p>
-  )
-
+  return children
 
 }
 
