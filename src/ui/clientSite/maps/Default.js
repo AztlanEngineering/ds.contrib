@@ -69,7 +69,7 @@ const Default = ({
           labelClassName='dash'
           label={ content.alt }
         >
-          <p>
+          <p className='s1 k-s'>
           { content.content }
           </p>
         </Heading>

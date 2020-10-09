@@ -59,6 +59,7 @@ const Header = ({
       id={ id }
       style={{
         '--background-image':content.image ? `url('${content.image.fullPath}')`:undefined,
+        '--content-width':'600px'
       }}
     >
       <div className='overlay'>
@@ -66,14 +67,14 @@ const Header = ({
       <div className='i-content ph-u'>
         <Heading
           headingClassName=''
-          headingAs='h2'
+          headingAs='h1'
           heading={ content.heading }
           subtitle={ content.subtitle }
           subtitleClassName='s2 k-s'
           labelClassName='dash'
           label={ content.alt }
         >
-          <p className='tb'>
+          <p className='tb s2 k-s'>
             { content.content }
           </p>
         </Heading>
