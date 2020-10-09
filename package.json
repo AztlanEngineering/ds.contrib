@@ -1,7 +1,7 @@
 {
   "name": "@fwrlines/ds.contrib",
   "author": "",
-  "version": "1.11.6",
+  "version": "1.11.7",
   "description": "",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
