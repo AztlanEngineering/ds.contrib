@@ -59,7 +59,7 @@ const Header = ({
       id={ id }
       style={{
         '--background-image':content.image ? `url('${content.image.fullPath}')`:undefined,
-        '--content-width':'600px'
+        '--content-width':'700px'
       }}
     >
       <div className='overlay'>
