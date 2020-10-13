@@ -39,6 +39,7 @@ const AnalyticsButton = ({
   event,
 
   onClick:userOnClick,
+  disabled,
   ...otherProps
 
 
@@ -66,7 +67,8 @@ const AnalyticsButton = ({
       }
       id={ id }
       style={ style }
-      onClick={ onClick }
+      onClick={ !disabled ? onClick : undefined }
+      disabled={ disabled }
       { ...otherProps }
     />
   )}
