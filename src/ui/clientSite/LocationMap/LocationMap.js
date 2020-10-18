@@ -17,6 +17,7 @@ let Popup = false
 
 let LG = false
 let SearchProvider = false
+let Icon = false
 
 if (!isBackend) {
   RL = require('react-leaflet')
@@ -27,6 +28,8 @@ if (!isBackend) {
 
   LG = require('leaflet-geosearch')
   SearchProvider = LG.AlgoliaProvider
+
+  Icon = require('./common/LeafletIcon').default
 }
 
 //Intl
@@ -124,6 +127,8 @@ const LocationMap = ({
 
   }, [location])
   // setup
+  //
+  console.log(998899, Icon)
 
   return (
     <div
@@ -150,7 +155,7 @@ const LocationMap = ({
             attribution={'© <a href="https://apps.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
             url={ themeUrl }
           />
-          <Marker position={position}>
+          <Marker position={position} icon={Icon}>
             <Popup>
               A pretty CSS3 popup.
               {' '}

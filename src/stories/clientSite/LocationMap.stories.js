@@ -62,6 +62,22 @@ export const Default = () => {
 
 //Default.parameters = storyParameters
 
+export const Light = () => {
+  const location = {
+    address :'Corso Buenos Aires 24',
+    postcode:'20124',
+    city    :'Milano',
+    country :'Italy'
+  }
+  return (<div className='ui-dark'>
+    <LocationMap
+      theme={'default'}
+      location={ location }
+    >
+    </LocationMap>
+  </div>
+  )}
+
 export const Dark = () => {
   const location = {
     address :'Corso Buenos Aires 24',
