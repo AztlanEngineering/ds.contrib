@@ -66,6 +66,7 @@ const LocationMap = ({
   id,
   className,
   style,
+  as:Wrapper,
   location:userLocation,
   defaultCountry,
   
@@ -131,7 +132,7 @@ const LocationMap = ({
   console.log(998899, Icon)
 
   return (
-    <div
+    <Wrapper
       className={
         [
         //styles[baseClassName],
@@ -171,7 +172,7 @@ const LocationMap = ({
             { children }
           </div>
       }
-    </div>
+    </Wrapper>
   )}
 
 LocationMap.propTypes = {
@@ -272,6 +273,7 @@ LocationMap.defaultProps = {
   initialZoom:5,
   finalZoom  :13,
   scrollWheelZoom:true,
+  as:'div'
 }
 
 const BackendLocationMap = ({

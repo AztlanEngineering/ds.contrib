@@ -40,8 +40,16 @@ const Header = ({
   className,
   style,
 
-  content
+  content,
+  ctaHref,
+
 }) => {
+
+  const CtaWrapper = ctaHref ? 'a' : React.Fragment
+
+  const ctaWrapperProps = ctaHref ? {
+    href:ctaHref
+  } : {}
 
   return (
     <Page.Section
@@ -59,7 +67,7 @@ const Header = ({
       id={ id }
       style={{
         '--background-image':content.image ? `url('${content.image.fullPath}')`:undefined,
-        '--content-width':'700px'
+        '--content-width'   :'700px'
       }}
     >
       <div className='overlay'>
@@ -78,12 +86,14 @@ const Header = ({
             { content.content }
           </p>
         </Heading>
-        { content.cta && 
-        <div className='mv-v v2'>
-          <Button className='x-green s2 k-s'>
-            { content.cta }
-          </Button>
-        </div>
+        { content.cta &&
+          <div className='mv-v v2'>
+            <CtaWrapper {...ctaWrapperProps}>
+              <Button className='x-green s2 k-s'>
+                { content.cta }
+              </Button>
+            </CtaWrapper>
+          </div>
         }
       </div>
     </Page.Section>
@@ -132,6 +142,12 @@ Header.propTypes = {
 
   }).isRequired,
 
+
+  /**
+   * Local link for the cta (anchor)
+   */
+  ctaHref:PropTypes.string,
+
   /*
   : PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -151,4 +167,5 @@ Header.defaultProps = {
   //as:'p',
 }
 */
+
 export default Header
