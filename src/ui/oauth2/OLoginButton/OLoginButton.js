@@ -17,9 +17,12 @@ import messages from './messages'
    import styles from './o_login_button.scss' */
 import { isBackend } from 'ui/isBackend'
 
+import { useLocation } from 'react-router-dom'
+
 if(!isBackend) {
   import('./o_login_button.scss')
 }
+
 
 const baseClassName = 'o_login_button'
 
@@ -34,13 +37,22 @@ const OLoginButton = ({
   buttonClassName,
 
   providerName,
+  from:userFrom
 }) => {
+
+  const location = useLocation()
+
+  const { from=userFrom } = location.state || {}
 
   const {
     loading,
     error,
     data
-  } = useQuery(gql(query))
+  } = useQuery(gql(query), {
+    variables:{
+      next:from
+    }
+  })
   //console.log(loading, error, data)
   //
   const finalData = useMemo(() => {
@@ -132,16 +144,11 @@ OLoginButton.propTypes = {
    * The button label
    */
   providerName:PropTypes.string.isRequired,
-  /*
-  : PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    state: PropTypes.string.isRequired,
-  }),
-  : PropTypes.func,
-  : PropTypes.func,
-  : PropTypes.oneOf(['primary', 'stroke', 'flat'])
-  */
+
+  /**
+   * A slug that overrides the location state from. This is passed as a variable to the query
+   */
+  from:PropTypes.string
 }
 
 OLoginButton.defaultProps = {

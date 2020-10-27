@@ -5,6 +5,7 @@ import * as React from 'react'
 
 import { OLoginButton } from 'ui'
 import { AplProvider } from 'stories/utils'
+import { Router } from 'stories/utils'
 
 export default {
   title     :'oAuth2/OLoginButton',
@@ -12,6 +13,7 @@ export default {
   parameters:{
     decorators:[
       storyfn => <AplProvider>{ storyfn() }</AplProvider>,
+      storyfn => <Router>{ storyfn() }</Router>,
     ]
   }
 }
