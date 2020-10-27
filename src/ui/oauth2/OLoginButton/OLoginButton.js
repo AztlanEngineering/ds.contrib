@@ -42,7 +42,10 @@ const OLoginButton = ({
 
   const location = useLocation()
 
-  const { from=userFrom } = location.state || {}
+
+  const { from } = location.state || {}
+
+  const fromPathname = (from && from.pathname) || userFrom || undefined
 
   const {
     loading,
@@ -50,7 +53,7 @@ const OLoginButton = ({
     data
   } = useQuery(gql(query), {
     variables:{
-      next:from
+      next:fromPathname
     }
   })
   //console.log(loading, error, data)
