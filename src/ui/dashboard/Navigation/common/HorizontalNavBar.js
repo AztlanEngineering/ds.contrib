@@ -136,7 +136,7 @@ HorizontalNavBar.propTypes = {
   /**
    * Whether to hide if not main content
    */
-  isContentNavigation:PropTypes.bool
+  isContentNavigation:PropTypes.bool,
 
   /**
    * Whether the button is a dummy
