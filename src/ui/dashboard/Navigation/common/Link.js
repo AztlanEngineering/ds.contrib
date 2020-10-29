@@ -36,6 +36,7 @@ const Link = ({
 
   as:Wrapper,
   to,
+  state,
   ...otherProps
 }) => {
 
@@ -57,7 +58,12 @@ const Link = ({
       style={ style }
       { ...otherProps }
     >
-      <RouterLink to={ to }>
+      <RouterLink
+        to={{
+          pathname:to,
+          state
+        }}
+      >
         { children }
       </RouterLink>
     </Wrapper>
@@ -88,6 +94,11 @@ Link.propTypes = {
    *  The children JSX
    */
   children:PropTypes.node,
+
+  /**
+   * State refer to react-router-dom for info `https://reactrouter.com/react-router/web/api/Link`
+   */
+  state:PropTypes.object,
 
   /**
    * Which html tag to use

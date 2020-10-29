@@ -8,6 +8,7 @@ import {
   DashboardNavigation,
   DashboardContextProvider,
   DashboardMain,
+  SwitchRouteMap
 } from 'ui'
 /* import QUERY from './graphql/query.graphql'
    import { AplProvider } from 'stories/utils' */
@@ -140,12 +141,25 @@ export const Default = () => {
         <DashboardNavigation.HorizontalBar
           className='md-h lg-h u50'
           label={'blah'}
+          isContentNavigation
         />
         <div
           style={{height: '120vh'}}
         >
           Content Goes here
+
         </div>
+        {/*
+         <SwitchRouteMap
+   routes={routes}
+   NotFound={
+     <div
+       style={{ height: '120vh' }}
+     >
+Content Goes here
+     </div>
+   }
+ />*/}
       </DashboardMain>
     </>
   )

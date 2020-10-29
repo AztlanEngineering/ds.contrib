@@ -12,6 +12,8 @@ import HorizontalNavBar from './HorizontalNavBar'
 
 import { useRouteMatch, useLocation, useHistory} from 'react-router-dom'
 
+import { useIntl } from 'react-intl'
+
 /* Config */
 import C from 'ui/cssClasses'
 
@@ -75,6 +77,10 @@ const Slide = ({
   ,[shouldRedirectMatch, history])
     */
 
+  const intl = useIntl()
+
+  const titleAsString =  typeof title === 'string' ? title : intl.formatMessage(title)
+
 
   const displayUrls = useMemo(() => {
     const list = subItems ?
@@ -103,7 +109,9 @@ const Slide = ({
 
   //console.log('display this slide when the location matches one of those ', displayUrls, match, currentLocation.pathname)
 
-  //console.log(title, ' is active ? ', isActive)
+  /* console.log(title, ' is active ? ', isActive)
+      */
+
 
   return (
     <div
@@ -133,24 +141,24 @@ const Slide = ({
             dummy={ treeDepth == 0 }
           />
       }
-        { header &&
+      { header &&
         <header className='s-1 k-s u2 ph-u v25 pv-v'>
           { header }
-            </header>
-        }
+        </header>
+      }
       <div className={ C.content + ' u2 ph-u v50 pv-v' }>
 
         { logo &&
           <Image
             src={ logo }
-            alt={ title }
+            alt={ titleAsString }
             objectFit='contain'
             style={{ height: '100px' }}
           />
         }
         <Heading
           className='h3 v50 mv-v'
-          heading={ title }
+          heading={ titleAsString }
         />
 
         { subItems &&
@@ -185,7 +193,7 @@ const Slide = ({
                   treeDepth={ treeDepth }
                   iconHover={ iconHover }
                   iconSelected={ iconSelected }
-                  parentName={ title }
+                  parentName={ titleAsString }
                   parentLocation={ pathname } //TODO change by match render
                   currentLocation={ currentLocation }
                   slideClassName={ className }
