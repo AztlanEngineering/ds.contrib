@@ -145,9 +145,9 @@ HorizontalNavBar.propTypes = {
 }
 
 HorizontalNavBar.defaultProps = {
-  className         :'u50',
-  backIcon          :'h',
-  backDefaultMessage:<FormattedMessage { ...messages.back }/>,
+  className          :'u50',
+  backIcon           :'h',
+  backDefaultMessage :<FormattedMessage { ...messages.back }/>,
   isContentNavigation:false
   //as:'p',
 }
