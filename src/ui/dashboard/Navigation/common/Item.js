@@ -8,6 +8,11 @@ import { DashboardContext } from '../../common'
 import Slide from './Slide.js' //Circular recursion by design
 import NavLink from './Link.js'
 
+
+import { injectIntl } from 'react-intl'
+
+const ri = require('react-intl')
+console.log(89989, ri)
 /* Config
    import C from 'ui/cssClasses' */
 
@@ -27,7 +32,12 @@ const baseClassName = 'item'
  */
 class Item extends React.PureComponent {
 
-  static contextType = DashboardContext
+  //static contextType = IntlContext
+
+  /*
+  static contextTypes = {
+    intl:IntlContext,
+  }*/
 
   static defaultProps = {
     treeDepth:-1,
@@ -55,11 +65,17 @@ class Item extends React.PureComponent {
     return this.props.currentLocation.pathname == this.props.pathname //TODO change this by a match
   }
 
+  get titleAsString() {
+    const content = this.props.title
+    return typeof content === 'string' ? content : this.props.intl.formatMessage(content)
+  }
+
   componentDidUpdate(p) {
     //console.log('was active', this.wasActive(p))
+    /*
     if (this.isActive && (p.currentLocation.pathname != this.props.currentLocation.pathname)) {
-      this.context.setFocus(this.isLast ? 'main':'sidebar')
-    }
+      //this.context.setFocus(this.isLast ? 'main':'sidebar')
+    }*/
   }
 
   render () {
@@ -82,22 +98,24 @@ class Item extends React.PureComponent {
       treeDepth,
       //currentLocation,
 
-      title,
+      //title,
+      parentName,
       pathname,
       rootNode,
       //subItems,
     } = this.props
 
-    const { setFocus } = this.context
+    //const { setFocus } = this.context
 
     const ListItem = 'li'
 
+    /*
     const onClick = (e) => {
       e.persist()
       setFocus(
         this.isLast ? 'main': 'sidebar'
       )
-    }
+    }*/
 
     if (rootNode) return (
       <Slide
@@ -110,7 +128,7 @@ class Item extends React.PureComponent {
 
     else if (this.isCustomSlide) return (
       <ListItem >
-        { title }
+        { this.titleAsString }
         {' '}
         ( Custom Slide )
       </ListItem>
@@ -119,10 +137,15 @@ class Item extends React.PureComponent {
     else if (this.isNormalSlide) return (
       <ListItem >
         <NavLink
-          onClick={ onClick }
+          //onClick={ onClick }
+          state={{
+            displayMainContent        :false,
+            previousTitle             :parentName,
+            previousDisplayMainContent:false
+          }}
           to={ pathname }
         >
-          { title }
+          { this.titleAsString }
         </NavLink>
         <Slide
           { ...this.props }
@@ -136,10 +159,15 @@ class Item extends React.PureComponent {
     else return ( // is this.isLast
       <ListItem >
         <NavLink
-          onClick={ onClick }
+          //onClick={ onClick }
+          state={{
+            displayMainContent        :true,
+            previousTitle             :parentName,
+            previousDisplayMainContent:false
+          }}
           to={ pathname }
         >
-          { title }
+          { this.titleAsString }
         </NavLink>
       </ListItem>
 
@@ -210,4 +238,4 @@ Item.propTypes = {
 
 }
 
-export default Item
+export default injectIntl(Item)

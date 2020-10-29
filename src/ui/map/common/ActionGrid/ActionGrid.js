@@ -2,6 +2,7 @@
 import * as React from 'react'
 import { useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
+import { Helmet } from 'react-helmet'
 
 import { Actions } from './common'
 
@@ -18,7 +19,8 @@ import {
   Button,
   Label,
   Shortcut,
-  InlineLoader
+  InlineLoader,
+  LocalHelmet
 } from 'ds-core'
 
 import {
@@ -236,6 +238,14 @@ const ActionGrid = ({
       style={ style }
 
     >
+      <Helmet>
+        <title>
+          {(currentSingleView) ? (location.pathname === newViewUrl) ?
+            `${currentType.name}/new`:
+            `${currentType.name}/${currentSingleView}/${name}`:
+            `${currentType.name}/${currentListView}`}
+        </title>
+      </Helmet>
       { !lean &&
         <>
           <span className='h3 x-subtitle c-x f-m'>

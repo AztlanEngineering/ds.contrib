@@ -8,18 +8,27 @@ Classes :
 */
 
 .dashboard .main {
-  background: var(--y, var(--light-background));
-  box-shadow: -0.25em 0 2em 0 rgba(0, 0, 0, 0.15);
-  transition: all 0.3s;
-  height:100vh;
+  background: var(--light-y, var(--light-background));
+  box-shadow: -.25em 0 2em 0 rgba(0, 0, 0, .15);
+  height: 100vh;
+  transition: all .3s;
 
   z-index: 2;
 
   @media (max-width: 899px) {
+    display: flex;
+    flex-direction: column;
     left: 110%;
+    overflow-y: scroll;
     position: fixed;
     top: 0;
     width: 100%;
+
+    .page {
+      flex-grow: 99;
+      min-height: auto;
+    }
+
 
     &.active {
       left: 0;
@@ -29,5 +38,4 @@ Classes :
   @media (min-width: 900px) {
     grid-column-end: span 12;
   }
-
 }

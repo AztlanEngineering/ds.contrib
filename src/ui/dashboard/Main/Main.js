@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 
 import { DashboardContext } from '../common/'
 
+import { useLocation } from 'react-router-dom'
 
 
 /* Config */
@@ -34,9 +35,13 @@ const Main = ({
   as:Element
 }) => {
 
+  const { state={} } = useLocation()
+
+  /*
   const {
     focus
   } = useContext(DashboardContext)
+  */
 
   return (
     <Element
@@ -44,7 +49,7 @@ const Main = ({
         [
         //styles[baseClassName],
           baseClassName,
-          (focus == 'main') && C.active,
+          (state.displayMainContent) && C.active,
           className
         ].filter(e => e).join(' ')
       }

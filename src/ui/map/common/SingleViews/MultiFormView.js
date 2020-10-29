@@ -91,12 +91,13 @@ const MultiFormView = ({
     return multiInfo ? multiInfo.find(e => e.type.toLowerCase() === typeLower) || {} : {}
   },
   [
-    routeParams.type,
-    currentId
+    location.pathname
+    //routeParams.type,
+    //currentId
   ])
 
   const currentRelatedType = useMemo(() => getType(currentMultiFormInfo.type),
-    [ currentRelatedType ]
+    [ currentMultiFormInfo ]
   )
 
   const ObjectCard = useMemo(() => currentRelatedType.defaultViews.card.Component, [currentRelatedType])
@@ -106,7 +107,7 @@ const MultiFormView = ({
     error,
     data,
     refetch
-  } = useQuery(gql(currentType.graphql.queries.FULL || currentType.grqphql.queries.ONE),
+  } = useQuery(gql(currentMultiFormInfo.QUERY || currentType.graphql.queries.FULL || currentType.grqphql.queries.ONE),
     {
       variables:{
         id:itemId || currentId
@@ -217,6 +218,7 @@ const MultiFormView = ({
     >
 
       <FormContextProvider
+        key={ currentRelatedType && currentRelatedType.name }
         useObjects
       >
         <ActionGrid
@@ -235,7 +237,7 @@ const MultiFormView = ({
           orderField={ currentMultiFormInfo.orderField }
           inputMap={ currentRelatedType.defaultViews.single.fields.filter(e => e.name !== currentMultiFormInfo.foreignKey) }
           maxExtra={ currentMultiFormInfo.maxExtra || 4 }
-          extra={ currentMultiFormInfo.extra }
+          extra={ currentMultiFormInfo.extra || 1 }
           //query={ currentMultiFormInfo.query }
           existing={ existingItems }
           ObjectActions={({objectId}) =>

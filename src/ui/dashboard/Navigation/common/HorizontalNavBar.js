@@ -1,9 +1,9 @@
 /* @fwrlines/generator-react-component 2.1.1 */
 import * as React from 'react'
-import { useContext } from 'react'
+import { useContext, useMemo } from 'react'
 import PropTypes from 'prop-types'
 
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import { HorizontalBar, Heading, Button } from 'ds-core'
 
@@ -35,14 +35,15 @@ const HorizontalNavBar = ({
   className,
   style,
   backMessage,
+  backDefaultMessage,
   backIcon,
+  isContentNavigation,
   backTo,
   dummy
 }) => {
+  const { state={} } = useLocation()
 
   const history = useHistory()
-
-  const { setFocus } = useContext(DashboardContext)
 
   const navigateBack = backTo ?
     (e) => {
@@ -51,9 +52,9 @@ const HorizontalNavBar = ({
     } :
     (e) => {
       e.persist()
-      setFocus('sidebar')
       history.goBack()
     }
+  if(isContentNavigation && !state.displayMainContent) return null
 
   return (
     <HorizontalBar
@@ -73,15 +74,17 @@ const HorizontalNavBar = ({
         { !dummy ?
           <Button
             simple
+            compact
             className='it x-subtitle xh-paragraph k-s s1'
             icon={ backIcon }
             iconSide='l'
             onClick={ navigateBack }
           >
-            { backMessage }
+            { backMessage || state.previousTitle || backDefaultMessage }
           </Button>
           :
           <Button
+            compact
             simple
             className='it k-s s1'
             disabled
@@ -116,14 +119,24 @@ HorizontalNavBar.propTypes = {
   //children:PropTypes.node,
 
   /**
-   * The back button label
+   * The back button label. This trumps both the previousTitle and the default message
    */
   backMessage:PropTypes.object,
+
+  /**
+   * The back button label. This is trumped by the backMessage and the previousTitle
+   */
+  backDefaultMessage:PropTypes.object,
 
   /**
    * The back button icon
    */
   backIcon:PropTypes.string,
+
+  /**
+   * Whether to hide if not main content
+   */
+  isContentNavigation:PropTypes.bool,
 
   /**
    * Whether the button is a dummy
@@ -132,9 +145,10 @@ HorizontalNavBar.propTypes = {
 }
 
 HorizontalNavBar.defaultProps = {
-  className  :'u50',
-  backIcon   :'h',
-  backMessage:<FormattedMessage { ...messages.back }/>
+  className          :'u50',
+  backIcon           :'h',
+  backDefaultMessage :<FormattedMessage { ...messages.back }/>,
+  isContentNavigation:false
   //as:'p',
 }
 

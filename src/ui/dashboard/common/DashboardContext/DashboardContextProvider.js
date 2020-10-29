@@ -30,6 +30,7 @@ const DataProcessor = (data) => {
 }
  */
 
+/*
 const reducer = (state, action) =>{
   switch (action.type) {
   case 'SET_FOCUS':
@@ -41,7 +42,8 @@ const reducer = (state, action) =>{
     return state
   }
 
-}
+}*/
+
 /**
  * Use `DashboardContextProvider` to
  * Has color `x`
@@ -54,28 +56,32 @@ const DashboardContextProvider = ({
   as:Wrapper
 }) => {
 
+  /*
   const [state, dispatch] = useReducer(reducer, {
     focus:'sidebar'
   })
+    */
 
   //const location = useLocation()
 
   const history = useHistory()
 
+  /*
   const setFocus = (whereToFocus) => {
     dispatch({
       type   :'SET_FOCUS',
       payload:whereToFocus, //'sidebar', 'main'
     })
-  }
+  }*/
 
+  /*
   const navigate = (destination, whereToFocus=false) => {
     history.push(destination)
     if (
       whereToFocus &&
       (whereToFocus != state.focus)
     ) setFocus(whereToFocus)
-  }
+  }*/
 
   const { userTheme } = useContext(SiteContext)
 
@@ -89,10 +95,10 @@ const DashboardContextProvider = ({
 
   return (
     <DashboardContext.Provider value={{
-      setFocus,
-      navigate,
-      //isLocalUrl,
-      ...state
+      //setFocus,
+      /* navigate,
+         isLocalUrl, */
+      //...state
     }}
     >
       <Wrapper
