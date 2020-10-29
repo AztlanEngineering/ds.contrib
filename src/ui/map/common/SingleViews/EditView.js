@@ -64,7 +64,7 @@ const baseClassName = 'edit_view'
  * Use `EditView` to
  * Has color `x`
  */
-const EditView = ({
+const EditViewPayload = ({
   id,
   className,
   style,
@@ -163,6 +163,26 @@ const EditView = ({
   ,[ mutationResponse ]
   )
 
+  const {
+    mergeValues
+    /* touched,
+         errors,
+         isValid */
+  } = useForm()
+
+  useEffect(() => {
+    if (mergeValues && mutationResponse.id) {
+      mergeValues(mutationResponse)
+
+    }
+  }, [mutationResponse.id])
+
+  useEffect(() => {
+    if(finalData && finalData.id) {
+      mergeValues(finalData)
+    }
+
+  }, [finalData])
 
   const SubmitButton = React.memo((props) => {
 
@@ -170,7 +190,6 @@ const EditView = ({
       parsed:values,
       touched,
       setInputValue,
-      mergeValues
     /* touched,
          errors,
          isValid */
@@ -196,12 +215,6 @@ const EditView = ({
       saveItem({variables})
     }, [values])
 
-    useEffect(() => {
-      if (mergeValues && mutationResponse.id) {
-        mergeValues(mutationResponse)
-
-      }
-    }, [mutationResponse.id])
 
     return(
       <Button
@@ -239,18 +252,71 @@ const EditView = ({
       id={ id }
       style={ style }
     >
-      <FormContextProvider
-        initialValues={ finalData }
-        parsers={ currentType.graphql.types }
-      >
 
+      <ActionGrid
+        item={ finalData }
+        loadingSingle={ loading || mutationLoading }
+        currentSingleView='Edit'
+        title={ finalData.id ? 'Edit' : 'New' }
+        refetch={ refetch }
+        editMode
+      >
+        <SingleActions
+          item={ finalData }
+          enableDelete={ currentId ? true : false }
+          lean
+          independent
+          reverse={ false }
+          redirectAfterDelete={ true }
+          style={{
+            justifyContent:'end'
+          }}
+          extraActions={[
+            {
+              condition:(user) => true,
+              Component:SubmitButton
+            }
+          ]}
+        />
+      </ActionGrid>
+      <div className='pv-v v2'>
+
+        { finalData.createdAt &&
+          <Timestamp
+            time={ finalData.createdAt }
+            className={ 'x-subtitle c-x' }
+            prefix={
+              <strong>Created</strong>
+            }
+          />
+        }
+        { finalData.updatedAt &&
+          <Timestamp
+            time={ finalData.updatedAt }
+            className={ 'x-primary c-x' }
+            prefix={
+              <strong>Updated</strong>
+            }
+          />
+        }
+      </div>
+      <div
+        className='pv-v v2 s-1 k-s'
+        style={{ zIndex: 6 }}
+      >
+        { fields.map((e, i) =>
+          <FormInput
+            key={e.inputId}
+            compact
+            { ...e }
+          />
+        ) }
+      </div>
+      <div className='pv-v v2'>
         <ActionGrid
           item={ finalData }
           loadingSingle={ loading || mutationLoading }
-          currentSingleView='Edit'
-          title={ finalData.id ? 'Edit' : 'New' }
-          refetch={ refetch }
-          editMode
+          lean
         >
           <SingleActions
             item={ finalData }
@@ -270,152 +336,112 @@ const EditView = ({
             ]}
           />
         </ActionGrid>
-        <div className='pv-v v2'>
-
-          { finalData.createdAt &&
-            <Timestamp
-              time={ finalData.createdAt }
-              className={ 'x-subtitle c-x' }
-              prefix={
-                <strong>Created</strong>
-              }
-            />
-          }
-          { finalData.updatedAt &&
-            <Timestamp
-              time={ finalData.updatedAt }
-              className={ 'x-primary c-x' }
-              prefix={
-                <strong>Updated</strong>
-              }
-            />
-          }
-        </div>
-        <div
-          className='pv-v v2 s-1 k-s'
-          style={{ zIndex: 6 }}
+      </div>
+      <div className='pv-v v2'>
+        <Accordion
+          className='s0 k-s y-white x-subtitle'
+          toggleStyle='plus'
         >
-          { fields.map((e, i) =>
-            <FormInput
-              key={e.inputId}
-              compact
-              { ...e }
-            />
-          ) }
-        </div>
-        <div className='pv-v v2'>
-          <ActionGrid
-            item={ finalData }
-            loadingSingle={ loading || mutationLoading }
-            lean
+          <Accordion.Item
+            className='y-blue b-y ui-dark'
+            title={
+              <Heading
+                headingAs='h2'
+                heading='Local Graph'
+              />
+            }
+            id={ 'local_graph' }
           >
-            <SingleActions
-              item={ finalData }
-              enableDelete={ currentId ? true : false }
-              lean
-              independent
-              reverse={ false }
-              redirectAfterDelete={ true }
-              style={{
-                justifyContent:'end'
-              }}
-              extraActions={[
-                {
-                  condition:(user) => true,
-                  Component:SubmitButton
-                }
-              ]}
-            />
-          </ActionGrid>
-        </div>
-        <div className='pv-v v2'>
-          <Accordion
-            className='s0 k-s y-white x-subtitle'
-            toggleStyle='plus'
+            <pre className='c-x x-paragraph'>
+
+              { data && JSON.stringify(finalData, null, 2) }
+            </pre>
+          </Accordion.Item>
+          <Accordion.Item
+            className='y-background b-y'
+            title={
+              <Heading
+                headingAs='h2'
+                heading='Form Debug'
+              />
+            }
+            id={ 'form_debugger' }
           >
+            <FormContextDebugger/>
+          </Accordion.Item>
+          { error &&
             <Accordion.Item
-              className='y-blue b-y ui-dark'
+              className='y-error b-dark-y ui-dark'
               title={
                 <Heading
                   headingAs='h2'
-                  heading='Local Graph'
+                  heading='Loading Error (query)'
+                  subtitle='This only appears if the object didnt load properly.'
                 />
               }
-              id={ 'local_graph' }
+              id={ 'loading_error' }
             >
               <pre className='c-x x-paragraph'>
 
-                { data && JSON.stringify(finalData, null, 2) }
+                { data && JSON.stringify(error, null, 2) }
               </pre>
-            </Accordion.Item>
+            </Accordion.Item>}
+          { mutationError &&
             <Accordion.Item
-              className='y-background b-y'
+              className='y-error b-dark-y ui-dark'
               title={
                 <Heading
                   headingAs='h2'
-                  heading='Form Debug'
+                  heading='Save Error (mutation)'
+                  subtitle='This only appears if the object didnt save properly.'
                 />
               }
-              id={ 'form_debugger' }
+              id={ 'mutation_error' }
             >
-              <FormContextDebugger/>
-            </Accordion.Item>
-            { error &&
-              <Accordion.Item
-                className='y-error b-dark-y ui-dark'
-                title={
-                  <Heading
-                    headingAs='h2'
-                    heading='Loading Error (query)'
-                    subtitle='This only appears if the object didnt load properly.'
-                  />
-                }
-                id={ 'loading_error' }
-              >
-                <pre className='c-x x-paragraph'>
+              <pre className='c-x x-paragraph'>
 
-                  { data && JSON.stringify(error, null, 2) }
-                </pre>
-              </Accordion.Item>}
-            { mutationError &&
-              <Accordion.Item
-                className='y-error b-dark-y ui-dark'
-                title={
-                  <Heading
-                    headingAs='h2'
-                    heading='Save Error (mutation)'
-                    subtitle='This only appears if the object didnt save properly.'
-                  />
-                }
-                id={ 'mutation_error' }
-              >
-                <pre className='c-x x-paragraph'>
+                { data && JSON.stringify(mutationError, null, 2) }
+              </pre>
+            </Accordion.Item>}
+          { mutationData && (Object.keys(mutationData).length > 0) &&
+            <Accordion.Item
+              className='y-success b-dark-y ui-dark'
+              title={
+                <Heading
+                  headingAs='h2'
+                  heading='Save Success (mutation)'
+                  subtitle='This only appears if the object did save properly.'
+                />
+              }
+              id={ 'mutation_data' }
+            >
+              <pre className='c-x x-paragraph'>
 
-                  { data && JSON.stringify(mutationError, null, 2) }
-                </pre>
-              </Accordion.Item>}
-            { mutationData && (Object.keys(mutationData).length > 0) &&
-              <Accordion.Item
-                className='y-success b-dark-y ui-dark'
-                title={
-                  <Heading
-                    headingAs='h2'
-                    heading='Save Success (mutation)'
-                    subtitle='This only appears if the object did save properly.'
-                  />
-                }
-                id={ 'mutation_data' }
-              >
-                <pre className='c-x x-paragraph'>
+                { data && JSON.stringify(mutationData, null, 2) }
+              </pre>
+            </Accordion.Item>}
+        </Accordion>
+      </div>
 
-                  { data && JSON.stringify(mutationData, null, 2) }
-                </pre>
-              </Accordion.Item>}
-          </Accordion>
-        </div>
-
-      </FormContextProvider>
     </div>
+  )
+}
+
+const EditView = (props) => {
+
+  const {
+    currentType,
+  } = useModelMap()
+
+  return (
+    <FormContextProvider
+      //initialValues={ finalData }
+      parsers={ currentType.graphql.types }
+    >
+      <EditViewPayload {...props}/>
+
+    </FormContextProvider>
+
   )
 }
 
@@ -465,4 +491,5 @@ EditView.defaultProps = {
   //as:'p',
 }
 */
+
 export default EditView
