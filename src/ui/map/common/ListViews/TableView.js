@@ -24,6 +24,7 @@ import { SingleActions } from '../SingleActions'
 import {
   Button,
   Shortcut,
+  Label,
   Keys,
   Popup,
   InlineLoader
@@ -57,6 +58,7 @@ const TableView = ({
   id,
   className,
   style,
+  enableIndexColumn
 }) => {
 
   const [columnSelectorDisplay, setColumnSelectorDisplay] = useState(false)
@@ -76,13 +78,31 @@ const TableView = ({
       notifyOnNetworkStatusChange:true
     })
 
-  const columns = useMemo(() => currentType.defaultViews.table.columns, [currentType.name])
+  const columns = useMemo(() => {
+    const columns = []
+    if (enableIndexColumn) {
+      columns.push({
+        Header:'L#',
+        //accessor:''
+        id    :'local-index',
+        Cell  :(v) => (<Label
+          circle
+          className='x-black'
+                       >
+          {v.row.index}
+                       </Label>),
+      })
+    }
+    Array.prototype.push.apply(columns, currentType.defaultViews.table.columns)
+    return columns
+  }
+  , [currentType.name])
   const finalData = useMemo(() => (data && data[Object.keys(data).reduce((a, e) => {
     return e
   }, '')]) || [],
   [currentType.name, loading])
 
-  const defaultSortBy = useMemo(() => [{ id:'updatedAt', desc:true }], [currentType.name])
+  const defaultSortBy = useMemo(() => [{ id: 'updatedAt', desc: true }], [currentType.name])
 
   const {
     getTableProps,
@@ -333,14 +353,19 @@ TableView.propTypes = {
   //as: PropTypes.string,
 
   /**
+   * Whether to enable index column
+  */
+  enableIndexColumn:PropTypes.bool,
+
+  /**
    * The height of the element
    */
-  height:PropTypes.string,
+  //height:PropTypes.string,
 
   /**
    * The width of the element
    */
-  width:PropTypes.string,
+  //width:PropTypes.string,
   /*
   : PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -353,11 +378,9 @@ TableView.propTypes = {
   */
 }
 
-/*
 TableView.defaultProps = {
-  status: 'neutral',
-  //height:'2.2em',
-  //as:'p',
+  enableIndexColumn:true,
+  /* height:'2.2em',
+     as:'p', */
 }
-*/
 export default TableView
