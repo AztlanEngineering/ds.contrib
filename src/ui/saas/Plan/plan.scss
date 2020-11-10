@@ -8,7 +8,7 @@ Classes :
 */
 
 @use "@fwrlines/stylebook/src/mixins";
-@use "@fwrlines/stylebook/src/vars/responsive" as *;
+@use "@fwrlines/stylebook/src/globals" as *;
 
 .plan {
   --z: var(--y);
