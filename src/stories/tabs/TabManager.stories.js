@@ -22,13 +22,11 @@ export default {
     'Tabline.Tab':TabManager.Tabline.Tab
     //Item:TabManager.Item
   },
-  parameters:{
-    decorators:[
-      /* storyfn => <div className="">{ storyfn() }</div>,
+  decorators:[
+    /* storyfn => <div className="">{ storyfn() }</div>,
          storyfn => <AplProvider endpoint={ endpoint }>{ storyfn() }</AplProvider>, */
-      storyfn => <Router>{ storyfn() }</Router>,
-    ]
-  }
+    storyfn => <Router>{ storyfn() }</Router>,
+  ]
 }
 
 export const Default = () => (

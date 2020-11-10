@@ -21,14 +21,12 @@ export default {
   subcomponents:{
     //Item:BlogList.Item
   },
-  parameters:{
-    decorators:[
-      //storyfn => <div className="">{ storyfn() }</div>,
-      storyfn => <BlogContextProvider>{ storyfn() }</BlogContextProvider>,
-      storyfn => <AplProvider endpoint={ endpoint }>{ storyfn() }</AplProvider>,
-      //storyfn => <Router>{ storyfn() }</Router>,
-    ]
-  }
+  decorators:[
+    //storyfn => <div className="">{ storyfn() }</div>,
+    storyfn => <BlogContextProvider>{ storyfn() }</BlogContextProvider>,
+    storyfn => <AplProvider endpoint={ endpoint }>{ storyfn() }</AplProvider>,
+    //storyfn => <Router>{ storyfn() }</Router>,
+  ]
 }
 
 /*

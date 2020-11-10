@@ -27,14 +27,12 @@ export default {
   subcomponents:{
     //Item:LocationMap.Item
   },
-  parameters:{
-    decorators:[
-      /* storyfn => <div className="">{ storyfn() }</div>,
+  decorators:[
+    /* storyfn => <div className="">{ storyfn() }</div>,
          storyfn => <AplProvider endpoint={ endpoint }>{ storyfn() }</AplProvider>, */
-      storyfn => <SiteContextProvider>{ storyfn() }</SiteContextProvider>,
-      //storyfn => <Router>{ storyfn() }</Router>,
-    ]
-  }
+    storyfn => <SiteContextProvider>{ storyfn() }</SiteContextProvider>,
+    //storyfn => <Router>{ storyfn() }</Router>,
+  ]
 }
 
 /*

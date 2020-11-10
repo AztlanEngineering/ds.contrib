@@ -21,18 +21,16 @@ export default {
     LogoutLink      :CPStatusBar.LogoutLink,
     ConnectionStatus:CPStatusBar.ConnectionStatus
   },
-  parameters:{
-    decorators:[
-      storyfn => <SessionContextProvider
-        logoutPath='/logout'
-        GQL_QUERY_ME={ 'query { me { id } }' }
-                 >
-        { storyfn() }
-                 </SessionContextProvider>,
-      storyfn => <AplProvider>{ storyfn() }</AplProvider>,
-      storyfn => <Router>{ storyfn() }</Router>,
-    ]
-  }
+  decorators:[
+    storyfn => <SessionContextProvider
+      logoutPath='/logout'
+      GQL_QUERY_ME={ 'query { me { id } }' }
+               >
+      { storyfn() }
+               </SessionContextProvider>,
+    storyfn => <AplProvider>{ storyfn() }</AplProvider>,
+    storyfn => <Router>{ storyfn() }</Router>,
+  ]
 }
 
 /*

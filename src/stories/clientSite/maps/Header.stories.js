@@ -25,14 +25,12 @@ export default {
   subcomponents:{
     //Item:Header.Item
   },
-  parameters:{
-    decorators:[
-      storyfn => <div className='u2 sm-u1'>{ storyfn() }</div>,
-      /* storyfn => <div className="">{ storyfn() }</div>,
+  decorators:[
+    storyfn => <div className='u2 sm-u1'>{ storyfn() }</div>,
+    /* storyfn => <div className="">{ storyfn() }</div>,
          storyfn => <AplProvider endpoint={ endpoint }>{ storyfn() }</AplProvider>,
          storyfn => <Router>{ storyfn() }</Router>, */
-    ]
-  }
+  ]
 }
 
 /*

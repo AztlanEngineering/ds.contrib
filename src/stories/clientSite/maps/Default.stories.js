@@ -24,14 +24,12 @@ export default {
   subcomponents:{
     //Item:Default.Item
   },
-  parameters:{
-    decorators:[
-      storyfn => <div className='u2 sm-u1'>{ storyfn() }</div>,
-      /*
+  decorators:[
+    storyfn => <div className='u2 sm-u1'>{ storyfn() }</div>,
+    /*
          storyfn => <AplProvider endpoint={ endpoint }>{ storyfn() }</AplProvider>,
          storyfn => <Router>{ storyfn() }</Router>, */
-    ]
-  }
+  ]
 }
 
 /*

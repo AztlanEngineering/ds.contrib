@@ -20,13 +20,11 @@ export default {
   subcomponents:{
     //Item:GraphQLTester.Item
   },
-  parameters:{
-    decorators:[
-      //storyfn => <div className="">{ storyfn() }</div>,
-      storyfn => <AplProvider>{ storyfn() }</AplProvider>,
-      //storyfn => <Router>{ storyfn() }</Router>,
-    ]
-  }
+  decorators:[
+    //storyfn => <div className="">{ storyfn() }</div>,
+    storyfn => <AplProvider>{ storyfn() }</AplProvider>,
+    //storyfn => <Router>{ storyfn() }</Router>,
+  ]
 }
 
 export const Default = () => (

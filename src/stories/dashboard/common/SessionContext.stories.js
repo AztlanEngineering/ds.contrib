@@ -16,12 +16,10 @@ export default {
   subcomponents:{
     //Logout:Logout
   },
-  parameters:{
-    decorators:[
-      storyfn => <AplProvider>{ storyfn() }</AplProvider>,
-      storyfn => <Router>{ storyfn() }</Router>
-    ]
-  }
+  decorators:[
+    storyfn => <AplProvider>{ storyfn() }</AplProvider>,
+    storyfn => <Router>{ storyfn() }</Router>
+  ]
 }
 
 export const Default = () => (
