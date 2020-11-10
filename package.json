@@ -29,7 +29,7 @@
     "bd": "npm run build&&npm run commit ",
     "npre": "nodemon --watch src --ignore 'src/stories' --exec 'npm run build:es && echo done'",
     "postinstall": "node ./scripts/postinstall.js",
-    "relink": "npm link @fwrlines/ds.core && npm link @fwrlines/ds.form && npm link @fwrlines/swatch && npm link @fwrlines/utils",
+    "relink": "npm link @fwrlines/ds.core && npm link @fwrlines/ds.form && npm link @fwrlines/utils",
     "relink:old": "npm link @fwrlines/ds.core && npm link @fwrlines/ds.form && npm link @fwrlines/alphabet-scss && npm link @fwrlines/swatch && npm link @fwrlines/utils"
   },
   "keywords": [],
@@ -37,7 +37,8 @@
   "dependencies": {
     "@apollo/client": "^3.0.0-rc.2",
     "@apollo/link-retry": "^2.0.0-beta.3",
-    "@fwrlines/alphabet-scss": "latest",
+    "@fwrlines/stylebook": "latest",
+    "@fwrlines/swatch": "latest",
     "@fwrlines/ds.core": "latest",
     "@fwrlines/ds.form": "latest",
     "@fwrlines/utils": "latest",
