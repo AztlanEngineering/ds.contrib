@@ -95,6 +95,7 @@ const ArticleCard = ({
         { category &&
           <CategoryButton
             slug={ category.slug }
+            compact
             name={ category.name }
             className={
               [

@@ -210,8 +210,7 @@ const Slide = ({
       { footer &&
         <footer className='s-1 k-s uc u2 ph-u v1 pv-v'>
           { footer }
-          {' '}
-          <span className='x-metadata c-x'>Copyright mycompany 2020 - privacy policy - the best software in town</span>
+          {/*<span className='x-metadata c-x'>Copyright mycompany 2020 - privacy policy - the best software in town</span>*/}
         </footer>
       }
     </div>
