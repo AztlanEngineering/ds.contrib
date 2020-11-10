@@ -1,6 +1,6 @@
 /* @fwrlines/generator-react-component 2.3.4 */
-@use "@fwrlines/alphabet-scss/scss/mixins";
-@use "@fwrlines/alphabet-scss/scss/vars/responsive" as *;
+@use "@fwrlines/stylebook/src/mixins";
+@use "@fwrlines/stylebook/src/vars/responsive" as *;
 
 /*
 
@@ -15,11 +15,12 @@ Classes :
   }
 
   .gc-illustration a {
-    display:block;
-    width:100%;
-    height:100%;
+    display: block;
+    height: 100%;
+    width: 100%;
+
     img {
-      width:100%;
+      width: 100%;
     }
   }
 

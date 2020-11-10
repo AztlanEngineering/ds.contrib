@@ -30,7 +30,7 @@
     "npre": "nodemon --watch src --ignore 'src/stories' --exec 'npm run build:es && echo done'",
     "postinstall": "node ./scripts/postinstall.js",
     "relink": "npm link @fwrlines/ds.core && npm link @fwrlines/ds.form && npm link @fwrlines/utils",
-    "relink:old": "npm link @fwrlines/ds.core && npm link @fwrlines/ds.form && npm link @fwrlines/alphabet-scss && npm link @fwrlines/swatch && npm link @fwrlines/utils"
+    "relink:old": "npm link @fwrlines/ds.core && npm link @fwrlines/ds.form && npm link @fwrlines/stylebook && npm link @fwrlines/swatch && npm link @fwrlines/utils"
   },
   "keywords": [],
   "license": "ISC",
