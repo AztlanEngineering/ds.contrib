@@ -20,14 +20,12 @@ export default {
   subcomponents:{
     //Item:Main.Item
   },
-  parameters:{
-    decorators:[
-      /* storyfn => <div className="">{ storyfn() }</div>,
+  decorators:[
+    /* storyfn => <div className="">{ storyfn() }</div>,
          storyfn => <AplProvider endpoint={ endpoint }>{ storyfn() }</AplProvider>, */
-      storyfn => <DashboardContextProvider>{ storyfn() }</DashboardContextProvider>,
-      storyfn => <Router>{ storyfn() }</Router>,
-    ]
-  }
+    storyfn => <DashboardContextProvider>{ storyfn() }</DashboardContextProvider>,
+    storyfn => <Router>{ storyfn() }</Router>,
+  ]
 }
 
 export const Default = () => (

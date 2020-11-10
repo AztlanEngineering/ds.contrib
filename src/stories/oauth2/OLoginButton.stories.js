@@ -10,12 +10,10 @@ import { Router } from 'stories/utils'
 export default {
   title     :'oAuth2/OLoginButton',
   component :OLoginButton,
-  parameters:{
-    decorators:[
-      storyfn => <AplProvider>{ storyfn() }</AplProvider>,
-      storyfn => <Router>{ storyfn() }</Router>,
-    ]
-  }
+  decorators:[
+    storyfn => <AplProvider>{ storyfn() }</AplProvider>,
+    storyfn => <Router>{ storyfn() }</Router>,
+  ]
 }
 
 export const Default = () => (

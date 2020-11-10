@@ -25,25 +25,23 @@ export default {
   subcomponents:{
     //Item:ArticleCard.Item
   },
-  parameters:{
-    decorators:[
-      storyfn => <BlogContextProvider
-        routes={{
+  decorators:[
+    storyfn => <BlogContextProvider
+      routes={{
 
-          BASE              :'/blog',
-          HOME              :'/blog',
-          HOME_PAGINATED    :`/blog/${paginationParam}`,
-          CATEGORY          :`/blog/c/${categoryUrlParam}`,
-          CATEGORY_PAGINATED:`/blog/c/${categoryUrlParam}/${paginationParam}`,
-          SINGLE            :`/blog/${slugUrlParam}/`,
-        }}
-      >
-        { storyfn() }
-      </BlogContextProvider>,
-      storyfn => <AplProvider endpoint={ endpoint }>{ storyfn() }</AplProvider>,
-      storyfn => <Router>{ storyfn() }</Router>,
-    ]
-  }
+        BASE              :'/blog',
+        HOME              :'/blog',
+        HOME_PAGINATED    :`/blog/${paginationParam}`,
+        CATEGORY          :`/blog/c/${categoryUrlParam}`,
+        CATEGORY_PAGINATED:`/blog/c/${categoryUrlParam}/${paginationParam}`,
+        SINGLE            :`/blog/${slugUrlParam}/`,
+      }}
+               >
+      { storyfn() }
+               </BlogContextProvider>,
+    storyfn => <AplProvider endpoint={ endpoint }>{ storyfn() }</AplProvider>,
+    storyfn => <Router>{ storyfn() }</Router>,
+  ]
 }
 
 /*
