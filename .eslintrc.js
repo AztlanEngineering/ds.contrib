@@ -1,111 +1,111 @@
 module.exports = {
-  'settings': {
-    'import/resolver': {
-      'webpack': {
-        'config': 'webpack.config.js'
+  'settings':{
+    'import/resolver':{
+      'webpack':{
+        'config':'webpack.config.js'
       }
     }
   },
-  'env': {
-    'browser': true,
-    'node': true,
-    'commonjs': true,
-    'es6': true
+  'env':{
+    'browser' :true,
+    'node'    :true,
+    'commonjs':true,
+    'es6'     :true
   },
-  'extends': [
+  'extends':[
     'eslint:recommended',
     'plugin:react/recommended'
   ],
-  'parserOptions': {
-    'ecmaFeatures': {
-      'jsx': true
+  'parserOptions':{
+    'ecmaFeatures':{
+      'jsx':true
     },
-    'ecmaVersion': 2018,
-    'sourceType': 'module'
+    'ecmaVersion':2018,
+    'sourceType' :'module'
   },
-  'parser': 'babel-eslint',
-  'plugins': [
-		'react',
-		'react-hooks',
+  'parser' :'babel-eslint',
+  'plugins':[
+    'react',
+    'react-hooks',
     'formatjs'
   ],
-  'rules': {
-    'indent': [
+  'rules':{
+    'indent':[
       'error',
-			2,
-			//{'ignoredNodes': ['JSXElement']}
+      2,
+      //{'ignoredNodes': ['JSXElement']}
     ],
-    'linebreak-style': [
+    'linebreak-style':[
       'error',
       'unix'
     ],
-    'quotes': [
+    'quotes':[
       'error',
-			"single",
-			{ "allowTemplateLiterals": true }
+      'single',
+      { 'allowTemplateLiterals': true }
     ],
-    'semi': [
+    'semi':[
       'error',
       'never'
     ],
-    'no-trailing-spaces': [
+    'no-trailing-spaces':[
       'error', { 'skipBlankLines': false }
     ],
-    'no-console': 0,
-    'array-bracket-newline': [
+    'no-console'           :0,
+    'array-bracket-newline':[
       'error', 'consistent'
     ],
-    'multiline-comment-style': [
+    'multiline-comment-style':[
       'error', 'bare-block'
     ],
-    'jsx-quotes': [
+    'jsx-quotes':[
       'error', 'prefer-single'
     ],
-    'no-tabs': [
+    'no-tabs':[
       'error', { 'allowIndentationTabs': false }
     ],
-    'no-mixed-spaces-and-tabs': [
+    'no-mixed-spaces-and-tabs':[
       'error'
     ],
-		'no-unused-vars' :[
-			"warn"
-		],
-		'react/jsx-closing-tag-location': ['error'],
-		'react/jsx-indent': [
-			2, 2, {indentLogicalExpressions: true}
-		],
+    'no-unused-vars':[
+      'warn'
+    ],
+    'react/jsx-closing-tag-location':['error'],
+    'react/jsx-indent'              :[
+      2, 2, {indentLogicalExpressions: true}
+    ],
     'react/jsx-indent-props':[
       'error',2
     ],
-		'react/jsx-closing-bracket-location': ['error', 'tag-aligned'],
-		'react/jsx-first-prop-new-line': [
-			'error', 'multiline-multiprop'
-		],
-		'react/jsx-max-props-per-line': ['error', { 'maximum':1}],
-    'react/jsx-one-expression-per-line': [
+    'react/jsx-closing-bracket-location':['error', 'tag-aligned'],
+    'react/jsx-first-prop-new-line'     :[
+      'error', 'multiline-multiprop'
+    ],
+    'react/jsx-max-props-per-line'     :['error', { 'maximum': 1}],
+    'react/jsx-one-expression-per-line':[
       'error', {
-        'allow': 'single-child'
+        'allow':'single-child'
       }
     ],
-    'react/jsx-equals-spacing': [
+    'react/jsx-equals-spacing':[
       1,
       'never'
     ],
-    'react/display-name': 0,
-    'react/prop-types': 0,
-		'react/forbid-prop-types': 0,
-		'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 0,
-    'key-spacing': [
-      "error", {
-        "multiLine": {
-          "beforeColon": false,
-          "afterColon": false
+    'react/display-name'         :0,
+    //'react/prop-types': 0,
+    'react/forbid-prop-types'    :0,
+    'react-hooks/rules-of-hooks' :'error',
+    'react-hooks/exhaustive-deps':0,
+    'key-spacing'                :[
+      'error', {
+        'multiLine':{
+          'beforeColon':false,
+          'afterColon' :false
         },
-         "align": {
-          "beforeColon": false,
-          "afterColon": false,
-          "on": "colon"
+        'align':{
+          'beforeColon':false,
+          'afterColon' :false,
+          'on'         :'colon'
         }
       }
     ],

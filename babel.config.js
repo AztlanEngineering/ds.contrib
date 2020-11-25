@@ -33,7 +33,7 @@ module.exports = function (api) {
         'ds-form':'@fwrlines/ds.form',
       }
     }],
-    '@babel/plugin-proposal-class-properties',
+    ['@babel/plugin-proposal-class-properties', { 'loose': true }],
     ['babel-plugin-inline-import', {
       'extensions':[
         '.html',

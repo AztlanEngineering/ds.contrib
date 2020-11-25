@@ -53,6 +53,8 @@ const ALL_COLORS = [
 const FONT_FAMILY_HEADINGS = 'pxg'
 const FONT_FAMILY_PARAGRAPH = 'us'
 
+const ENDPOINT = 'https://template-graphql-server.now.sh/graphql'
+
 export {
   SIZES,
   THEME,
@@ -62,5 +64,7 @@ export {
   ALL_COLORS,
 
   FONT_FAMILY_HEADINGS,
-  FONT_FAMILY_PARAGRAPH
+  FONT_FAMILY_PARAGRAPH,
+
+  ENDPOINT
 }

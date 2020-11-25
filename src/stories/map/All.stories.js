@@ -252,14 +252,12 @@ export default {
   subcomponents:{
     Item:ListView
   },
-  parameters:{
-    decorators:[
-      /* storyfn => <MapContextProvider typeList={ typeList }>{  storyfn() }</MapContextProvider>,
+  decorators:[
+    /* storyfn => <MapContextProvider typeList={ typeList }>{  storyfn() }</MapContextProvider>,
          storyfn => <Route path='/:type' > { storyfn() } </Route>, */
-      storyfn => <AplProvider>{ storyfn() }</AplProvider>,
-      storyfn => <Router>{ storyfn() }</Router>,
-    ]
-  }
+    storyfn => <AplProvider>{ storyfn() }</AplProvider>,
+    storyfn => <Router>{ storyfn() }</Router>,
+  ]
 }
 
 /*
@@ -448,8 +446,8 @@ export const Buttons = () => {
         <MapReverseAssociationButton
           itemId='46a7be79-b013-431d-b2d3-1c1e99dc97f2'
           item={{
-            _string: 'Grapefruit', 
-            'id': '46a7be79-b013-431d-b2d3-1c1e99dc97f2',
+            _string   :'Grapefruit',
+            'id'      :'46a7be79-b013-431d-b2d3-1c1e99dc97f2',
             'contents':[
               { 'id': '46a7be79-b013-431d-b2d3-1c1e99dc97f2', },
               { 'id': '46a7be79-b013-431d-b2d3-1c1e99dc97f2', }
@@ -461,8 +459,8 @@ export const Buttons = () => {
         <MapReverseAssociationButton
           itemId='46a7be79-b013-431d-b2d3-1c1e99dc97f2'
           item={{
-            _string: 'Grapefruit', 
-            'id': '46a7be79-b013-431d-b2d3-1c1e99dc97f2',
+            _string   :'Grapefruit',
+            'id'      :'46a7be79-b013-431d-b2d3-1c1e99dc97f2',
             'contents':[
             ]
           }}
