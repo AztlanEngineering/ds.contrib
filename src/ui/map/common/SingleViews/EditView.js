@@ -164,6 +164,8 @@ const EditViewPayload = ({
   )
 
   const {
+    parsed:values,
+    touched,
     mergeValues
     /* touched,
          errors,
@@ -184,49 +186,34 @@ const EditViewPayload = ({
 
   }, [finalData])
 
-  const SubmitButton = React.memo((props) => {
-
-    const {
-      parsed:values,
-      touched,
-      setInputValue,
-    /* touched,
-         errors,
-         isValid */
-    } = useForm()
-
-    //console.log('rdr submitbtn', values)
-
-
-    const mutate = useCallback(() => {
-      const variables = values ? Object.keys(values).reduce((a, e) => {
-        if (Object.keys(touched).includes(e)) {
-          const customType = currentType.graphql.types && currentType.graphql.types[e]
-          a[e] = customType ? customType(values[e]) : values[e]
-        }
-        return a
+  const mutate = () => {
+    var variables = {}
+    variables.input = values ? Object.keys(values).reduce((a, e) => {
+      if (Object.keys(touched).includes(e)) {
+        const customType = currentType.graphql.types && currentType.graphql.types[e]
+        a[e] = customType ? customType(values[e]) : values[e]
       }
-      ,{}) : {}
-      if (values && values.id) {
-        variables['id'] = values.id
+      return a
+    }
+    ,{}) : {}
+    if (values && values.id) {
+      variables['id'] = values.id
 
-      }
-      //console.log('Will now mutate', variables)
-      saveItem({variables})
-    }, [values])
+    }
+    console.log('Will now mutate', variables)
+    saveItem({variables})
+  }
 
-
-    return(
-      <Button
-        className='x-success'
-        {...props}
-        onClick={ !mutationLoading ? mutate : undefined }
-        loading={ mutationLoading }
-      >
-        Submit
-      </Button>
-    )
-  })
+  const SubmitButton = (props) => (
+    <Button
+      className='x-success'
+      {...props}
+      onClick={ !mutationLoading ? mutate : undefined }
+      loading={ mutationLoading }
+    >
+      Submit
+    </Button>
+  )
 
   if(currentId && !finalData.__typename) return (
     <GraphQLErrorView

@@ -11,8 +11,8 @@ import NavLink from './Link.js'
 
 import { injectIntl } from 'react-intl'
 
-const ri = require('react-intl')
-console.log(89989, ri)
+/* const ri = require('react-intl')
+   console.log(89989, ri) */
 /* Config
    import C from 'ui/cssClasses' */
 
