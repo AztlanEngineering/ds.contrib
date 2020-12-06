@@ -2,3 +2,4 @@
 export { SessionContext } from './common'
 export { default as SessionContextProvider } from './SessionContextProvider'
 export { default as useSession } from './useSession'
+export { default as useCurrentUser } from './useCurrentUser'

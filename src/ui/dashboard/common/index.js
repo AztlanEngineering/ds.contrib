@@ -5,5 +5,6 @@ export {
 export {
   SessionContext,
   SessionContextProvider,
-  useSession
+  useSession,
+  useCurrentUser,
 } from './SessionContext'
