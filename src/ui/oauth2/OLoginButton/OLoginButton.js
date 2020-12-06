@@ -45,7 +45,7 @@ const OLoginButton = ({
 
   const { from } = location.state || {}
 
-  const fromPathname = (from && from.pathname) || userFrom || undefined
+  const fromPathname = (from && (from.pathname !== '/') && from.pathname) || userFrom || undefined
 
   const {
     loading,
@@ -56,8 +56,8 @@ const OLoginButton = ({
       next:fromPathname
     }
   })
-  //console.log(loading, error, data)
-  //
+  /* console.log(loading, error, data)
+      */
   const finalData = useMemo(() => {
     var result
     //console.log(99, data)

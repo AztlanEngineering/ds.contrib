@@ -52,11 +52,6 @@ if(!isBackend) {
 
 const baseClassName = 'location_map'
 
-const mapThemes = {
-  'default':'https://api.mapbox.com/styles/v1/meccamico/ckflb4mmw031a19ntj0fmbv1d/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibWVjY2FtaWNvIiwiYSI6ImNrZmxhemd5ODB6OWczMXFoOTd4bDRuZDUifQ.V37g_kCX_acd0eQHKqhcKQ',
-  'dark'   :'https://api.mapbox.com/styles/v1/meccamico/ckflb54q934r819mly8n1r8gk/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibWVjY2FtaWNvIiwiYSI6ImNrZmxhemd5ODB6OWczMXFoOTd4bDRuZDUifQ.V37g_kCX_acd0eQHKqhcKQ'
-}
-
 
 /**
  * Use `LocationMap` to display a map of a location ( Type ). Do not forget to wrap this into SiteContextProvider to profit from the theming.
@@ -69,7 +64,7 @@ const LocationMap = ({
   as:Wrapper,
   location:userLocation,
   defaultCountry,
-  
+
   initialLat,
   initialLng,
   initialZoom,
@@ -78,18 +73,24 @@ const LocationMap = ({
 
   theme,
 
+  availableThemes,
+
   children,
+
+  SiteContext:UserSiteContext
 }) => {
 
   const location = userLocation || {}
 
   const {
     userTheme
-  } = useContext(SiteContext)
+  } = useContext(UserSiteContext)
+
+
 
   const themeUrl = theme ?
-    mapThemes[theme] :
-    mapThemes[userTheme] || mapThemes['default']
+    availableThemes[theme] :
+    availableThemes[userTheme] || availableThemes['default']
 
   const provider = useMemo(() => new SearchProvider(), [])
 
@@ -127,8 +128,8 @@ const LocationMap = ({
 
 
   }, [location])
-  // setup
-  //
+  /* setup
+      */
   console.log(998899, Icon)
 
   return (
@@ -156,7 +157,10 @@ const LocationMap = ({
             attribution={'© <a href="https://apps.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
             url={ themeUrl }
           />
-          <Marker position={position} icon={Icon}>
+          <Marker
+            position={position}
+            icon={Icon}
+          >
             <Popup>
               A pretty CSS3 popup.
               {' '}
@@ -168,9 +172,9 @@ const LocationMap = ({
         </Map>
       }
       { children &&
-          <div className='map-description y-background b-light-y'>
-            { children }
-          </div>
+        <div className='map-description y-background b-light-y'>
+          { children }
+        </div>
       }
     </Wrapper>
   )}
@@ -254,6 +258,15 @@ LocationMap.propTypes = {
    */
   children:PropTypes.node,
 
+  /**
+   * The hash of themes and tile sources
+   */
+  availableThemes:PropTypes.object.isRequired,
+
+  /**
+   * Override the default site context to read the theme from
+   */
+  SiteContext:PropTypes.object,
 
   /*
   : PropTypes.shape({
@@ -268,12 +281,17 @@ LocationMap.propTypes = {
 }
 
 LocationMap.defaultProps = {
-  initialLat :0,
-  initialLng :0,
-  initialZoom:5,
-  finalZoom  :13,
+  initialLat     :0,
+  initialLng     :0,
+  initialZoom    :5,
+  finalZoom      :13,
   scrollWheelZoom:true,
-  as:'div'
+  as             :'div',
+  availableThemes:{
+    'default':`https://api.mapbox.com/styles/v1/meccamico/ckflb4mmw031a19ntj0fmbv1d/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibWVjY2FtaWNvIiwiYSI6ImNrZmxhemd5ODB6OWczMXFoOTd4bDRuZDUifQ.V37g_kCX_acd0eQHKqhcKQ`,
+    'dark'   :`https://api.mapbox.com/styles/v1/meccamico/ckflb54q934r819mly8n1r8gk/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibWVjY2FtaWNvIiwiYSI6ImNrZmxhemd5ODB6OWczMXFoOTd4bDRuZDUifQ.V37g_kCX_acd0eQHKqhcKQ`
+  },
+  SiteContext,
 }
 
 const BackendLocationMap = ({
@@ -283,10 +301,10 @@ const BackendLocationMap = ({
   location:userLocation,
   defaultCountry,
   children,
-  //initialLat,
-  //initialLng,
-  //initialZoom,
-  //finalZoom,
+  /* initialLat,
+     initialLng,
+     initialZoom,
+     finalZoom, */
 
   //theme
 }) => {
