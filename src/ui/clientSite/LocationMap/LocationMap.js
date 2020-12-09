@@ -150,6 +150,9 @@ const LocationMap = ({
           center={position}
           zoom={position.zoom}
           scrollWheelZoom={ scrollWheelZoom }
+          style={{
+            height:'100vh'
+          }}
         >
           <TileLayer
             tileSize={ 512 }
