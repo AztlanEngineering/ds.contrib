@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import { Subtitle, IconList, Image ,Heading, Button ,HorizontalBar } from 'ds-core'
 
-import { DashboardContext } from '../../common'
+import { DashboardContext, useSession } from '../../common'
 
 import NavItem from './Item' //Circular reference by design
 import HorizontalNavBar from './HorizontalNavBar'
@@ -81,6 +81,7 @@ const Slide = ({
 
   const titleAsString =  typeof title === 'string' ? title : intl.formatMessage(title)
 
+  const { currentUserData:user } = useSession()
 
   const displayUrls = useMemo(() => {
     const list = subItems ?
@@ -171,7 +172,7 @@ const Slide = ({
             }
           >
             { subItems.map((e, i, a) =>
-              <>
+              (e.policy?.(user) || !e.policy) && <>
                 {(
                   ((i == 0) && e.section ) ||
             (e.section && (String(e.section) != String(a[i-1].section) ) )

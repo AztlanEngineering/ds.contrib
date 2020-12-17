@@ -86,8 +86,6 @@ const LocationMap = ({
     userTheme
   } = useContext(UserSiteContext)
 
-
-
   const themeUrl = theme ?
     availableThemes[theme] :
     availableThemes[userTheme] || availableThemes['default']
@@ -130,7 +128,7 @@ const LocationMap = ({
   }, [location])
   /* setup
       */
-  console.log(998899, Icon)
+  //  console.log(998899, Icon)
 
   return (
     <Wrapper
@@ -151,7 +149,7 @@ const LocationMap = ({
           zoom={position.zoom}
           scrollWheelZoom={ scrollWheelZoom }
           style={{
-            height:'100vh'
+            //height:'100vh'
           }}
         >
           <TileLayer
