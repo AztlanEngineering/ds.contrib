@@ -1,0 +1,48 @@
+/* @fwrlines/generator-react-component 2.5.1 */
+
+/*
+
+Classes :
+.permissions_input : default
+
+*/
+
+.permissions_input {
+  .input_content {
+    display: flex;
+    flex-direction: column;
+
+    .permission_selector {
+      background: var(--form-input-background);
+      border: var(--form-border);
+      border-radius: var(--form-border-radius);
+
+      padding: 1em;
+    }
+
+    table {
+      width: 100%;
+    }
+
+    th .fb {
+      background: var(--form-fieldset-background);
+      cursor: pointer;
+      justify-content: space-between;
+    }
+  }
+
+  label {
+    cursor: pointer;
+  }
+
+  .add_other {
+    padding: .5em;
+
+    input {
+      --form-state-color-light: var(--metadata);
+      border: var(--form-border);
+      border-radius: var(--form-border-radius);
+      padding: var(--form-input-compact-padding);
+    }
+  }
+}
