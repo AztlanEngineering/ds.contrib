@@ -86,7 +86,7 @@ const PermissionsInput = ({
       type :null,
       value:newPermission
     }])
-    setInputValue(value?.push(newPermission) || [newPermission])
+    setInputValue(value?.length ? [...value, newPermission] : [newPermission])
   }, [newPermission, setAdditionalPermissions, value])
   /*
   useEffect(() => {
