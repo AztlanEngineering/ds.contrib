@@ -95,6 +95,10 @@ const SessionContextProvider = ({
 
   const isConnected = currentUserData ? true : false
 
+  const currentUserHasPermission = useCallback(permission =>
+    currentUserData?.permissions?.includes(permission)
+  )
+
   return (
     <SessionContext.Provider value={{
       logoutPath,
@@ -109,6 +113,7 @@ const SessionContextProvider = ({
       currentUserError,
       currentUserLoading,
       currentUserData,
+      currentUserHasPermission,
       loadCurrentUser,
 
       isConnected
