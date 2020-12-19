@@ -82,10 +82,12 @@ const PermissionsInput = ({
   const [ additionalPermissions, setAdditionalPermissions ] = useState([])
 
   const addNewPermission = useCallback(() => {
-    setAdditionalPermissions([...additionalPermissions, {
-      type :null,
-      value:newPermission
-    }])
+    setAdditionalPermissions(Array.from(new Set(
+      [...additionalPermissions, {
+        type :null,
+        value:newPermission
+      }])
+    ))
     setInputValue(value?.length ? [...value, newPermission] : [newPermission])
   }, [newPermission, setAdditionalPermissions, value])
   /*
@@ -96,16 +98,23 @@ const PermissionsInput = ({
 
 
   //Populate additional perms if not provided in defaultPermissionsList
-  const defaultPermissionsValues = useMemo(() =>
-    defaultPermissionsList.reduce((a ,e) => {
-      a.push(e.value)
-      return a
-    }, [])
-  ,[ defaultPermissionsList ])
+  const currentPermissionsValues = useMemo(() =>
+    [
+
+      ...defaultPermissionsList.reduce((a ,e) => {
+        a.push(e.value)
+        return a
+      }, []),
+      ...additionalPermissions.reduce((a ,e) => {
+        a.push(e.value)
+        return a
+      }, [])
+    ]
+  ,[ defaultPermissionsList, additionalPermissions ])
 
   useEffect(() => {
     if(value) {
-      const newAdditionalPerms = value.filter(e => !defaultPermissionsValues.includes(e))
+      const newAdditionalPerms = value.filter(e => !currentPermissionsValues.includes(e))
       if (newAdditionalPerms?.length){
         const newSet = new Set([
           ...additionalPermissions,
@@ -117,7 +126,11 @@ const PermissionsInput = ({
         setAdditionalPermissions(Array.from(newSet))
       }
     }
-  }, [value, defaultPermissionsValues])
+  }, [value, currentPermissionsValues])
+
+  const addPermissionButtonDisabled = useMemo(() => value?.includes(newPermission),
+    [newPermission, value]
+  )
 
   const onCheckboxChange = useCallback(event => {
     !touched && setInputTouched()
@@ -310,9 +323,10 @@ const PermissionsInput = ({
             &nbsp;
             <Button
               className='x-grey'
-              onClick={ addNewPermission }
+              disabled={ addPermissionButtonDisabled }
+              onClick={ !addPermissionButtonDisabled ? addNewPermission : null}
             >
-              Add
+              { addPermissionButtonDisabled ? 'Exists already' : 'Add' }
             </Button>
           </div>
         </div>
