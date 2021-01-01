@@ -1,0 +1,57 @@
+/* @fwrlines/generator-react-component 2.5.1 */
+
+/*
+
+Classes :
+.article_card : default
+
+*/
+@keyframes reveal {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.article_card_wrapper {
+  background: var(--y);
+  height: 100%;
+  scroll-snap-align: center;
+  transition: padding .9s ease-in-out;
+  width: 100%;
+
+  &.open {
+    padding: var(--u);
+
+    .article-card {
+      box-shadow: .3em .3em 2em rgba(12, 12, 12, .8);
+    }
+  }
+
+  &:not(.open) {
+    background: red;
+  }
+}
+
+.article-card {
+  background: var(--light-x);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: box-shadow .5s ease-in-out;
+
+  .read-more {
+    animation: reveal 2s 1 forwards;
+    margin-bottom: var(--u);
+    margin-top: auto;
+    opacity: 0;
+    text-align: center;
+  }
+
+  &.clickable {
+    cursor: pointer;
+  }
+}

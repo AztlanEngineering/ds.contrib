@@ -81,7 +81,7 @@ const Slide = ({
 
   const titleAsString =  typeof title === 'string' ? title : intl.formatMessage(title)
 
-  const { currentUserData:user } = useSession()
+  const { currentUserData:user }  = useSession()
 
   const displayUrls = useMemo(() => {
     const list = subItems ?
@@ -172,7 +172,9 @@ const Slide = ({
             }
           >
             { subItems.map((e, i, a) =>
-              (e.policy?.(user) || !e.policy) && <>
+            {
+              if((((e.condition !== undefined) && e.condition) || ( e.condition === undefined ))&&
+              ((user?.id && e.policy?.(user)) || !e.policy)) return( <>
                 {(
                   ((i == 0) && e.section ) ||
             (e.section && (String(e.section) != String(a[i-1].section) ) )
@@ -203,7 +205,8 @@ const Slide = ({
                   footer={ e.footer || footer }
                 />
               </>
-            )}
+              )
+              return null})}
 
           </ul>
         }
