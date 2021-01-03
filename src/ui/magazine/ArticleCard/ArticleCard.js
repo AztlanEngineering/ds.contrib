@@ -1,11 +1,11 @@
 /* @fwrlines/generator-react-component 2.5.1 */
 import * as React from 'react'
-import { useState, useRef, useCallback } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import PropTypes from 'prop-types'
 
 import { useHistory } from 'react-router-dom'
 
-
+import { useIsTop } from '@fwrlines/utils'
 //Intl
 
 /* import { FormattedMessage} from "react-intl";
@@ -41,7 +41,8 @@ const ArticleCard = ({
   href,
   delay,
   hasReadMore,
-  isOpenDefault
+  isOpenDefault,
+  isOpen:userIsOpen,
 }) => {
 
   const myRef = useRef(null)
@@ -50,7 +51,13 @@ const ArticleCard = ({
 
   const [isOpen, setIsOpen] = useState(isOpenDefault)
 
+
   //const [a, setA] = useState('')
+  useEffect(() => {
+    if (isOpen != isOpenDefault) {
+      setIsOpen(isOpenDefault)
+    }
+  }, [isOpenDefault])
 
   const history = useHistory()
 
@@ -65,9 +72,10 @@ const ArticleCard = ({
         history.push(href)
       }, delay)
     }
+    /*
     else {
       setIsOpen(!isOpen)
-    }
+    }*/
   //router.push(href)
   }, [isOpen])
 
@@ -97,6 +105,7 @@ const ArticleCard = ({
 
         {JSON.stringify([
           isOpen,
+          userIsOpen,
           isClickable,
           isOpenDefault
         ])}

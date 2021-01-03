@@ -6,6 +6,8 @@ Classes :
 .article_card : default
 
 */
+$cardBoxShadow: .3em .3em 1em rgba(12, 12, 12, .8);
+
 @keyframes reveal {
   from {
     opacity: 0;
@@ -16,10 +18,20 @@ Classes :
   }
 }
 
+@keyframes remove-box-shadow {
+  from {
+    box-shadow: $cardBoxShadow;
+  }
+
+  to {
+    box-shadow: 0 0 0 transparent;
+  }
+}
+
 .article_card_wrapper {
   background: var(--y);
   height: 100%;
-  scroll-snap-align: center;
+  scroll-snap-align: start;
   transition: padding .9s ease-in-out;
   width: 100%;
 
@@ -27,16 +39,22 @@ Classes :
     padding: var(--u);
 
     .article-card {
-      box-shadow: .3em .3em 2em rgba(12, 12, 12, .8);
+      box-shadow: $cardBoxShadow;
+      //transition: box-shadow .5s ease-in-out;
     }
   }
 
   &:not(.open) {
-    background: red;
+    //background: red;
+
+    .article-card {
+      //box-shadow: $cardBoxShadow;
+    }
   }
 }
 
 .article-card {
+  //transition: box-shadow .5s ease-in-out;
   background: var(--light-x);
   display: flex;
   flex-direction: column;
