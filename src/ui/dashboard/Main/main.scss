@@ -10,8 +10,8 @@ Classes :
 .dashboard .main {
   background: var(--light-y, var(--light-background));
   box-shadow: -.25em 0 2em 0 rgba(0, 0, 0, .15);
+  height: 100%;
   min-height: 100vh;
-  height:max-content;
   transition: all .3s;
 
   z-index: 2;
@@ -19,6 +19,7 @@ Classes :
   @media (max-width: 899px) {
     display: flex;
     flex-direction: column;
+    height: 100%;
     left: 110%;
     overflow-y: scroll;
     position: fixed;
