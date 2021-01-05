@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useEffect, useMemo, useCallback } from 'react'
+import diffCountFunc from './diffCount.js'
 
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/client'
@@ -11,6 +12,8 @@ export default (MUTATION, extraProps) => {
   const {
     additionalVariables={},
     defaultDataObject={},
+    removeVariables,
+    compareWithOriginalObject,
     refetch
   } = extraProps || {}
 
@@ -21,7 +24,7 @@ export default (MUTATION, extraProps) => {
     {
       loading,
       error,
-      data={}
+      data
     }
   ] = useMutation(
     gql(MUTATION),
@@ -46,20 +49,35 @@ export default (MUTATION, extraProps) => {
     }
   }, finalData)
 
-
-  const mutate= useCallback(() => doMutate({
-    variables:{
-      ...parsed,
-      ...additionalVariables
-    }
-  }),
+  const mutate= useCallback(() => {
+    const finalFormVariables = Object.keys(parsed)
+      .filter(key => removeVariables ? !removeVariables.includes(key): true)
+      .reduce((a, key) => {
+        a[key] = parsed[key]
+        return a
+      }, {})
+    doMutate({
+      variables:{
+        ...finalFormVariables,
+        ...additionalVariables
+      }
+    })},
   [parsed, additionalVariables]
   )
+
+
+  const diffCount = useMemo(() => {
+    if(compareWithOriginalObject) {
+      return diffCountFunc(compareWithOriginalObject, parsed)
+    }
+    else return null
+  }, [parsed, compareWithOriginalObject])
 
   return {
     mutate,
     loading,
     error,
-    response:finalData
+    diffCount,
+    response:finalData,
   }
 }
