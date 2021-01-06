@@ -89,7 +89,7 @@ const HorizontalNavBar = ({
             className='it k-s s1'
             disabled
           >
-            { ' ' }
+            &nbsp;
           </Button>
         }
         {/*<p>Its me</p>*/}
@@ -145,7 +145,7 @@ HorizontalNavBar.propTypes = {
 }
 
 HorizontalNavBar.defaultProps = {
-  className          :'u50',
+  className          :'',
   backIcon           :'h',
   backDefaultMessage :<FormattedMessage { ...messages.back }/>,
   isContentNavigation:false

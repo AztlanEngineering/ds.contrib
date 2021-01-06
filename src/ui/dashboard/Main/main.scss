@@ -8,8 +8,8 @@ Classes :
 */
 
 .dashboard .main {
-  background: var(--light-y, var(--light-background));
-  box-shadow: -.25em 0 2em 0 rgba(0, 0, 0, .15);
+  background: var(--dark-y, var(--light-background));
+  box-shadow: -.25em 0 var(--u) 0 rgba(255, 255, 255, .45);
   height: 100%;
   min-height: 100vh;
   transition: all .3s;
@@ -21,7 +21,7 @@ Classes :
     flex-direction: column;
     height: 100%;
     left: 110%;
-    overflow-y: scroll;
+    overflow-y: auto;
     position: fixed;
     top: 0;
     width: 100%;
