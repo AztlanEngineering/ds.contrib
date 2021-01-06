@@ -10,6 +10,7 @@ import { useForm } from 'ds-form'
 export default (MUTATION, extraProps) => {
 
   const {
+    id,
     additionalVariables={},
     defaultDataObject={},
     removeVariables,
@@ -58,8 +59,11 @@ export default (MUTATION, extraProps) => {
       }, {})
     doMutate({
       variables:{
-        ...finalFormVariables,
-        ...additionalVariables
+        id   :id,
+        input:{
+          ...finalFormVariables,
+          ...additionalVariables
+        }
       }
     })},
   [parsed, additionalVariables]

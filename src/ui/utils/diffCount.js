@@ -7,8 +7,11 @@ export default (a, b) => {
 
   // We only need to compare the keys of keysB
   keysB.forEach(key => {
-    if (a[key]){
-      if (a[key] !== b[key]) {
+    if (keysA.includes(key)){
+      if (
+        (a[key] !== b[key]) &&
+        !(!a[key] && (b[key] === ''))
+      ) {
         diffCount ++
       }
     }
