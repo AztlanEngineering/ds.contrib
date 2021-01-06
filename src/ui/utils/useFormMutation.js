@@ -12,7 +12,7 @@ export default (MUTATION, extraProps) => {
   const {
     id,
     additionalVariables={},
-    defaultDataObject={},
+    //defaultDataObject={},
     removeVariables,
     compareWithOriginalObject,
     refetch
@@ -34,7 +34,7 @@ export default (MUTATION, extraProps) => {
     })
 
   const finalData = useMemo(() => {
-    var result = defaultDataObject
+    var result = {} //defaultDataObject
     if(data) {
       const dataKey = Object.keys(data).reduce((a, e) => e)
       result = data[dataKey]
@@ -48,7 +48,7 @@ export default (MUTATION, extraProps) => {
     if (Object.keys(finalData).length) {
       refetch?.()
     }
-  }, finalData)
+  }, [finalData])
 
   const mutate= useCallback(() => {
     const finalFormVariables = Object.keys(parsed)
