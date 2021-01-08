@@ -63,6 +63,7 @@ const LocationMap = ({
   style,
   as:Wrapper,
   location:userLocation,
+  fullAddress,
   defaultCountry,
 
   initialLat,
@@ -72,6 +73,7 @@ const LocationMap = ({
   scrollWheelZoom,
 
   theme,
+  height,
 
   availableThemes,
 
@@ -111,7 +113,7 @@ const LocationMap = ({
 
 
   useEffect(() => {
-    const queryString = `${location.address} ${location.address2 || ''}, ${location.postcode} ${location.city}, ${location.country || defaultCountry}`
+    const queryString = fullAddress ? fullAddress :`${location.address} ${location.address2 || ''}, ${location.postcode} ${location.city}, ${location.country || defaultCountry}`
     const fetchAndUpdatePosition = async () => {
       const results = await provider.search({ query: queryString })
       console.log(7777, queryString, results)
@@ -125,7 +127,7 @@ const LocationMap = ({
     fetchAndUpdatePosition()
 
 
-  }, [location])
+  }, [location, fullAddress])
   /* setup
       */
   //  console.log(998899, Icon)
@@ -141,7 +143,10 @@ const LocationMap = ({
         ].filter(e => e).join(' ')
       }
       id={ id }
-      style={ style }
+      style={{
+        '--map-height':height,
+        ...style
+      }}
     >
       { !isBackend &&
         <Map
@@ -248,6 +253,15 @@ LocationMap.propTypes = {
    */
   theme:PropTypes.string,
 
+  /**
+   * The full address that will be used as the query string of the search
+   */
+  fullAddress:PropTypes.string,
+
+  /**
+   * The height, passed as a CSS value, of the map. Warning : when the map is too small, it might render unexpectedly.
+   */
+  height:PropTypes.string,
 
   /**
    * Whether to allow the scroll wheel woom. THis is a leaflet prop https://leafletjs.com/reference-1.4.0.html#map-closepopuponclick

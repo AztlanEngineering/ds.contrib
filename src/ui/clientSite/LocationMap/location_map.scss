@@ -6,6 +6,7 @@ Classes :
 .location_map : default
 
 */
+$defaultMapHeight:500px;
 
 .location_map {
   &.has-description {
@@ -21,19 +22,18 @@ Classes :
     }
 
     .leaflet-container {
-      grid-area:"map";
+      grid-area: "map";
     }
 
     .map-description {
-      grid-area:"description";
+      grid-area: "description";
     }
-
   }
 
 
   .leaflet-container {
     //border: 2px solid red;
-    height: 500px;
+    height: var(--map-height, #{$defaultMapHeight});
     width: 100%;
   }
 

@@ -93,15 +93,8 @@ export const Dark = () => {
   )}
 
 export const InitialLatLng = () => {
-  const location = {
-    address :'Corso Buenos Aires 24',
-    postcode:'20124',
-    city    :'Milano',
-    country :'Italy'
-  }
   return (
     <LocationMap
-      location={ location }
       initialLat={41.897598}
       initialLng={12.498408}
       initialZoom={16}
@@ -120,6 +113,28 @@ export const Children = () => {
   return (
     <LocationMap
       location={ location }
+      children={
+        <h1>
+          This should appear on the side on desktop and under the map on mobile
+        </h1>
+
+      }
+    >
+    </LocationMap>
+
+  )}
+
+export const Height = () => {
+  const location = {
+    address :'Corso Buenos Aires 24',
+    postcode:'20124',
+    city    :'Milano',
+    country :'Italy'
+  }
+  return (
+    <LocationMap
+      location={ location }
+      height='200px'
       children={
         <h1>
           This should appear on the side on desktop and under the map on mobile
