@@ -44,5 +44,35 @@ export default defineMessages({
     defaultMessage:'Sunday',
     description   :'',
   },
+  dayFormLabel:{
+    id            :'ds.contrib.opening_times.dayFormLabel',
+    //id: "app.common.pages.opening_times.subtitle",
+    defaultMessage:'Add opening times for the following days.',
+    description   :'',
+  },
+  dayFormLabelShort:{
+    id            :'ds.contrib.opening_times.dayFormLabel',
+    //id: "app.common.pages.opening_times.subtitle",
+    defaultMessage:'Add opening times for { days }.',
+    description   :'',
+  },
+  dayFormLabelMultiple:{
+    id            :'ds.contrib.opening_times.dayFormLabel',
+    //id: "app.common.pages.opening_times.subtitle",
+    defaultMessage:'Add opening times for { days } and { lastDay }.',
+    description   :'',
+  },
+  weekend:{
+    id            :'ds.contrib.opening_times.weekend',
+    //id: "app.common.pages.opening_times.subtitle",
+    defaultMessage:'the weekend',
+    description   :'',
+  },
+  weekdays:{
+    id            :'ds.contrib.opening_times.weekdays',
+    //id: "app.common.pages.opening_times.subtitle",
+    defaultMessage:'the week days',
+    description   :'',
+  },
 })
 

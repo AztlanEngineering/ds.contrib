@@ -1,12 +1,11 @@
 /* @fwrlines/generator-storybook-story 1.6.1 */
 import * as React from 'react'
-//import {} from 'react'
+import { Form, FormContextDebugger } from 'ds-form'
 
 //import { action } from '@storybook/addon-actions'
 
-import { useForm, FormContextProvider,FormContextDebugger } from 'ds-form'
-import { OpeningTimesInput } from 'ui'
-import { DaysFormContext, DaysForm, ScheduleForm } from 'ui/inputs/OpeningTimesInput/common'
+import { SelectDaysInput } from 'ui'
+import FormContext from 'ui/inputs/SelectDaysInput/Context'
 /* import QUERY from './graphql/query.graphql'
    import { AplProvider } from 'stories/utils'
    import { Router } from 'stories/utils'
@@ -16,11 +15,11 @@ import { DaysFormContext, DaysForm, ScheduleForm } from 'ui/inputs/OpeningTimesI
 //const endpoint = 'https://api.fwrlines.com/graphql'
 
 export default {
-  title        :'inputs/OpeningTimesInput',
-  component    :OpeningTimesInput,
+  title        :'inputs/SelectDaysInput',
+  component    :SelectDaysInput,
   //componentSubtitle:'Component subtitle',
   subcomponents:{
-    DaysForm:DaysForm,
+    //Item:SelectDaysInput.Item
   },
   decorators:[
     /* storyfn => <div className="">{ storyfn() }</div>,
@@ -42,37 +41,28 @@ const storyParameters = {
  */
 
 export const Default = () => (
-  <FormContextProvider>
-    <OpeningTimesInput
-      name='Ot'
-      label='Opening Times'
-      optional={ true }
-      isSelectorOpenDefault={ true }
-      description='Please select the regular opening times'
+  <Form>
+    <SelectDaysInput
+      className='y-red u1 md-u2'
+      name='select_days'
+    >
+      <FormContextDebugger
+        context={ FormContext }
+        name='Select Days'
+      />
+    </SelectDaysInput>
+    <FormContextDebugger
+      //context={ FormContext }
+      name='Form'
     />
-    <FormContextDebugger/>
-  </FormContextProvider>
+  </Form>
 )
 
 //Default.parameters = storyParameters
 
+/*
 export const Variant = () => (
-  <FormContextProvider>
-    <OpeningTimesInput
-      name='ot2'
-      label='Opening Times'
-      optional={ true }
-      description='Please select the regular opening times'
-      //description='Please select the right user permissions'
-    />
-    <FormContextDebugger/>
-  </FormContextProvider>
-)
-
-export const DaysInput = () => (
-  <DaysForm>
-    <FormContextDebugger context={ DaysFormContext }/>
-  </DaysForm>
-)
+  <SelectDaysInput></SelectDaysInput>
+)*/
 
 //Variant.parameters = storyParameters

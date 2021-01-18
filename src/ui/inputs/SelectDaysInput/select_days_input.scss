@@ -1,0 +1,34 @@
+/* @fwrlines/generator-react-component 2.8.0 */
+
+/*
+
+Classes :
+.select_days_input : default
+
+*/
+
+.select_days_input {
+  .days {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    padding: var(--form-input-compact-padding);
+
+    span {
+      color: var(--form-description-color);
+      cursor: pointer;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: color .3s;
+
+      &:hover,
+      &:focus {
+        color: var(--form-label-color);
+      }
+    }
+  }
+}

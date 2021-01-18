@@ -4,9 +4,10 @@ import * as React from 'react'
 
 //import { action } from '@storybook/addon-actions'
 
-import { useForm, FormContextProvider,FormContextDebugger } from 'ds-form'
-import { OpeningTimesInput } from 'ui'
-import { DaysFormContext, DaysForm, ScheduleForm } from 'ui/inputs/OpeningTimesInput/common'
+import { Form, FormContextDebugger } from 'ds-form'
+
+import { HoursSelectorInput } from 'ui'
+import FormContext from 'ui/inputs/HoursSelectorInput/Context'
 /* import QUERY from './graphql/query.graphql'
    import { AplProvider } from 'stories/utils'
    import { Router } from 'stories/utils'
@@ -16,11 +17,11 @@ import { DaysFormContext, DaysForm, ScheduleForm } from 'ui/inputs/OpeningTimesI
 //const endpoint = 'https://api.fwrlines.com/graphql'
 
 export default {
-  title        :'inputs/OpeningTimesInput',
-  component    :OpeningTimesInput,
+  title        :'inputs/HoursSelectorInput',
+  component    :HoursSelectorInput,
   //componentSubtitle:'Component subtitle',
   subcomponents:{
-    DaysForm:DaysForm,
+    //Item:HoursSelectorInput.Item
   },
   decorators:[
     /* storyfn => <div className="">{ storyfn() }</div>,
@@ -42,37 +43,28 @@ const storyParameters = {
  */
 
 export const Default = () => (
-  <FormContextProvider>
-    <OpeningTimesInput
-      name='Ot'
-      label='Opening Times'
-      optional={ true }
-      isSelectorOpenDefault={ true }
-      description='Please select the regular opening times'
+  <Form>
+    <HoursSelectorInput
+      name='hours'
+      label='Select the opening hours below'
+      description='If you open your shop twice a day, you need to have two opening times'
+    >
+      <FormContextDebugger
+        context={ FormContext }
+        name='Hours'
+      />
+    </HoursSelectorInput>
+    <FormContextDebugger
+      //context={ FormContext }
+      name='Form'
     />
-    <FormContextDebugger/>
-  </FormContextProvider>
+  </Form>
 )
 
 //Default.parameters = storyParameters
 
-export const Variant = () => (
-  <FormContextProvider>
-    <OpeningTimesInput
-      name='ot2'
-      label='Opening Times'
-      optional={ true }
-      description='Please select the regular opening times'
-      //description='Please select the right user permissions'
-    />
-    <FormContextDebugger/>
-  </FormContextProvider>
-)
-
-export const DaysInput = () => (
-  <DaysForm>
-    <FormContextDebugger context={ DaysFormContext }/>
-  </DaysForm>
-)
+/* export const Variant = () => (
+       <HoursSelectorInput></HoursSelectorInput>
+   ) */
 
 //Variant.parameters = storyParameters

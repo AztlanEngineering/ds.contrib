@@ -1,0 +1,43 @@
+/* @fwrlines/generator-react-component 2.8.0 */
+
+/*
+
+Classes :
+.hours_selector_input : default
+
+*/
+
+$inputBetweenMargin:1em;
+$rowsBetweenMargin:1em;
+
+.hours_selector_input {
+  .row {
+    align-items: flex-end;
+    display: flex;
+
+    .input {
+      flex-basis: 200px;
+      flex-grow: 1;
+    }
+
+    & > * {
+      & + * {
+        margin-left: $inputBetweenMargin;
+      }
+
+      &.button {
+        flex-basis: 4em;
+        flex-grow: 0;
+        margin-left: auto;
+      }
+    }
+
+    & + .row {
+      margin-top: $rowsBetweenMargin;
+    }
+  }
+
+  .add-extra {
+    margin-top: $rowsBetweenMargin;
+  }
+}

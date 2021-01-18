@@ -34,6 +34,14 @@ module.exports = {
       include: path.resolve(__dirname, '../..')
     });
 
+    config.resolve = {
+      alias:{
+      'react'           :path.resolve('./node_modules/react'),
+      'react-dom'       :path.resolve('./node_modules/react-dom'),
+      'react-intl'      :path.resolve('./node_modules/react-intl'),
+      }
+    }
+
     // Return the altered config
     return config;
   },

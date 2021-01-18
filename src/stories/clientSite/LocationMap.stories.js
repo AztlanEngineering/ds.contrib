@@ -135,12 +135,6 @@ export const Height = () => {
     <LocationMap
       location={ location }
       height='200px'
-      children={
-        <h1>
-          This should appear on the side on desktop and under the map on mobile
-        </h1>
-
-      }
     >
     </LocationMap>
 

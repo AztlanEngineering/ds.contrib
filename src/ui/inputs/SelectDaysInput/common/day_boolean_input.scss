@@ -1,0 +1,57 @@
+/* @fwrlines/generator-react-component 2.8.0 */
+
+/*
+
+Classes :
+.day_boolean_input : default
+
+*/
+@use "@fwrlines/stylebook/src/mixins";
+@use "@fwrlines/stylebook/src/globals";
+
+.day_boolean_input {
+  position: relative;
+
+  label {
+    align-items: center;
+    background: var(--light-y);
+    border: 2px solid transparent;
+    border-radius: 50%;
+    color: var(--on-y);
+    display: flex;
+    flex-direction: column;
+    height: 2.5em;
+    justify-content: center;
+    transition: all .4s;
+    width: 2.5em;
+  }
+
+  @include mixins.media($from:globals.$sm-md) {
+    label {
+      height: 6em;
+      width: 6em;
+    }
+  }
+
+  @include mixins.media($from:globals.$xs-sm, $to:globals.$sm-md) {
+    label {
+      height: 4em;
+      width: 4em;
+    }
+  }
+
+  input[type=checkbox] {
+    appearance: none;
+    //background: rgba(220, 40, 160, 1);
+    border: none;
+    color: black;
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+
+    &:checked ~ label {
+      background: var(--y);
+      border: 2px solid var(--dark-y);
+    }
+  }
+}
