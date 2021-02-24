@@ -7,6 +7,7 @@ import { useIntl } from 'react-intl'
 import messages from './messages'
 
 export default () => {
+  /*
 
   const {
     WEEK_STARTS_ON_SUNDAY=0
@@ -32,7 +33,8 @@ export default () => {
     6:intl.formatMessage(messages.sunday),
   }), [
     intl, WEEK_STARTS_ON_SUNDAY
-  ])
+  ])*/
+  const dayMap = ['']
 
   return daysMap
 }
