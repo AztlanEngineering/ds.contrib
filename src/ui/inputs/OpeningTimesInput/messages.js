@@ -51,13 +51,13 @@ export default defineMessages({
     description   :'',
   },
   dayFormLabelShort:{
-    id            :'ds.contrib.opening_times.dayFormLabel',
+    id            :'ds.contrib.opening_times.dayFormLabelShort',
     //id: "app.common.pages.opening_times.subtitle",
     defaultMessage:'Add opening times for { days }.',
     description   :'',
   },
   dayFormLabelMultiple:{
-    id            :'ds.contrib.opening_times.dayFormLabel',
+    id            :'ds.contrib.opening_times.dayFormLabelMultiple',
     //id: "app.common.pages.opening_times.subtitle",
     defaultMessage:'Add opening times for { days } and { lastDay }.',
     description   :'',
